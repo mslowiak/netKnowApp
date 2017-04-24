@@ -1,4 +1,4 @@
-package netKnow.Scene;
+package netKnow.scene;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -13,7 +13,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import netKnow.DatabaseConnection;
 
-import javax.xml.crypto.Data;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -23,11 +22,11 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Login {
+public class LoginScene {
 
     Scene scene;
 
-    public Login(Scene scene){
+    public LoginScene(Scene scene){
         this.scene = scene;
         setScene();
     }
@@ -46,7 +45,7 @@ public class Login {
         loginLabel.setFont(Font.font(null, FontWeight.BOLD, 24));
         loginLabel.setPadding(new Insets(10,10,50,10));
 
-        Label nameLabel = new Label("Login: ");
+        Label nameLabel = new Label("LoginScene: ");
         nameLabel.setFont(Font.font(null, FontWeight.BOLD, 12));
         TextField nameInput = new TextField();
         nameInput.setPromptText("login");
@@ -91,7 +90,7 @@ public class Login {
             if (result == 1){
                 logError.setText("");
                 updateLastVisitDate(enteredName);
-                new LoggedIn(scene, enteredName);
+                new LoggedInScene(scene, enteredName);
             }else if(result == 2){
                 logError.setText("Wprowadziłeś złe hasło!");
             }else{
@@ -100,7 +99,7 @@ public class Login {
         });
 
         registerButton.setOnAction(e -> {
-            new Registration(scene);
+            new RegistrationScene(scene);
         });
 
         passInput.setOnKeyPressed(e ->{
@@ -109,7 +108,7 @@ public class Login {
             }
         });
 
-        //window.setScene(new Scene(vbox, 600, 275));
+        //window.setScene(new scene(vbox, 600, 275));
         scene.setRoot(vbox);
     }
 
