@@ -22,7 +22,6 @@ public class Main extends Application {
         //new Login(scene);
         window.show();
         //window.setFullScreen(true);
-        //xd
     }
 
 
