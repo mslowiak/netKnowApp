@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="netKnow.controller.LoginController">
    <children>
       <Label text="Logowanie do aplikacji">
@@ -22,7 +21,7 @@
             <Insets bottom="50.0" left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
       </Label>
-      <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
+      <GridPane alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10.0">
         <columnConstraints>
           <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -32,9 +31,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <padding>
-            <Insets left="150.0" right="150.0" />
-         </padding>
          <children>
             <Label text="Login:" />
             <Label text="Password: " GridPane.rowIndex="1" />
@@ -42,13 +38,16 @@
             <PasswordField fx:id="passwordField" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Button fx:id="loginButton" mnemonicParsing="false" text="Zaloguj się" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
          </children>
+         <VBox.margin>
+            <Insets left="150.0" right="150.0" />
+         </VBox.margin>
       </GridPane>
       <Label fx:id="logErrorLabel" textFill="#fc0000">
          <VBox.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </VBox.margin>
       </Label>
-      <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
+      <GridPane alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10.0">
          <columnConstraints>
             <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -56,13 +55,13 @@
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
-         <padding>
-            <Insets left="150.0" right="150.0" />
-         </padding>
          <children>
             <Button fx:id="registerButton" mnemonicParsing="false" text="Zarejestruj się" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
             <Label text="Nie masz konta?" />
          </children>
+         <VBox.margin>
+            <Insets left="150.0" right="150.0" />
+         </VBox.margin>
       </GridPane>
    </children>
 </VBox>
