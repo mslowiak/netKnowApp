@@ -23,9 +23,9 @@ public class CalculatorIPController {
 
     @FXML
     void initialize(){
-        System.out.println("initialize method");
+        //System.out.println("initialize method");
         countButton.setOnAction(e -> {
-            System.out.println("on action");
+            //System.out.println("on action");
             String fullIPAdress[] = {octetFirst.getText(), octetSecond.getText(), octetThird.getText(),
                     octetFourth.getText(), mask.getText()};
             myIP = new IP(fullIPAdress);
