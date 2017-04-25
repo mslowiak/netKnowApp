@@ -1,5 +1,6 @@
 package netKnow.scene;
 
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +13,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import netKnow.DatabaseConnection;
+import netKnow.controller.LoginController;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -24,13 +27,33 @@ import java.time.format.DateTimeFormatter;
 
 public class LoginScene {
 
-    Scene scene;
+    private Scene scene;
+    private FXMLLoader loader;
+    private LoginController loginController;
 
-    public LoginScene(Scene scene){
+    public LoginScene(Scene scene) {
         this.scene = scene;
         setScene();
+        setController();
     }
 
+    private void setScene() {
+        loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/netKnow/fxml/login_scene.fxml"));
+
+        try {
+            VBox vBox = loader.load();
+            scene.setRoot(vBox);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setController() {
+        loginController = loader.getController();
+        loginController.setScene(scene);
+    }
+/*
     public void setScene(){
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
@@ -45,7 +68,7 @@ public class LoginScene {
         loginLabel.setFont(Font.font(null, FontWeight.BOLD, 24));
         loginLabel.setPadding(new Insets(10,10,50,10));
 
-        Label nameLabel = new Label("LoginScene: ");
+        Label nameLabel = new Label("Login: ");
         nameLabel.setFont(Font.font(null, FontWeight.BOLD, 12));
         TextField nameInput = new TextField();
         nameInput.setPromptText("login");
@@ -111,115 +134,5 @@ public class LoginScene {
         //window.setScene(new scene(vbox, 600, 275));
         scene.setRoot(vbox);
     }
-
-    public static int loginUser(String login, String password){
-        Connection connection = DatabaseConnection.getConenction();
-        String dbLogin = "";
-        String dbPassword = "";
-        try{
-            Statement statement = connection.createStatement();
-            String query = "SELECT login, password FROM Users" + " WHERE login='"+login+"'";
-            ResultSet rs = statement.executeQuery(query);
-            if(!rs.next()){
-                return 3;
-            }else{
-                rs.beforeFirst();
-                while(rs.next()){
-                    dbLogin = rs.getString("login");
-                    dbPassword = rs.getString("password");
-                }
-            }
-            rs.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            DatabaseConnection.closeConnection();
-        }
-
-        if(login == null || login.isEmpty()){
-            System.out.println("puste");
-            return 4;
-        }else{
-            if(login.equals(dbLogin)){
-                if(isPasswordMatching(password, dbPassword)){
-                    return 1; // login and pass matches
-                }else{
-                    return 2; // login good, password bad
-                }
-            }else{
-                return 3; // bad login
-            }
-        }
-    }
-
-    public static boolean validateLicenseKey(String userLogin){
-        Connection connection = DatabaseConnection.getConenction();
-        Boolean dbKey = false;
-        try {
-            Statement statement = connection.createStatement();
-            String query = "SELECT licenseActivation FROM Users WHERE login='"+userLogin+"'";
-            ResultSet rs = statement.executeQuery(query);
-            while(rs.next()){
-                dbKey = rs.getBoolean("licenseActivation");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DatabaseConnection.closeConnection();
-        }
-
-        if(dbKey){
-            return true;
-        }
-        return false;
-    }
-
-    public static void activateLicense(String userLogin){
-        Connection connection = DatabaseConnection.getConenction();
-        try {
-            Statement statement = connection.createStatement();
-            String query = "UPDATE Users SET licenseActivation=true WHERE login='"+userLogin+"'";
-            statement.executeUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DatabaseConnection.closeConnection();
-        }
-    }
-
-    public static boolean isPasswordMatching(String enteredPassword, String dbPassword){
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(enteredPassword.getBytes());
-            byte byteData[]  = md.digest();
-            StringBuffer stringBuffer = new StringBuffer();
-            for(int i=0; i<byteData.length; i++){
-                stringBuffer.append(Integer.toString((byteData[i] & 0xff) +  0x100, 16).substring(1));
-            }
-            enteredPassword = stringBuffer.toString();
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        }
-        if(enteredPassword.equals(dbPassword)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public static void updateLastVisitDate(String login){
-        Connection connection = DatabaseConnection.getConenction();
-        try{
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            String date = dtf.format(now);
-
-            Statement statement = connection.createStatement();
-            String query = "UPDATE Users SET lastVisitDate='" + date + "' WHERE login='"+login+"';";
-            System.out.println("QUERY: " + query);
-            statement.executeUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+*/
 }

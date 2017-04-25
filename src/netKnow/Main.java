@@ -18,8 +18,8 @@ public class Main extends Application {
         window.setTitle("netKnow - aplication that will change your life");
         Scene scene = new Scene(new VBox(), 1000, 800);
         window.setScene(scene);
-        new IPCalculatorScene(scene);
-        //new Login(scene);
+        //new IPCalculatorScene(scene);
+        new LoginScene(scene);
         window.show();
         //window.setFullScreen(true);
     }

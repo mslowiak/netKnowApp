@@ -35,8 +35,4 @@ public class IPCalculatorScene {
         //System.out.println("setController");
         calculatorIPController = loader.getController();
     }
-
-    private void doSomething(){
-
-    }
 }
