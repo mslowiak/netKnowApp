@@ -1,4 +1,4 @@
-package netKnow.Scene;
+package netKnow.scene;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 import netKnow.DatabaseConnection;
 import netKnow.MailSender;
 
@@ -28,7 +27,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-public class Registration {
+public class RegistrationScene {
     String firstName;
     String lastName;
     String nickName;
@@ -42,7 +41,7 @@ public class Registration {
 
     Scene scene;
 
-    public Registration(Scene scene){
+    public RegistrationScene(Scene scene){
         this.scene = scene;
         setScene();
     }
@@ -78,7 +77,7 @@ public class Registration {
         Label nickNameLabel = new Label("Twój login");
         nickNameLabel.setFont(Font.font(null, FontWeight.BOLD, labelFontSize));
         TextField nickNameInput = new TextField();
-        nickNameInput.setPromptText("Login");
+        nickNameInput.setPromptText("LoginScene");
 
         registration.addRow(2, nickNameLabel, nickNameInput);
 
@@ -112,7 +111,7 @@ public class Registration {
         registration.addRow(6, registrationError);
 
         goBackButton.setOnAction(e ->{
-            new Login(scene);
+            new LoginScene(scene);
         });
 
         registerButton.setOnAction(e ->{
@@ -160,7 +159,7 @@ public class Registration {
 
         vbox.getChildren().addAll(registrationDescription, registration);
         scene.setRoot(vbox);
-        //window.setScene(new Scene(vbox, 600, 600));
+        //window.setScene(new scene(vbox, 600, 600));
         //window.setFullScreen(true);
     }
     public static void registerUser(String login, String password, String firstName, String lastName, String email){
@@ -208,7 +207,7 @@ public class Registration {
         return "Witaj " + firstName + " " + lastName + "!\n\n" +
                 "Dziękujemy za założenie konta.\nCieszymy się, że chcesz używać naszej aplikacji!\n\n" +
                 "Oto Twoje dane podane podczas rejestracji: \n\n"+
-                "\nLogin: " + nickName +
+                "\nLoginScene: " + nickName +
                 "\nHasło: " + password +
                 "\nAdres email: " + email;
     }

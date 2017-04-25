@@ -1,4 +1,4 @@
-package netKnow.Scene;
+package netKnow.scene;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,13 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class LoggedIn {
+public class LoggedInScene {
 
     Scene scene;
     String login;
     Label userLogin, registrationDate, lastVisitDate;
 
-    public LoggedIn(Scene scene, String login){
+    public LoggedInScene(Scene scene, String login){
         this.scene = scene;
         this.login = login;
         setScene();
