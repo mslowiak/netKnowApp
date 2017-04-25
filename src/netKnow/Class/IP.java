@@ -3,17 +3,17 @@ package netKnow.Class;
 public class IP {
     private int [] ipArray;
     private int [] maskArray;
-    private int maskAsInteger;
     private String fullIPAdress [];
 
     public IP(String [] fullIPAdress){
         ipArray = new int[4];
         maskArray = new int[4];
-        maskAsInteger = 0;
         this.fullIPAdress = fullIPAdress;
         convertStringToIPAdress(fullIPAdress);
         convertStringToMask(fullIPAdress[4]);
         System.out.println(computeNetwork());
+        System.out.println(computeBrodcast());
+        System.out.println(numberOfHosts());
     }
 
     private void convertStringToIPAdress(String [] fullIPAdress){
@@ -26,7 +26,6 @@ public class IP {
         int n = Integer.parseInt(fullIPAdress[4]);
         for(int i = 0; i < n; i++){
             maskArray[i/8] |=  (128 >> (i%8));
-            maskAsInteger++;
         }
     }
 
@@ -39,10 +38,16 @@ public class IP {
         return result;
     }
     private String computeBrodcast(){
-        String result;
-        for(int i = 0; i < 32 - maskAsInteger; i++){
-
+        String result = "";
+        for(int i = 0; i < 4; i++){
+            result +=  (((~maskArray[i] ^ (1 << 31)) - 2147483392) | ipArray[i]) + ".";
         }
-        return "";
+        return result;
+    }
+
+    private int numberOfHosts()
+    {
+        int n = Integer.parseInt(fullIPAdress[4]);
+        return n;
     }
 }
