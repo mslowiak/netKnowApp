@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import netKnow.scene.IPCalculatorScene;
+import netKnow.scene.LoginScene;
 import netKnow.scene.RegistrationScene;
 
 public class Main extends Application {
@@ -18,6 +19,7 @@ public class Main extends Application {
         window.setTitle("netKnow - aplication that will change your life");
         Scene scene = new Scene(new VBox(), 1000, 800);
         window.setScene(scene);
+        //new LoginScene(scene);
         new IPCalculatorScene(scene);
         //new RegistrationScene(scene);
         window.show();

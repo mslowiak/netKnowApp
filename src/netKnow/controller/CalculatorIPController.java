@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import netKnow.Class.IP;
 
 public class CalculatorIPController {
@@ -47,6 +48,12 @@ public class CalculatorIPController {
             numberOfHostsField.setText(myIP.getNumberOfHosts());
             minHostField.setText(myIP.getMinHost());
             maxHostField.setText(myIP.getMaxHost());
+        });
+
+        mask.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ENTER){
+                countButton.fire();
+            }
         });
     }
 
