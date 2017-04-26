@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import netKnow.DatabaseConnection;
 import netKnow.MailSender;
+import netKnow.PasswordEncrypter;
 import netKnow.scene.LoginScene;
 
 import javax.mail.MessagingException;
@@ -79,7 +80,7 @@ public class RegistrationController {
                     if(!checkIfEmailExists()){
                         if(checkIfPasswordMatch()){
                             System.out.println("Przed kodowaniem: " + password);
-                            encryptedPassword = encryptPassword(password);
+                            encryptedPassword = PasswordEncrypter.encryptPassword(password);
                             System.out.println("Po  zakodowaniu: " + encryptedPassword);
                             registerUser(login, encryptedPassword, firstName, lastName, email);
                             MailSender mailSender = new MailSender(email, getMessageContent());
@@ -200,23 +201,6 @@ public class RegistrationController {
 
     private boolean checkIfPasswordMatch(){
         return passwordConfirmation.equals(password);
-    }
-
-    private String encryptPassword(String password){
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes());
-            byte byteData[]  = md.digest();
-            StringBuffer stringBuffer = new StringBuffer();
-            for(int i=0; i<byteData.length; i++){
-                stringBuffer.append(Integer.toString((byteData[i] & 0xff) +  0x100, 16).substring(1));
-            }
-            password = stringBuffer.toString();
-
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        }
-        return password;
     }
 
     public void setScene(Scene scene){
