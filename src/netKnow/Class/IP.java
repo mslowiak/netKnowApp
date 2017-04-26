@@ -45,6 +45,7 @@ public class IP {
         for(int i = 0; i < 4; i++) {
             result += (ipArray[i] & maskArray[i]) + ".";
         }
+        result = result.substring(0, result.length()-1);
         return result;
     }
     private String computeBroadcast(){
@@ -52,6 +53,7 @@ public class IP {
         for(int i = 0; i < 4; i++){
             result +=  (((~maskArray[i] ^ (1 << 31)) - 2147483392) | ipArray[i]) + ".";
         }
+        result = result.substring(0, result.length()-1);
         return result;
     }
 
