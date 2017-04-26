@@ -26,16 +26,12 @@ public class LoginController {
 
     @FXML
     private Button loginButton;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private TextField loginField;
-
     @FXML
     private Label logErrorLabel;
-
     @FXML
     private Button registerButton;
 

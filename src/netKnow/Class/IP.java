@@ -5,6 +5,12 @@ public class IP {
     private int [] maskArray;
     private String fullIPAdress [];
 
+    private String network;
+    private String broadcast;
+    private String maxHost;
+    private String minHost;
+    private String numberOfHosts;
+
     public IP(String [] fullIPAdress){
         ipArray = new int[4];
         maskArray = new int[4];
@@ -32,8 +38,15 @@ public class IP {
         }
     }
 
+    public void computeData(){
+        network = computeNetwork();
+        broadcast = computeBroadcast();
+        numberOfHosts = Integer.toString(numberOfHosts());
+        minHost = minHost();
+        maxHost = maxHost();
+    }
+
     private String computeNetwork(){
-        int [] tmp = new int[4];
         String result = "";
         for(int i = 0; i < 4; i++) {
             result += (ipArray[i] & maskArray[i]) + ".";
@@ -48,14 +61,12 @@ public class IP {
         return result;
     }
 
-    private int numberOfHosts()
-    {
+    private int numberOfHosts(){
         int n = Integer.parseInt(fullIPAdress[4]);
         return (int) (Math.pow(2,(double) (32 - n)) - 2);
     }
 
-    private String minHost()
-    {
+    private String minHost(){
         String [] tmp1 = computeNetwork().split("\\.");
         int tmp2 = Integer.parseInt(tmp1[tmp1.length-1]);
         tmp2++;
@@ -68,5 +79,25 @@ public class IP {
         int tmp2 = Integer.parseInt(tmp1[tmp1.length-1]);
         tmp2--;
         return (tmp1[0] + "." + tmp1[1] + "." + tmp1[2] + "." + tmp2);
+    }
+
+    public String getNetwork() {
+        return network;
+    }
+
+    public String getBroadcast() {
+        return broadcast;
+    }
+
+    public String getMaxHost() {
+        return maxHost;
+    }
+
+    public String getMinHost() {
+        return minHost;
+    }
+
+    public String getNumberOfHosts() {
+        return numberOfHosts;
     }
 }
