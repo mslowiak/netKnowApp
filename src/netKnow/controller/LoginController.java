@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import netKnow.DatabaseConnection;
+import netKnow.PasswordEncrypter;
 import netKnow.scene.LoggedInScene;
 import netKnow.scene.RegistrationScene;
 
@@ -26,16 +27,12 @@ public class LoginController {
 
     @FXML
     private Button loginButton;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private TextField loginField;
-
     @FXML
     private Label logErrorLabel;
-
     @FXML
     private Button registerButton;
 
@@ -107,7 +104,7 @@ public class LoginController {
             return 4;
         }else{
             if(login.equals(dbLogin)){
-                if(isPasswordMatching(password, dbPassword)){
+                if(PasswordEncrypter.isPasswordMatching(password, dbPassword)){
                     return 1; // login and pass matches
                 }else{
                     return 2; // login good, password bad
@@ -153,25 +150,6 @@ public class LoginController {
         }
     }
 
-    private boolean isPasswordMatching(String enteredPassword, String dbPassword){
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(enteredPassword.getBytes());
-            byte byteData[]  = md.digest();
-            StringBuffer stringBuffer = new StringBuffer();
-            for(int i=0; i<byteData.length; i++){
-                stringBuffer.append(Integer.toString((byteData[i] & 0xff) +  0x100, 16).substring(1));
-            }
-            enteredPassword = stringBuffer.toString();
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        }
-        if(enteredPassword.equals(dbPassword)){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     private void updateLastVisitDate(String login){
         Connection connection = DatabaseConnection.getConenction();
