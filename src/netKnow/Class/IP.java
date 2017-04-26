@@ -15,14 +15,6 @@ public class IP {
         ipArray = new int[4];
         maskArray = new int[4];
         this.fullIPAdress = fullIPAdress;
-        convertStringToIPAdress(fullIPAdress);
-        convertStringToMask(fullIPAdress[4]);
-        System.out.println(computeNetwork());
-        System.out.println(computeBroadcast());
-        System.out.println(numberOfHosts());
-        System.out.println(minHost());
-        System.out.println(maxHost());
-
     }
 
     private void convertStringToIPAdress(String [] fullIPAdress){
@@ -39,6 +31,8 @@ public class IP {
     }
 
     public void computeData(){
+        convertStringToIPAdress(fullIPAdress);
+        convertStringToMask(fullIPAdress[4]);
         network = computeNetwork();
         broadcast = computeBroadcast();
         numberOfHosts = Integer.toString(numberOfHosts());

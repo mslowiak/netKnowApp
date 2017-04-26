@@ -2,57 +2,52 @@ package netKnow.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import netKnow.Class.IP;
 
 public class CalculatorIPController {
+
     @FXML
-    Button countButton;
+    private TextField octetFirst;
     @FXML
-    TextField octetFirst;
+    private TextField octetSecond;
     @FXML
-    TextField octetSecond;
+    private TextField octetThird;
     @FXML
-    TextField octetThird;
+    private TextField octetFourth;
     @FXML
-    TextField octetFourth;
+    private TextField mask;
     @FXML
-    TextField mask;
+    private Button countButton;
+    @FXML
+    private TextArea networkField;
+    @FXML
+    private TextArea broadcastField;
+    @FXML
+    private TextArea numberOfHostsField;
+    @FXML
+    private TextArea minHostField;
+    @FXML
+    private TextArea maxHostField;
+
 
     IP myIP;
 
     @FXML
     void initialize(){
-        //System.out.println("initialize method");
         countButton.setOnAction(e -> {
-            //System.out.println("on action");
             String fullIPAdress[] = {octetFirst.getText(), octetSecond.getText(), octetThird.getText(),
                     octetFourth.getText(), mask.getText()};
             myIP = new IP(fullIPAdress);
+            myIP.computeData();
+            networkField.setText(myIP.getNetwork());
+            broadcastField.setText(myIP.getBroadcast());
+            numberOfHostsField.setText(myIP.getNumberOfHosts());
+            minHostField.setText(myIP.getMinHost());
+            maxHostField.setText(myIP.getMaxHost());
         });
     }
 
-    public Button getCountButton() {
-        return countButton;
-    }
-
-    public TextField getOctetFirst() {
-        return octetFirst;
-    }
-
-    public TextField getOctetSecond() {
-        return octetSecond;
-    }
-
-    public TextField getOctetThird() {
-        return octetThird;
-    }
-
-    public TextField getOctetFourth() {
-        return octetFourth;
-    }
-
-    public TextField getMask() {
-        return mask;
-    }
 }

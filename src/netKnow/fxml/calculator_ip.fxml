@@ -19,7 +19,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="ipLabel" prefHeight="45.0" prefWidth="26.0" text="IP: ">
+                  <Label prefHeight="45.0" prefWidth="26.0" text="IP: ">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
@@ -86,9 +86,9 @@
                   <Label text="adres rozgłoszeniowy" GridPane.rowIndex="1" />
                   <TextArea fx:id="networkField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
                   <TextArea fx:id="broadcastField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextArea fx:id="numberOfHostsField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextArea fx:id="minHostField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextArea fx:id="maxHostField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="hostów w sieci" GridPane.rowIndex="2" />
                   <Label text="host min" GridPane.rowIndex="3" />
                   <Label text="host max" GridPane.rowIndex="4" />
