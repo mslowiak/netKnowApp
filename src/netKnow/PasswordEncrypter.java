@@ -3,11 +3,9 @@ package netKnow;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by MQ on 2017-04-26.
- */
+
 public class PasswordEncrypter {
-    
+
     public static boolean isPasswordMatching(String enteredPassword, String dbPassword){
         enteredPassword = encryptPassword(enteredPassword);
         return enteredPassword.equals(dbPassword);
