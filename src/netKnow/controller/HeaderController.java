@@ -20,13 +20,9 @@ public class HeaderController {
     @FXML
     private Label lastVisitDateLabel;
 
-    @FXML
-    void initialize(){
-        setDates();
-    }
-
-    public void setLogin(String login){
+    public void doStartup(String login){
         this.login = login;
+        setDates();
     }
 
     private void setDates(){

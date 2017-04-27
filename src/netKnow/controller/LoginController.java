@@ -8,8 +8,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import netKnow.DatabaseConnection;
+import netKnow.HeaderRoot;
 import netKnow.PasswordEncrypter;
 import netKnow.scene.LoggedInScene;
+import netKnow.scene.MainOptionsScene;
 import netKnow.scene.RegistrationScene;
 
 import java.security.MessageDigest;
@@ -53,7 +55,8 @@ public class LoginController {
             if(result == 1) {
                 logErrorLabel.setText("");
                 updateLastVisitDate(enteredLogin);
-                new LoggedInScene(scene, enteredLogin);
+                //HeaderRoot.setHeader(enteredLogin);
+                new MainOptionsScene(scene);
             }else if(result == 2){
                 logErrorLabel.setText("Wprowadziłeś złe hasło!");
             }else{

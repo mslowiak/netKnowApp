@@ -6,19 +6,22 @@ import netKnow.controller.HeaderController;
 
 public class HeaderRoot {
 
-    private VBox header;
-    private FXMLLoader loader;
-    private HeaderController headerController;
+    private static VBox header;
+    private static FXMLLoader loader;
+    private static HeaderController headerController;
 
 
-    public void setHeader(String login){
+    public static void setHeader(String login){
         loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/netKnow/fxml/login_scene.fxml"));
+        loader.setLocation(HeaderRoot.class.getResource("/netKnow/fxml/user_header.fxml"));
+        System.out.println("GOOD 1");
         headerController = loader.getController();
-        headerController.setLogin(login);
+        System.out.println("GOOD 2");
+        headerController.doStartup(login);
+        System.out.println("GOOD 3");
     }
 
-    public VBox getHeader(){
+    public static VBox getHeader(){
         return header;
     }
 }
