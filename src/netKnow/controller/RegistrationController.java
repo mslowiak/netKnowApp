@@ -58,9 +58,7 @@ public class RegistrationController {
 
     @FXML
     void initialize(){
-        goBackButton.setOnAction(e ->{
-            new LoginScene(scene);
-        });
+        goBackButton.setOnAction(e -> new LoginScene(scene));
 
         registerButton.setOnAction(e ->{
 
@@ -79,9 +77,7 @@ public class RegistrationController {
                 if(!checkIfLoginExists()){
                     if(!checkIfEmailExists()){
                         if(checkIfPasswordMatch()){
-                            System.out.println("Przed kodowaniem: " + password);
                             encryptedPassword = PasswordEncrypter.encryptPassword(password);
-                            System.out.println("Po  zakodowaniu: " + encryptedPassword);
                             registerUser(login, encryptedPassword, firstName, lastName, email);
                             MailSender mailSender = new MailSender(email, getMessageContent());
                             try {
@@ -115,7 +111,6 @@ public class RegistrationController {
             String date = dtf.format(now);
 
             String query = "INSERT INTO `Users` (login, password, registrationDate, lastVisitDate, firstname, lastname, email, licenseKey) VALUES ('"+login+"', '"+password+"', '"+date+"', '"+date+"', '"+firstName+"', '"+lastName+"', '"+email+"', '"+licenseKey+"');";
-            System.out.println(query);
             statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,7 +144,7 @@ public class RegistrationController {
         return "Witaj " + firstName + " " + lastName + "!\n\n" +
                 "Dziękujemy za założenie konta.\nCieszymy się, że chcesz używać naszej aplikacji!\n\n" +
                 "Oto Twoje dane podane podczas rejestracji: \n\n"+
-                "\nLoginScene: " + login +
+                "\nLogin: " + login +
                 "\nHasło: " + password +
                 "\nAdres email: " + email;
     }
@@ -170,11 +165,7 @@ public class RegistrationController {
             e1.printStackTrace();
         }
 
-        if(login.equals(dbLogin)){
-            return true;
-        }else{
-            return false;
-        }
+        return login.equals(dbLogin);
     }
 
     private boolean checkIfEmailExists(){
@@ -192,11 +183,7 @@ public class RegistrationController {
             e1.printStackTrace();
         }
 
-        if(email.equals(dbEmail)){
-            return true;
-        }else{
-            return false;
-        }
+        return email.equals(dbEmail);
     }
 
     private boolean checkIfPasswordMatch(){

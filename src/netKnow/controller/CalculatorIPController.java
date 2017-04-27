@@ -1,12 +1,14 @@
 package netKnow.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import netKnow.Class.IP;
+import netKnow.scene.MainOptionsScene;
 
 public class CalculatorIPController {
 
@@ -32,9 +34,11 @@ public class CalculatorIPController {
     private TextArea minHostField;
     @FXML
     private TextArea maxHostField;
+    @FXML
+    private Button goBackButton;
 
-
-    IP myIP;
+    private Scene scene;
+    private IP myIP;
 
     @FXML
     void initialize(){
@@ -55,6 +59,12 @@ public class CalculatorIPController {
                 countButton.fire();
             }
         });
+        goBackButton.setOnAction(e -> {
+            new MainOptionsScene(scene);
+        });
     }
 
+    public void setScene(Scene scene){
+        this.scene = scene;
+    }
 }
