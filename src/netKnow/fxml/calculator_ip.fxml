@@ -68,6 +68,9 @@
                         <Insets />
                      </opaqueInsets></Button>
                </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
             </HBox>
             <GridPane alignment="CENTER" hgap="10.0" prefHeight="259.0" prefWidth="580.0" vgap="10.0">
               <columnConstraints>
@@ -121,6 +124,15 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </GridPane>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="goBackButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="107.0" text="Wstecz">
+                     <HBox.margin>
+                        <Insets bottom="30.0" left="50.0" right="50.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>
