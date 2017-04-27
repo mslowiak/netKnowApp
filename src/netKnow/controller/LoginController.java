@@ -58,9 +58,7 @@ public class LoginController {
             }
         });
 
-        registerButton.setOnAction(e ->{
-            new RegistrationScene(scene);
-        });
+        registerButton.setOnAction(e -> new RegistrationScene(scene));
 
         passwordField.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.ENTER){
@@ -86,7 +84,6 @@ public class LoginController {
                 while(rs.next()){
                     dbLogin = rs.getString("login");
                     dbPassword = rs.getString("password");
-                    System.out.println("xd: " + dbLogin + "   " + dbPassword);
                 }
             }
             rs.close();
@@ -97,7 +94,6 @@ public class LoginController {
         }
 
         if(login == null || login.isEmpty()){
-            System.out.println("puste");
             return 4;
         }else{
             if(login.equals(dbLogin)){
@@ -128,10 +124,7 @@ public class LoginController {
             DatabaseConnection.closeConnection();
         }
 
-        if(dbKey){
-            return true;
-        }
-        return false;
+        return dbKey;
     }
 
     private void activateLicense(String userLogin){
