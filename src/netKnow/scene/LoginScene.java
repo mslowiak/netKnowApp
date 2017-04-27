@@ -43,6 +43,7 @@ public class LoginScene {
 
         try {
             VBox vBox = loader.load();
+            setController();
             scene.setRoot(vBox);
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package netKnow.scene;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import netKnow.HeaderRoot;
@@ -23,17 +24,15 @@ public class MainOptionsScene {
         loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/netKnow/fxml/main_options_scene.fxml"));
 
-
         try {
-            VBox content = loader.load();
             VBox view = new VBox();
-            //VBox header = HeaderRoot.getHeader();
+            view.setAlignment(Pos.CENTER);
+            VBox content = loader.load();
+            VBox header = HeaderRoot.getHeader();
 
-            //view.getChildren().addAll(header, content);
+            view.getChildren().addAll(header, content);
 
-
-            //scene.setRoot(view);
-            scene.setRoot(content);
+            scene.setRoot(view);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -10,12 +10,8 @@ import javafx.scene.input.KeyCode;
 import netKnow.DatabaseConnection;
 import netKnow.HeaderRoot;
 import netKnow.PasswordEncrypter;
-import netKnow.scene.LoggedInScene;
 import netKnow.scene.MainOptionsScene;
 import netKnow.scene.RegistrationScene;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,19 +39,17 @@ public class LoginController {
         loginButton.setOnAction(e ->{
             String enteredLogin = loginField.getText();
             String enteredPassword = passwordField.getText();
-            System.out.println(enteredLogin + "   " + enteredPassword);
+
             if(enteredLogin.isEmpty() || enteredPassword.isEmpty()){
                 logErrorLabel.setText("Wprowadz login i hasło!");
             }
 
             int result = loginUser(enteredLogin, enteredPassword);
 
-            System.out.println("result: "+result);
-
             if(result == 1) {
                 logErrorLabel.setText("");
                 updateLastVisitDate(enteredLogin);
-                //HeaderRoot.setHeader(enteredLogin);
+                HeaderRoot.setHeader(enteredLogin);
                 new MainOptionsScene(scene);
             }else if(result == 2){
                 logErrorLabel.setText("Wprowadziłeś złe hasło!");
@@ -153,7 +147,6 @@ public class LoginController {
         }
     }
 
-
     private void updateLastVisitDate(String login){
         Connection connection = DatabaseConnection.getConenction();
         try{
@@ -163,7 +156,6 @@ public class LoginController {
 
             Statement statement = connection.createStatement();
             String query = "UPDATE Users SET lastVisitDate='" + date + "' WHERE login='"+login+"';";
-            System.out.println("QUERY: " + query);
             statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
