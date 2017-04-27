@@ -144,7 +144,7 @@ public class RegistrationController {
         return "Witaj " + firstName + " " + lastName + "!\n\n" +
                 "Dziękujemy za założenie konta.\nCieszymy się, że chcesz używać naszej aplikacji!\n\n" +
                 "Oto Twoje dane podane podczas rejestracji: \n\n"+
-                "\nLoginScene: " + login +
+                "\nLogin: " + login +
                 "\nHasło: " + password +
                 "\nAdres email: " + email;
     }
