@@ -18,7 +18,7 @@
             </Label>
             <Label fx:id="userLoginLabel">
                <font>
-                  <Font size="36.0" />
+                  <Font name="System Bold" size="36.0" />
                </font>
             </Label>
          </children>
@@ -29,7 +29,7 @@
                <children>
                   <Label text="Jesteś z nami od: ">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="registrationDateLabel">
@@ -46,7 +46,7 @@
                <children>
                   <Label text="Ostatnie logowanie:">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="lastVisitDateLabel">

@@ -32,7 +32,7 @@ public class HeaderController {
             String query = "SELECT login, registrationDate, lastVisitDate FROM Users" + " WHERE login='"+login+"'";
             ResultSet rs = statement.executeQuery(query);
             rs.next();
-            userLoginLabel.setText(login);
+            userLoginLabel.setText(login + "!");
             registrationDateLabel.setText(rs.getString("registrationDate"));
             lastVisitDateLabel.setText(rs.getString("lastVisitDate"));
             rs.close();
