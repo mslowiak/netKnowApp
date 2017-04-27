@@ -8,6 +8,8 @@ import netKnow.scene.IPCalculatorScene;
 import netKnow.scene.LoginScene;
 import netKnow.scene.RegistrationScene;
 
+import java.sql.Connection;
+
 public class Main extends Application {
 
     private Stage window;
@@ -28,6 +30,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        launch(args);
+        Connection connection = DatabaseConnection.getConenction();
+        //launch(args);
     }
 }
