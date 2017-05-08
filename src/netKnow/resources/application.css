@@ -1,0 +1,54 @@
+.dragicon {
+    -fx-background-radius: 10;
+}
+
+.icon-blue {
+    -fx-background-color: blue;
+}
+
+.icon-red {
+    -fx-background-color: red;
+}
+
+.icon-green {
+    -fx-background-color: green;
+}
+
+.icon-black {
+    -fx-background-color: black;
+}
+
+.icon-grey {
+    -fx-background-color: grey;
+}
+
+.icon-yellow {
+    -fx-background-color: yellow;
+}
+
+.icon-purple {
+    -fx-background-color: purple;
+}
+
+.icon-pc {
+    -fx-background-image: url("turek.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+.icon-router {
+    -fx-background-image: url("chodar.png");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.icon-switchIco {
+    -fx-background-image: url("ruszil.png");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+.icon-label {
+    -fx-background-image: url("slowiak.png");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
