@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -198,6 +199,41 @@ public class RoutingLayout extends AnchorPane {
                     System.out.println ("Moved node " + container.getValue("type"));
             }
 
+            container = (DragContainer) event.getDragboard().getContent(DragContainer.AddLink);
+
+            if (container != null) {
+
+                String sourceId = container.getValue("source");
+                String targetId = container.getValue("target");
+
+                System.out.println(sourceId + "   " + targetId);
+
+                if (sourceId != null && targetId != null) {
+
+                    NodeLink link = new NodeLink();
+
+                    right_pane.getChildren().add(0,link);
+
+                    DraggableNode source = null;
+                    DraggableNode target = null;
+
+                    for (Node n: right_pane.getChildren()) {
+
+                        if (n.getId() == null)
+                            continue;
+
+                        if (n.getId().equals(sourceId))
+                            source = (DraggableNode) n;
+
+                        if (n.getId().equals(targetId))
+                            target = (DraggableNode) n;
+                    }
+
+                    if (source != null && target != null){
+                        link.bindEnds(source, target);
+                    }
+                }
+            }
             event.consume();
         });
     }

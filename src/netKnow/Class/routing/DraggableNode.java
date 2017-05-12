@@ -4,6 +4,7 @@ package netKnow.Class.routing;
  * Created by MQ on 2017-05-12.
  */
 import java.io.IOException;
+import java.util.UUID;
 
 import com.sun.javafx.scene.input.DragboardHelper;
 import javafx.beans.value.ChangeListener;
@@ -62,6 +63,8 @@ public class DraggableNode extends AnchorPane{
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        setId(UUID.randomUUID().toString());
     }
 
     @FXML
@@ -125,52 +128,6 @@ public class DraggableNode extends AnchorPane{
             AnchorPane parent = (AnchorPane) self.getParent();
             parent.getChildren().remove(self);
         });
-
-        mLinkHandleDragDetected = event -> {
-            getParent().setOnDragOver(null);
-            getParent().setOnDragDropped(null);
-
-            getParent().setOnDragOver(mContextDragOver);
-            getParent().setOnDragDropped(mLinkHandleDragDropped);
-
-            ClipboardContent content = new ClipboardContent();
-            DragContainer container = new DragContainer();
-
-            AnchorPane linkHandle = (AnchorPane) event.getSource();
-            DraggableNode parent = (DraggableNode) linkHandle.getParent().getParent().getParent();
-
-            container.addData("source", parent.getType().toString());
-
-            content.put(DragContainer.AddLink, container);
-
-            parent.startDragAndDrop(TransferMode.ANY).setContent(content);
-
-            event.consume();
-        };
-
-        mLinkHandleDragDropped = event -> {
-            getParent().setOnDragOver(null);
-            getParent().setOnDragDropped(null);
-
-            DragContainer container = (DragContainer) event.getDragboard().getContent(DragContainer.AddLink);
-
-            if (container == null)
-                return;
-
-            AnchorPane linkHandle = (AnchorPane) event.getSource();
-            DraggableNode parent = (DraggableNode) linkHandle.getParent().getParent().getParent();
-
-            ClipboardContent content = new ClipboardContent();
-
-            container.addData("target", parent.getType().toString());
-            content.put(DragContainer.AddLink, container);
-
-            event.getDragboard().setContent(content);
-
-            event.setDropCompleted(true);
-
-            event.consume();
-        };
     }
 
     private void buildLinkDragHandlers(){
@@ -193,9 +150,9 @@ public class DraggableNode extends AnchorPane{
             mDragLink.setStart(p);
 
             ClipboardContent content = new ClipboardContent();
-            DragContainer container = new DragContainer ();
+            DragContainer container = new DragContainer();
 
-            container.addData("source", getType().toString());
+            container.addData("source", getId());
             content.put(DragContainer.AddLink, container);
 
             startDragAndDrop (TransferMode.ANY).setContent(content);

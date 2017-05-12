@@ -6,18 +6,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.Line;
 
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * Created by MQ on 2017-05-12.
  */
 public class NodeLink extends AnchorPane{
 
-    @FXML CubicCurve nodeLink;
+    @FXML Line nodeLink;
 
     public NodeLink() {
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/netKnow/fxml/node_link.fxml"));
 
         fxmlLoader.setRoot(this);
@@ -29,25 +30,12 @@ public class NodeLink extends AnchorPane{
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        setId(UUID.randomUUID().toString());
     }
 
     @FXML
     private void initialize(){
-        nodeLink.controlX1Property().bind(
-                Bindings.add(nodeLink.startXProperty(), 100)
-        );
-
-        nodeLink.controlX2Property().bind(
-                Bindings.add(nodeLink.endXProperty(), -100)
-        );
-
-        nodeLink.controlY1Property().bind(
-                Bindings.add(nodeLink.startYProperty(), 0)
-        );
-
-        nodeLink.controlY2Property().bind(
-                Bindings.add(nodeLink.endYProperty(), 0)
-        );
     }
 
     public void setStart(Point2D startPoint) {
@@ -62,4 +50,11 @@ public class NodeLink extends AnchorPane{
         nodeLink.setEndY(endPoint.getY());
     }
 
+    public void bindEnds (DraggableNode source, DraggableNode target) {
+        nodeLink.startXProperty().bind(Bindings.add(source.layoutXProperty(), (source.getWidth() / 2.0)));
+        nodeLink.startYProperty().bind(Bindings.add(source.layoutYProperty(), (source.getWidth() / 2.0)));
+
+        nodeLink.endXProperty().bind(Bindings.add(target.layoutXProperty(), (target.getWidth() / 2.0)));
+        nodeLink.endYProperty().bind(Bindings.add(target.layoutYProperty(), (target.getWidth() / 2.0)));
+    }
 }
