@@ -1,24 +1,8 @@
 package netKnow.Class.routing;
 
 public enum DragIconType {
-    pc,
-    router,
+    pcIco,
+    routerIco,
     switchIco,
-    label
+    labelIco
 }
-
-/*
-
-public enum DragIconType {
-    red,
-    green,
-    blue,
-    black,
-    yellow,
-    purple,
-    grey,
-    pc,
-    router
-}
-
- */

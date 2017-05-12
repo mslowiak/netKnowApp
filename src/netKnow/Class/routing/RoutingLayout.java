@@ -7,10 +7,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import netKnow.HeaderRoot;
@@ -53,7 +50,8 @@ public class RoutingLayout extends AnchorPane {
             VBox header = HeaderRoot.getHeader();
             AnchorPane content = fxmlLoader.load();
 
-            view.getChildren().addAll(header, content);
+            //view.getChildren().addAll(header, content);
+            view.getChildren().add(content);
             scene.setRoot(view);
 
         } catch (IOException exception) {
@@ -195,10 +193,11 @@ public class RoutingLayout extends AnchorPane {
                 DragContainer container =
                         (DragContainer) event.getDragboard().getContent(DragContainer.AddNode);
 
+
                 if (container != null) {
                     if (container.getValue("scene_coords") != null) {
 
-                        DragIcon droppedIcon = new DragIcon();
+                        DraggableNode droppedIcon = new DraggableNode();
 
                         droppedIcon.setType(DragIconType.valueOf(container.getValue("type")));
                         right_pane.getChildren().add(droppedIcon);
@@ -210,6 +209,8 @@ public class RoutingLayout extends AnchorPane {
                         );
                     }
                 }
+
+                System.out.println (container.getData().toString());
 
                 event.consume();
             }

@@ -30,6 +30,7 @@ public class DragIcon extends AnchorPane {
         }
     }
 
+
     @FXML
     private void initialize() {
     }
@@ -43,51 +44,20 @@ public class DragIcon extends AnchorPane {
         getStyleClass().clear();
         getStyleClass().add("dragicon");
         switch (mType) {
-            /*
-            case blue:
-                getStyleClass().add("icon-blue");
-                break;
 
-            case red:
-                getStyleClass().add("icon-red");
-                break;
-
-            case green:
-                getStyleClass().add("icon-green");
-                break;
-
-            case grey:
-                getStyleClass().add("icon-grey");
-                break;
-
-            case purple:
-                getStyleClass().add("icon-purple");
-                break;
-
-            case yellow:
-                getStyleClass().add("icon-yellow");
-                break;
-
-            case black:
-                getStyleClass().add("icon-black");
-                //this.setBackground("/netKnow/resources/turek.png");
-                break;
-                */
-            case pc:
+            case pcIco:
                 getStyleClass().add("icon-pc");
                 break;
 
-            case router:
+            case routerIco:
                 getStyleClass().add("icon-router");
                 break;
             case switchIco:
-                getStyleClass().add("icon-switchIco");
+                getStyleClass().add("icon-switch");
                 break;
-            case label:
+            case labelIco:
                 getStyleClass().add("icon-label");
                 break;
-
-
             default:
                 break;
         }
@@ -105,4 +75,5 @@ public class DragIcon extends AnchorPane {
                         (getBoundsInLocal().getHeight() / 2))
         );
     }
+
 }

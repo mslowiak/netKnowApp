@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root fx:id="root_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" styleClass="draggable-icon" stylesheets="@/netKnow/resources/application.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="25.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="closeButton" alignment="TOP_RIGHT" text="X" textAlignment="RIGHT" GridPane.columnIndex="1">
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="titleBar" text="Label" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin>
+            </GridPane>
+            <AnchorPane fx:id="nodeBody" prefHeight="200.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></AnchorPane>
+         </children>
+      </VBox>
+      <HBox layoutX="10.0" layoutY="10.0" prefHeight="96.0" prefWidth="80.0" styleClass="dragIcon" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <AnchorPane fx:id="leftLinkHandle" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="25.0" styleClass="left-link-handle" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane fx:id="rightLinkHandle" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="25.0" styleClass="right-link-handle" />
+         </children>
+      </HBox>
+   </children>
+</fx:root>
