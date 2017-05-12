@@ -2,34 +2,6 @@
     -fx-background-radius: 10;
 }
 
-.icon-blue {
-    -fx-background-color: blue;
-}
-
-.icon-red {
-    -fx-background-color: red;
-}
-
-.icon-green {
-    -fx-background-color: green;
-}
-
-.icon-black {
-    -fx-background-color: black;
-}
-
-.icon-grey {
-    -fx-background-color: grey;
-}
-
-.icon-yellow {
-    -fx-background-color: yellow;
-}
-
-.icon-purple {
-    -fx-background-color: purple;
-}
-
 .icon-pc {
     -fx-background-image: url("computer.png");
     -fx-background-position: center;
@@ -57,6 +29,7 @@
     -fx-border-width: 1;
     -fx-border-style: solid;
     -fx-border-color: black;
+    -fx-background-color: antiquewhite;
 }
 
 .node-overlay {
@@ -74,4 +47,8 @@
 .left-link-handle:hover {
     -fx-background-color:
             rgba(184, 184, 148, 0.35);
+}
+
+.tlo{
+    -fx-background-color: red;
 }

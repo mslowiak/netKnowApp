@@ -5,17 +5,23 @@ package netKnow.Class.routing;
  */
 import java.io.IOException;
 
+import com.sun.javafx.scene.input.DragboardHelper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import org.omg.CORBA.TRANSACTION_MODE;
+import sun.plugin.javascript.navig.Anchor;
 
 public class DraggableNode extends AnchorPane{
 
@@ -23,14 +29,23 @@ public class DraggableNode extends AnchorPane{
     @FXML AnchorPane nodeBody;
     @FXML Label titleBar;
     @FXML Label closeButton;
+    @FXML AnchorPane leftLinkHandle;
+    @FXML AnchorPane rightLinkHandle;
 
     private final DraggableNode self;
 
-    private EventHandler mContextDragOver;
-    private EventHandler mContextDragDropped;
+    private EventHandler <DragEvent> mContextDragOver;
+    private EventHandler <DragEvent> mContextDragDropped;
+
+    private EventHandler <MouseEvent> mLinkHandleDragDetected; // wykrycie przeciagania
+    private EventHandler <DragEvent> mLinkHandleDragDropped; // wykrycie konca przeciagania
+    private EventHandler <DragEvent> mContextLinkDragOver; // wykrycie przeciagania z drugim obiektem
+    private EventHandler <DragEvent> mContextLinkDragDroppped; // wykrycie konca przeciagania z drugim obiektem
+
+    private NodeLink mDragLink;
+    private AnchorPane rightPane;
 
     private DragIconType mType = null;
-
     private Point2D mDragOffset = new Point2D(0.0, 0.0);
 
     public DraggableNode() {
@@ -52,19 +67,33 @@ public class DraggableNode extends AnchorPane{
     @FXML
     private void initialize() {
         buildNodeDragHandlers();
+        buildLinkDragHandlers();
+
+        leftLinkHandle.setOnDragDetected(mLinkHandleDragDetected);
+        rightLinkHandle.setOnDragDetected(mLinkHandleDragDetected);
+
+        leftLinkHandle.setOnDragDropped(mLinkHandleDragDropped);
+        rightLinkHandle.setOnDragDropped(mLinkHandleDragDropped);
+
+        mDragLink = new NodeLink();
+        mDragLink.setVisible(false);
+
+        parentProperty().addListener((observable, oldValue, newValue) -> {
+            rightPane = (AnchorPane) getParent();
+        });
     }
 
-    public void buildNodeDragHandlers(){
-        titleBar.setOnDragDetected( e ->{
+    private void buildNodeDragHandlers(){
+        titleBar.setOnDragDetected( event ->{
             getParent().setOnDragOver(null);
             getParent().setOnDragDropped(null);
 
             getParent().setOnDragOver(mContextDragOver);
             getParent().setOnDragDropped(mContextDragDropped);
 
-            mDragOffset = new Point2D(e.getX(), e.getY());
+            mDragOffset = new Point2D(event.getX(), event.getY());
 
-            relocateToPoint(new Point2D(e.getSceneX(), e.getSceneY()));
+            relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
 
             ClipboardContent content = new ClipboardContent();
             DragContainer container = new DragContainer();
@@ -74,28 +103,152 @@ public class DraggableNode extends AnchorPane{
 
             startDragAndDrop(TransferMode.ANY).setContent(content);
 
-            e.consume();
+            event.consume();
         });
 
-        mContextDragOver = (EventHandler<DragEvent>) e -> {
-            e.acceptTransferModes(TransferMode.ANY);
-            relocateToPoint(new Point2D(e.getSceneX(), e.getSceneY()));
-            e.consume();
+        mContextDragOver = (EventHandler<DragEvent>) event -> {
+            event.acceptTransferModes(TransferMode.ANY);
+            relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
+            event.consume();
         };
 
-        mContextDragDropped = (EventHandler<DragEvent>) e ->{
+        mContextDragDropped = (EventHandler<DragEvent>) event ->{
             getParent().setOnDragOver(null);
             getParent().setOnDragDropped(null);
 
-            e.setDropCompleted(true);
+            event.setDropCompleted(true);
 
-            e.consume();
+            event.consume();
         };
 
         closeButton.setOnMouseClicked(event -> {
             AnchorPane parent = (AnchorPane) self.getParent();
             parent.getChildren().remove(self);
         });
+
+        mLinkHandleDragDetected = event -> {
+            getParent().setOnDragOver(null);
+            getParent().setOnDragDropped(null);
+
+            getParent().setOnDragOver(mContextDragOver);
+            getParent().setOnDragDropped(mLinkHandleDragDropped);
+
+            ClipboardContent content = new ClipboardContent();
+            DragContainer container = new DragContainer();
+
+            AnchorPane linkHandle = (AnchorPane) event.getSource();
+            DraggableNode parent = (DraggableNode) linkHandle.getParent().getParent().getParent();
+
+            container.addData("source", parent.getType().toString());
+
+            content.put(DragContainer.AddLink, container);
+
+            parent.startDragAndDrop(TransferMode.ANY).setContent(content);
+
+            event.consume();
+        };
+
+        mLinkHandleDragDropped = event -> {
+            getParent().setOnDragOver(null);
+            getParent().setOnDragDropped(null);
+
+            DragContainer container = (DragContainer) event.getDragboard().getContent(DragContainer.AddLink);
+
+            if (container == null)
+                return;
+
+            AnchorPane linkHandle = (AnchorPane) event.getSource();
+            DraggableNode parent = (DraggableNode) linkHandle.getParent().getParent().getParent();
+
+            ClipboardContent content = new ClipboardContent();
+
+            container.addData("target", parent.getType().toString());
+            content.put(DragContainer.AddLink, container);
+
+            event.getDragboard().setContent(content);
+
+            event.setDropCompleted(true);
+
+            event.consume();
+        };
+    }
+
+    private void buildLinkDragHandlers(){
+        mLinkHandleDragDetected = event -> {
+
+            getParent().setOnDragOver(null);
+            getParent().setOnDragDropped(null);
+
+            getParent().setOnDragOver(mContextLinkDragOver);
+            getParent().setOnDragDropped(mLinkHandleDragDropped);
+
+            rightPane.getChildren().add(0,mDragLink);
+            mDragLink.setVisible(false);
+
+            Point2D p = new Point2D(
+                    getLayoutX() + (getWidth() / 2.0),
+                    getLayoutY() + (getHeight() / 2.0)
+            );
+
+            mDragLink.setStart(p);
+
+            ClipboardContent content = new ClipboardContent();
+            DragContainer container = new DragContainer ();
+
+            container.addData("source", getType().toString());
+            content.put(DragContainer.AddLink, container);
+
+            startDragAndDrop (TransferMode.ANY).setContent(content);
+
+            event.consume();
+        };
+
+        mLinkHandleDragDropped = event -> {
+            getParent().setOnDragOver(null);
+            getParent().setOnDragDropped(null);
+
+            DragContainer container = (DragContainer) event.getDragboard().getContent(DragContainer.AddLink);
+
+            if (container == null)
+                return;
+
+            mDragLink.setVisible(false);
+            rightPane.getChildren().remove(0);
+
+            AnchorPane linkHandle = (AnchorPane) event.getSource();
+
+            ClipboardContent content = new ClipboardContent();
+
+            container.addData("target", getId());
+
+            content.put(DragContainer.AddLink, container);
+
+            event.getDragboard().setContent(content);
+            event.setDropCompleted(true);
+            event.consume();
+        };
+
+        mContextLinkDragOver = event -> {
+            event.acceptTransferModes(TransferMode.ANY);
+
+            if (!mDragLink.isVisible())
+                mDragLink.setVisible(true);
+
+            mDragLink.setEnd(new Point2D(event.getX(), event.getY()));
+
+            event.consume();
+        };
+
+        mContextLinkDragDroppped = event -> {
+            getParent().setOnDragOver(null);
+            getParent().setOnDragDropped(null);
+
+            mDragLink.setVisible(false);
+            rightPane.getChildren().remove(0);
+
+            event.setDropCompleted(true);
+            event.consume();
+        };
     }
 
     public void relocateToPoint (Point2D p) {

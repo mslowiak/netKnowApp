@@ -6,10 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import netKnow.HeaderRoot;
 
 import java.io.IOException;
@@ -71,15 +73,18 @@ public class RoutingLayout extends AnchorPane {
         mDragOverIcon.setOpacity(0.65);
         getChildren().add(mDragOverIcon);
 
+        String [] labels = {"Komputer", "Router", "Switch", "Chodar"};
         //populate left pane with multiple colored icons for testing
         for (int i = 0; i < 4; i++) {
 
             DragIcon icn = new DragIcon();
+            Label descriptionLabel = new Label(labels[i]);
+            descriptionLabel.setFont(new Font("System Bold", 12));
 
             addDragDetection(icn);
 
             icn.setType(DragIconType.values()[i]);
-            left_pane.getChildren().add(icn);
+            left_pane.getChildren().addAll(icn, descriptionLabel);
         }
 
         buildDragHandlers();

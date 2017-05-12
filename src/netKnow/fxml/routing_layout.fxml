@@ -10,12 +10,12 @@
     <children>
         <SplitPane fx:id="base_pane" dividerPositions="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0">
+                <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="130.0">
                     <padding>
                         <Insets left="8.0" top="6.0" />
                     </padding>
                     <content>
-                        <VBox fx:id="left_pane" spacing="10.0" />
+                        <VBox fx:id="left_pane" alignment="CENTER" spacing="10.0" />
                     </content></ScrollPane>
                 <AnchorPane fx:id="right_pane" />
             </items>
