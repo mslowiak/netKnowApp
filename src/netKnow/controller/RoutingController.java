@@ -1,26 +1,28 @@
-package netKnow.Class.routing;
+package netKnow.controller;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
-import javafx.scene.input.*;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import netKnow.HeaderRoot;
+import netKnow.Class.routing.*;
+import netKnow.scene.MainOptionsScene;
 
-import java.io.IOException;
+/**
+ * Created by MQ on 2017-05-13.
+ */
+public class RoutingController {
 
-
-public class RoutingLayout extends AnchorPane {
-
-    Scene scene;
+    private Scene scene;
 
     @FXML
     SplitPane base_pane;
@@ -28,6 +30,14 @@ public class RoutingLayout extends AnchorPane {
     AnchorPane right_pane;
     @FXML
     VBox left_pane;
+    @FXML
+    AnchorPane root_pane;
+
+    @FXML
+    Button goBackButton;
+    @FXML
+    Button routingTypeButton;
+
 
     private DragIcon mDragOverIcon = null;
 
@@ -35,35 +45,11 @@ public class RoutingLayout extends AnchorPane {
     private EventHandler<DragEvent> mIconDragDropped = null;
     private EventHandler<DragEvent> mIconDragOverRightPane = null;
 
-    public RoutingLayout(Scene scene) {
-
-        this.scene = scene;
-
-        FXMLLoader fxmlLoader = new FXMLLoader(
-                getClass().getResource("/netKnow/fxml/routing_layout.fxml")
-        );
-
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            VBox view = new VBox();
-            view.setAlignment(Pos.CENTER);
-
-            VBox header = HeaderRoot.getHeader();
-            AnchorPane content = fxmlLoader.load();
-
-            //view.getChildren().addAll(header, content);
-            view.getChildren().add(content);
-            scene.setRoot(view);
-
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
     @FXML
     private void initialize() {
+        goBackButton.setOnAction(e -> new MainOptionsScene(scene));
+
+        routingTypeButton.setOnAction(e -> System.out.println("nie ma tej sceny"));
 
         //Add one icon that will be used for the drag-drop process
         //This is added as a child to the root anchorpane so it can be visible
@@ -72,7 +58,7 @@ public class RoutingLayout extends AnchorPane {
 
         mDragOverIcon.setVisible(false);
         mDragOverIcon.setOpacity(0.65);
-        getChildren().add(mDragOverIcon);
+        root_pane.getChildren().add(mDragOverIcon);
 
         String [] labels = {"Komputer", "Router", "Switch", "Chodar"};
         //populate left pane with multiple colored icons for testing
@@ -165,7 +151,7 @@ public class RoutingLayout extends AnchorPane {
             event.setDropCompleted(true);
         };
 
-        this.setOnDragDone(event -> {
+        root_pane.setOnDragDone(event -> {
 
             right_pane.removeEventHandler(DragEvent.DRAG_OVER, mIconDragOverRightPane);
             right_pane.removeEventHandler(DragEvent.DRAG_DROPPED, mIconDragDropped);
@@ -236,5 +222,9 @@ public class RoutingLayout extends AnchorPane {
             }
             event.consume();
         });
+    }
+
+    public void setScene(Scene scene){
+        this.scene = scene;
     }
 }
