@@ -56,5 +56,8 @@ public class NodeLink extends AnchorPane{
 
         nodeLink.endXProperty().bind(Bindings.add(target.layoutXProperty(), (target.getWidth() / 2.0)));
         nodeLink.endYProperty().bind(Bindings.add(target.layoutYProperty(), (target.getWidth() / 2.0)));
+
+        source.registerLink(getId());
+        target.registerLink(getId());
     }
 }

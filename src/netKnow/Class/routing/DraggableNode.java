@@ -4,6 +4,9 @@ package netKnow.Class.routing;
  * Created by MQ on 2017-05-12.
  */
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.UUID;
 
 import com.sun.javafx.scene.input.DragboardHelper;
@@ -14,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.ClipboardContent;
@@ -34,6 +38,7 @@ public class DraggableNode extends AnchorPane{
     @FXML AnchorPane rightLinkHandle;
 
     private final DraggableNode self;
+    private final List mLinkIds = new ArrayList();
 
     private EventHandler <DragEvent> mContextDragOver;
     private EventHandler <DragEvent> mContextDragDropped;
@@ -127,6 +132,22 @@ public class DraggableNode extends AnchorPane{
         closeButton.setOnMouseClicked(event -> {
             AnchorPane parent = (AnchorPane) self.getParent();
             parent.getChildren().remove(self);
+            
+            for(ListIterator iterId = mLinkIds.listIterator(); iterId.hasNext();){
+                String id = (String) iterId.next();
+
+                for(ListIterator iterNode = parent.getChildren().listIterator(); iterNode.hasNext();){
+                    Node node = (Node) iterNode.next();
+
+                    if(node.getId() == null){
+                        continue;
+                    }
+                    if(node.getId().equals(id)){
+                        iterNode.remove();
+                    }
+                }
+                iterId.remove();
+            }
         });
     }
 
@@ -218,6 +239,10 @@ public class DraggableNode extends AnchorPane{
                 (int) (localCoords.getX() - mDragOffset.getY()),
                 (int) (localCoords.getY() - mDragOffset.getY())
         );
+    }
+
+    public void registerLink(String linkId) {
+        mLinkIds.add(linkId);
     }
 
     public DragIconType getType () { return mType; }
