@@ -20,7 +20,7 @@ public class Main extends Application {
         new LoginScene(scene);
         //new RoutingLayout(scene);
         window.show();
-        //window.setFullScreen(true);
+        window.setFullScreen(true);
     }
 
 
