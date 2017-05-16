@@ -8,11 +8,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import netKnow.DatabaseConnection;
-import netKnow.scene.LoggedInScene;
+import netKnow.HeaderRoot;
+import netKnow.PasswordEncrypter;
+import netKnow.scene.MainOptionsScene;
 import netKnow.scene.RegistrationScene;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,16 +25,12 @@ public class LoginController {
 
     @FXML
     private Button loginButton;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private TextField loginField;
-
     @FXML
     private Label logErrorLabel;
-
     @FXML
     private Button registerButton;
 
@@ -44,19 +39,18 @@ public class LoginController {
         loginButton.setOnAction(e ->{
             String enteredLogin = loginField.getText();
             String enteredPassword = passwordField.getText();
-            System.out.println(enteredLogin + "   " + enteredPassword);
+
             if(enteredLogin.isEmpty() || enteredPassword.isEmpty()){
                 logErrorLabel.setText("Wprowadz login i hasło!");
             }
 
             int result = loginUser(enteredLogin, enteredPassword);
 
-            System.out.println("result: "+result);
-
             if(result == 1) {
                 logErrorLabel.setText("");
                 updateLastVisitDate(enteredLogin);
-                new LoggedInScene(scene, enteredLogin);
+                HeaderRoot.setHeader(enteredLogin);
+                new MainOptionsScene(scene);
             }else if(result == 2){
                 logErrorLabel.setText("Wprowadziłeś złe hasło!");
             }else{
@@ -64,9 +58,7 @@ public class LoginController {
             }
         });
 
-        registerButton.setOnAction(e ->{
-            new RegistrationScene(scene);
-        });
+        registerButton.setOnAction(e -> new RegistrationScene(scene));
 
         passwordField.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.ENTER){
@@ -92,7 +84,6 @@ public class LoginController {
                 while(rs.next()){
                     dbLogin = rs.getString("login");
                     dbPassword = rs.getString("password");
-                    System.out.println("xd: " + dbLogin + "   " + dbPassword);
                 }
             }
             rs.close();
@@ -103,11 +94,10 @@ public class LoginController {
         }
 
         if(login == null || login.isEmpty()){
-            System.out.println("puste");
             return 4;
         }else{
             if(login.equals(dbLogin)){
-                if(isPasswordMatching(password, dbPassword)){
+                if(PasswordEncrypter.isPasswordMatching(password, dbPassword)){
                     return 1; // login and pass matches
                 }else{
                     return 2; // login good, password bad
@@ -134,10 +124,7 @@ public class LoginController {
             DatabaseConnection.closeConnection();
         }
 
-        if(dbKey){
-            return true;
-        }
-        return false;
+        return dbKey;
     }
 
     private void activateLicense(String userLogin){
@@ -153,26 +140,6 @@ public class LoginController {
         }
     }
 
-    private boolean isPasswordMatching(String enteredPassword, String dbPassword){
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(enteredPassword.getBytes());
-            byte byteData[]  = md.digest();
-            StringBuffer stringBuffer = new StringBuffer();
-            for(int i=0; i<byteData.length; i++){
-                stringBuffer.append(Integer.toString((byteData[i] & 0xff) +  0x100, 16).substring(1));
-            }
-            enteredPassword = stringBuffer.toString();
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        }
-        if(enteredPassword.equals(dbPassword)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     private void updateLastVisitDate(String login){
         Connection connection = DatabaseConnection.getConenction();
         try{
@@ -182,7 +149,6 @@ public class LoginController {
 
             Statement statement = connection.createStatement();
             String query = "UPDATE Users SET lastVisitDate='" + date + "' WHERE login='"+login+"';";
-            System.out.println("QUERY: " + query);
             statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();

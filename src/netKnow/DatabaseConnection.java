@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private final static String DBURL = "jdbc:mysql://sql.slowiak.nazwa.pl:3306/slowiak";
     private final static String DBURL2 = "jdbc:mysql://127.0.0.1:3306/slowiak?serverTimezone=UTC";
-    private final static  String DBUSER = "slowiak";
-    private final static  String DBUSER2 = "root";
+    private final static String DBUSER = "slowiak";
+    private final static String DBUSER2 = "root";
     private final static String DBPASS = "ZaQ1XsW2";
     private static Connection connection = null;
 
