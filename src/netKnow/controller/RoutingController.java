@@ -1,5 +1,7 @@
 package netKnow.controller;
 
+import com.sun.javafx.tk.FontLoader;
+import com.sun.javafx.tk.Toolkit;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -73,13 +75,13 @@ public class RoutingController {
             icn.setType(DragIconType.values()[i]);
             left_pane.getChildren().addAll(icn, descriptionLabel);
         }
-
         buildDragHandlers();
     }
 
     private void addDragDetection(DragIcon dragIcon) {
 
         dragIcon.setOnDragDetected(event -> {
+            // odpowiada za przeciąganie z lewego panelu na prawy panel
 
             // set drag event handlers on their respective objects
             base_pane.setOnDragOver(mIconDragOverRoot);
@@ -126,7 +128,6 @@ public class RoutingController {
         };
 
         mIconDragOverRightPane = event -> {
-
             event.acceptTransferModes(TransferMode.ANY);
 
             //convert the mouse coordinates to scene coordinates,
@@ -139,7 +140,6 @@ public class RoutingController {
         };
 
         mIconDragDropped = event -> {
-
             DragContainer container = (DragContainer) event.getDragboard().getContent(DragContainer.AddNode);
 
             container.addData("scene_coords", new Point2D(event.getSceneX(), event.getSceneY()));
@@ -152,7 +152,7 @@ public class RoutingController {
         };
 
         root_pane.setOnDragDone(event -> {
-
+            System.out.println("drag done hehe");
             right_pane.removeEventHandler(DragEvent.DRAG_OVER, mIconDragOverRightPane);
             right_pane.removeEventHandler(DragEvent.DRAG_DROPPED, mIconDragDropped);
             base_pane.removeEventHandler(DragEvent.DRAG_OVER, mIconDragOverRoot);
@@ -161,10 +161,8 @@ public class RoutingController {
 
             DragContainer container = (DragContainer) event.getDragboard().getContent(DragContainer.AddNode);
 
-
             if (container != null) {
                 if (container.getValue("scene_coords") != null) {
-
                     DraggableNode droppedIcon = new DraggableNode();
 
                     droppedIcon.setType(DragIconType.valueOf(container.getValue("type")));
@@ -181,8 +179,9 @@ public class RoutingController {
             container = (DragContainer) event.getDragboard().getContent(DragContainer.DragNode);
 
             if (container != null) {
-                if (container.getValue("type") != null)
+                if (container.getValue("type") != null){
                     System.out.println ("Moved node " + container.getValue("type"));
+                }
             }
 
             container = (DragContainer) event.getDragboard().getContent(DragContainer.AddLink);
@@ -192,12 +191,12 @@ public class RoutingController {
                 String sourceId = container.getValue("source");
                 String targetId = container.getValue("target");
 
-                System.out.println(sourceId + "   " + targetId);
+                //System.out.println(sourceId + "   " + targetId);
 
                 if (sourceId != null && targetId != null) {
 
                     NodeLink link = new NodeLink();
-
+                    //System.out.println("LINKID: "+link.getId());
                     right_pane.getChildren().add(0,link);
 
                     DraggableNode source = null;
@@ -216,7 +215,20 @@ public class RoutingController {
                     }
 
                     if (source != null && target != null){
+                        link.setStartAndEnd(sourceId, targetId);
                         link.bindEnds(source, target);
+
+                        //right_pane.getChildren().add(link.infoLabel);
+                        link.infoLabel.setText("172.16.15.14/24");
+
+                        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+                        double textLength = fontLoader.computeStringWidth(link.infoLabel.getText(), link.infoLabel.getFont());
+                        double cordX = (source.getLayoutX() + target.getLayoutX() - textLength/2) / 2 ;
+                        double cordY = (source.getLayoutY() + target.getLayoutY()) / 2 ;
+
+                        link.infoLabel.setLayoutX(cordX);
+                        link.infoLabel.setLayoutY(cordY);
+
                     }
                 }
             }
