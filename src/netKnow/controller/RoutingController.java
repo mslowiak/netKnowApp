@@ -16,6 +16,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import netKnow.Class.IPAddress;
 import netKnow.Class.routing.*;
 import netKnow.scene.MainOptionsScene;
 
@@ -218,17 +219,13 @@ public class RoutingController {
                         link.setStartAndEnd(sourceId, targetId);
                         link.bindEnds(source, target);
 
-                        //right_pane.getChildren().add(link.infoLabel);
-                        link.infoLabel.setText("172.16.15.14/24");
-
-                        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
-                        double textLength = fontLoader.computeStringWidth(link.infoLabel.getText(), link.infoLabel.getFont());
-                        double cordX = (source.getLayoutX() + target.getLayoutX() - textLength/2) / 2 ;
-                        double cordY = (source.getLayoutY() + target.getLayoutY()) / 2 ;
-
-                        link.infoLabel.setLayoutX(cordX);
-                        link.infoLabel.setLayoutY(cordY);
-
+                        IPAddress ipAddress = NodeLinkData.display();
+                        if(ipAddress != null){
+                            link.infoLabel.setText(ipAddress.getAddress());
+                            link.relocateLabelCoords(right_pane);
+                        }else{
+                            right_pane.getChildren().remove(0);
+                        }
                     }
                 }
             }

@@ -76,12 +76,13 @@ public class DraggableNode extends AnchorPane{
         leftLinkHandle.setOnDragDropped(mLinkHandleDragDropped);
         rightLinkHandle.setOnDragDropped(mLinkHandleDragDropped);
 
-        mDragLink = new NodeLink();
-        mDragLink.setVisible(false);
-
-        parentProperty().addListener((observable, oldValue, newValue) -> {
+        parentProperty().addListener(e -> {
             rightPane = (AnchorPane) getParent();
         });
+
+        System.out.println("initialize");
+        mDragLink = new NodeLink();
+        mDragLink.setVisible(false);
     }
 
     private void buildNodeDragHandlers(){

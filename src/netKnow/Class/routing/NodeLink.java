@@ -22,6 +22,7 @@ public class NodeLink extends AnchorPane{
     public Label infoLabel;
     public String startIDNode;
     public String endIDNode;
+    public String typeOfConnection;
 
     public NodeLink() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/netKnow/fxml/node_link.fxml"));
