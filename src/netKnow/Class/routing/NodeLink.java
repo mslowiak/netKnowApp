@@ -32,7 +32,7 @@ public class NodeLink extends AnchorPane{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/netKnow/fxml/node_link.fxml"));
         infoLabel = new Label();
         infoLabel.setAlignment(Pos.CENTER);
-        infoLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
+        infoLabel.setFont(Font.font(null, FontWeight.BOLD, 16));
 
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -109,7 +109,7 @@ public class NodeLink extends AnchorPane{
             FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
             double textLength = fontLoader.computeStringWidth(infoLabel.getText(), infoLabel.getFont());
             double cordX = (source.getLayoutX() + target.getLayoutX() - textLength/2) / 2 ;
-            double cordY = (source.getLayoutY() + target.getLayoutY()) / 2 ;
+            double cordY = (source.getLayoutY() + source.getWidth()/2 + target.getLayoutY() + target.getWidth()/2 ) / 2 + 20;
             infoLabel.setLayoutX(cordX);
             infoLabel.setLayoutY(cordY);
         }
