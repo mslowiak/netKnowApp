@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import netKnow.Class.routing.NodeLinkData;
 import netKnow.Class.routing.*;
+import netKnow.scene.DraggableNodePopUp;
 import netKnow.scene.MainOptionsScene;
 import netKnow.scene.NodeLinkPopUp;
 
@@ -140,6 +141,8 @@ public class RoutingController {
         };
 
         mIconDragDropped = event -> {
+            System.out.println("drag dropped");
+
             DragContainer container = (DragContainer) event.getDragboard().getContent(DragContainer.AddNode);
 
             container.addData("scene_coords", new Point2D(event.getSceneX(), event.getSceneY()));
@@ -163,15 +166,20 @@ public class RoutingController {
             if (container != null) {
                 if (container.getValue("scene_coords") != null) {
                     DraggableNode droppedIcon = new DraggableNode();
+                    DraggableNodeData draggableNodeData = DraggableNodePopUp.display();
 
-                    droppedIcon.setType(DragIconType.valueOf(container.getValue("type")));
-                    right_pane.getChildren().add(droppedIcon);
+                    if(draggableNodeData != null) {
+                        droppedIcon.draggableNodeData = draggableNodeData;
+                        droppedIcon.setTitleBar(draggableNodeData.getName() + " (" + draggableNodeData.getHost() + ")");
+                        droppedIcon.setType(DragIconType.valueOf(container.getValue("type")));
+                        right_pane.getChildren().add(droppedIcon);
 
-                    Point2D cursorPoint = container.getValue("scene_coords");
+                        Point2D cursorPoint = container.getValue("scene_coords");
 
-                    droppedIcon.relocateToPoint(
-                            new Point2D(cursorPoint.getX() - 32, cursorPoint.getY() - 32)
-                    );
+                        droppedIcon.relocateToPoint(
+                                new Point2D(cursorPoint.getX() - 32, cursorPoint.getY() - 32)
+                        );
+                    }
                 }
             }
 
@@ -220,8 +228,7 @@ public class RoutingController {
                         if(ipAddress != null){
                             link.infoLabel.setText(ipAddress.getAddress());
                             link.relocateLabelCoords(right_pane);
-                            System.out.println(ipAddress.getAddress());
-                            System.out.println(ipAddress.getTypeOfConnection());
+                            link.nodeLinkData = ipAddress;
                         }else{
                             right_pane.getChildren().remove(0);
                         }
