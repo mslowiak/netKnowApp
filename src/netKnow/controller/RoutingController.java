@@ -220,8 +220,7 @@ public class RoutingController {
                         if(ipAddress != null){
                             link.infoLabel.setText(ipAddress.getAddress());
                             link.relocateLabelCoords(right_pane);
-                            System.out.println(ipAddress.getAddress());
-                            System.out.println(ipAddress.getTypeOfConnection());
+                            link.nodeLinkData = ipAddress;
                         }else{
                             right_pane.getChildren().remove(0);
                         }
