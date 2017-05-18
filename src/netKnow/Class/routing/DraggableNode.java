@@ -46,6 +46,7 @@ public class DraggableNode extends AnchorPane{
 
     private DragIconType mType = null;
     private Point2D mDragOffset = new Point2D(0.0, 0.0);
+    public DraggableNodeData draggableNodeData;
 
     public DraggableNode() {
         self = this;
@@ -63,6 +64,10 @@ public class DraggableNode extends AnchorPane{
         }
 
         setId(UUID.randomUUID().toString());
+    }
+
+    public void setTitleBar(String titleBarText) {
+        titleBar.setText(titleBarText);
     }
 
     @FXML

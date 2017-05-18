@@ -20,22 +20,6 @@ public class NodeLinkData {
         this.typeOfConnection = typeOfConnection;
     }
 
-    public void setOctetFirst(String octetFirst) {
-        this.octetFirst = octetFirst;
-    }
-
-    public void setOctetSecond(String octetSecond) {
-        this.octetSecond = octetSecond;
-    }
-
-    public void setOctetThird(String octetThird) {
-        this.octetThird = octetThird;
-    }
-
-    public void setOctetFourth(String octetFourth) {
-        this.octetFourth = octetFourth;
-    }
-
     public String getAddress(){
         return octetFirst + "." + octetSecond + "." + octetThird + "." + octetFourth + "/" + mask;
     }
