@@ -9,6 +9,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
@@ -89,12 +90,26 @@ public class NodeLinkPopUp {
         cableType.setSpacing(10);
         cableType.getChildren().addAll(cableTypeLabel, typeOfConnectionChoiceBox);
 
-        layout.getChildren().addAll(descriptionLabel, ipInfo, cableType, buttons);
+        Label errorLabel = new Label();
+        errorLabel.setTextFill(Paint.valueOf("#fc0000"));
+        errorLabel.setPadding(new Insets(10,10,10,10));
+
+        layout.getChildren().addAll(descriptionLabel, ipInfo, cableType, errorLabel, buttons);
         GridPane.setVgrow(buttons, Priority.ALWAYS);
 
         applyButton.setOnAction(e ->{
-            someIP = new NodeLinkData(octetFirstField.getText(), octetSecondField.getText(), octetThirdField.getText(), octetFourthField.getText(), maskField.getText(), typeOfConnectionChoiceBox.getValue());
-            window.close();
+            boolean isCorrectIP = checkCorrectnessOfOctetValue();
+            if(isCorrectIP){
+                if(typeOfConnectionChoiceBox.getValue() == null){
+                    errorLabel.setText("Nie wybrałeś rodzaju okablowania!");
+                }else{
+                    someIP = new NodeLinkData(octetFirstField.getText(), octetSecondField.getText(), octetThirdField.getText(), octetFourthField.getText(), maskField.getText(), typeOfConnectionChoiceBox.getValue());
+                    resetTextFields();
+                    window.close();
+                }
+            }else{
+                errorLabel.setText("Wprowadziłeś niepoprawne ip!");
+            }
         });
 
         cancelButton.setOnAction(e ->{
@@ -107,5 +122,42 @@ public class NodeLinkPopUp {
         window.showAndWait();
 
         return someIP;
+    }
+
+    private static boolean checkCorrectnessOfOctetValue() {
+        int tmpInteger = Integer.parseInt(octetFirstField.getText());
+        if (tmpInteger < 0 || tmpInteger > 255) {
+            return false;
+        }
+
+        tmpInteger = Integer.parseInt(octetSecondField.getText());
+        if (tmpInteger < 0 || tmpInteger > 255) {
+            return false;
+        }
+
+        tmpInteger = Integer.parseInt(octetThirdField.getText());
+        if (tmpInteger < 0 || tmpInteger > 255) {
+            return false;
+        }
+
+        tmpInteger = Integer.parseInt(octetFourthField.getText());
+        if (tmpInteger < 0 || tmpInteger > 255) {
+            return false;
+        }
+
+        tmpInteger = Integer.parseInt(maskField.getText());
+        if(tmpInteger < 0 || tmpInteger > 32){
+            return false;
+        }
+
+        return true;
+    }
+
+    private static void resetTextFields(){
+        octetFirstField.setText("");
+        octetSecondField.setText("");
+        octetThirdField.setText("");
+        octetFourthField.setText("");
+        maskField.setText("");
     }
 }
