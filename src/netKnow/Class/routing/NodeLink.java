@@ -83,9 +83,6 @@ public class NodeLink extends AnchorPane{
     }
 
     public void setStartAndEnd(String start, String end){
-        System.out.println("\n\tMyID: " + this.getId());
-        System.out.println("\tStart: " + start);
-        System.out.println("\tEnd: " + end);
         startIDNode = start;
         endIDNode = end;
     }
@@ -109,9 +106,28 @@ public class NodeLink extends AnchorPane{
             FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
             double textLength = fontLoader.computeStringWidth(infoLabel.getText(), infoLabel.getFont());
             double cordX = (source.getLayoutX() + target.getLayoutX() - textLength/2) / 2 ;
-            double cordY = (source.getLayoutY() + source.getWidth()/2 + target.getLayoutY() + target.getWidth()/2 ) / 2 + 20;
+            double cordY = (source.getLayoutY() + source.getWidth()/2 + target.getLayoutY() + target.getWidth()/2 ) / 2;
             infoLabel.setLayoutX(cordX);
             infoLabel.setLayoutY(cordY);
+            infoLabel.setRotate(getRotateValue(source, target));
         }
+    }
+
+    private double getRotateValue(DraggableNode source, DraggableNode target){
+        double x1 = source.getLayoutX();
+        double y1 = source.getLayoutY();
+        double x2 = target.getLayoutX();
+        double y2 = target.getLayoutY();
+
+        double a = Math.abs(x1-x2);
+        double c = Math.sqrt(Math.pow((x2-x1), 2) + Math.pow((y2-y1),2));
+        double degree = Math.toDegrees(Math.asin(a/c));
+
+        if((x1 < x2 && y1 > y2) || (x1 > x2 && y1 < y2)){ // source lub target lewy gorny rog
+            degree = -(90 - degree);
+        }else if((x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2)){ // source lub target prawy gorny rog
+            degree = 90 - degree;
+        }
+        return degree;
     }
 }
