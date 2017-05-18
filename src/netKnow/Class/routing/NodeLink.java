@@ -1,12 +1,18 @@
 package netKnow.Class.routing;
 
+import com.sun.javafx.tk.FontLoader;
+import com.sun.javafx.tk.Toolkit;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -17,9 +23,16 @@ import java.util.UUID;
 public class NodeLink extends AnchorPane{
 
     @FXML Line nodeLink;
+    public Label infoLabel;
+    public String startIDNode;
+    public String endIDNode;
+    public String typeOfConnection;
 
     public NodeLink() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/netKnow/fxml/node_link.fxml"));
+        infoLabel = new Label();
+        infoLabel.setAlignment(Pos.CENTER);
+        infoLabel.setFont(Font.font(null, FontWeight.BOLD, 16));
 
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -32,6 +45,7 @@ public class NodeLink extends AnchorPane{
         }
 
         setId(UUID.randomUUID().toString());
+        this.getChildren().add(infoLabel);
     }
 
     @FXML
@@ -48,6 +62,13 @@ public class NodeLink extends AnchorPane{
 
         nodeLink.setEndX(endPoint.getX());
         nodeLink.setEndY(endPoint.getY());
+
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        double textLength = fontLoader.computeStringWidth(infoLabel.getText(), infoLabel.getFont());
+        double cordX = (nodeLink.getStartX() + nodeLink.getEndX() - textLength/2) / 2 ;
+        double cordY = (nodeLink.getStartY() + nodeLink.getEndY()) / 2 ;
+        infoLabel.setLayoutX(cordX);
+        infoLabel.setLayoutY(cordY);
     }
 
     public void bindEnds (DraggableNode source, DraggableNode target) {
@@ -59,5 +80,38 @@ public class NodeLink extends AnchorPane{
 
         source.registerLink(getId());
         target.registerLink(getId());
+    }
+
+    public void setStartAndEnd(String start, String end){
+        System.out.println("\n\tMyID: " + this.getId());
+        System.out.println("\tStart: " + start);
+        System.out.println("\tEnd: " + end);
+        startIDNode = start;
+        endIDNode = end;
+    }
+
+    public void relocateLabelCoords(AnchorPane right_pane){
+        DraggableNode source = null;
+        DraggableNode target = null;
+
+        for(Node n: right_pane.getChildren()){
+            if (n.getId() == null)
+                continue;
+
+            if (n.getId().equals(this.startIDNode)){
+                source = (DraggableNode) n;
+            }
+            if (n.getId().equals(this.endIDNode)){
+                target = (DraggableNode) n;
+            }
+        }
+        if (source != null && target != null){
+            FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+            double textLength = fontLoader.computeStringWidth(infoLabel.getText(), infoLabel.getFont());
+            double cordX = (source.getLayoutX() + target.getLayoutX() - textLength/2) / 2 ;
+            double cordY = (source.getLayoutY() + source.getWidth()/2 + target.getLayoutY() + target.getWidth()/2 ) / 2 + 20;
+            infoLabel.setLayoutX(cordX);
+            infoLabel.setLayoutY(cordY);
+        }
     }
 }

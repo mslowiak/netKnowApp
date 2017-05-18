@@ -14,8 +14,10 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import netKnow.Class.routing.NodeLinkData;
 import netKnow.Class.routing.*;
 import netKnow.scene.MainOptionsScene;
+import netKnow.scene.NodeLinkPopUp;
 
 /**
  * Created by MQ on 2017-05-13.
@@ -73,13 +75,13 @@ public class RoutingController {
             icn.setType(DragIconType.values()[i]);
             left_pane.getChildren().addAll(icn, descriptionLabel);
         }
-
         buildDragHandlers();
     }
 
     private void addDragDetection(DragIcon dragIcon) {
 
         dragIcon.setOnDragDetected(event -> {
+            // odpowiada za przeciąganie z lewego panelu na prawy panel
 
             // set drag event handlers on their respective objects
             base_pane.setOnDragOver(mIconDragOverRoot);
@@ -126,7 +128,6 @@ public class RoutingController {
         };
 
         mIconDragOverRightPane = event -> {
-
             event.acceptTransferModes(TransferMode.ANY);
 
             //convert the mouse coordinates to scene coordinates,
@@ -139,7 +140,6 @@ public class RoutingController {
         };
 
         mIconDragDropped = event -> {
-
             DragContainer container = (DragContainer) event.getDragboard().getContent(DragContainer.AddNode);
 
             container.addData("scene_coords", new Point2D(event.getSceneX(), event.getSceneY()));
@@ -152,7 +152,7 @@ public class RoutingController {
         };
 
         root_pane.setOnDragDone(event -> {
-
+            System.out.println("drag done hehe");
             right_pane.removeEventHandler(DragEvent.DRAG_OVER, mIconDragOverRightPane);
             right_pane.removeEventHandler(DragEvent.DRAG_DROPPED, mIconDragDropped);
             base_pane.removeEventHandler(DragEvent.DRAG_OVER, mIconDragOverRoot);
@@ -161,10 +161,8 @@ public class RoutingController {
 
             DragContainer container = (DragContainer) event.getDragboard().getContent(DragContainer.AddNode);
 
-
             if (container != null) {
                 if (container.getValue("scene_coords") != null) {
-
                     DraggableNode droppedIcon = new DraggableNode();
 
                     droppedIcon.setType(DragIconType.valueOf(container.getValue("type")));
@@ -181,8 +179,9 @@ public class RoutingController {
             container = (DragContainer) event.getDragboard().getContent(DragContainer.DragNode);
 
             if (container != null) {
-                if (container.getValue("type") != null)
+                if (container.getValue("type") != null){
                     System.out.println ("Moved node " + container.getValue("type"));
+                }
             }
 
             container = (DragContainer) event.getDragboard().getContent(DragContainer.AddLink);
@@ -192,12 +191,11 @@ public class RoutingController {
                 String sourceId = container.getValue("source");
                 String targetId = container.getValue("target");
 
-                System.out.println(sourceId + "   " + targetId);
+                //System.out.println(sourceId + "   " + targetId);
 
                 if (sourceId != null && targetId != null) {
 
                     NodeLink link = new NodeLink();
-
                     right_pane.getChildren().add(0,link);
 
                     DraggableNode source = null;
@@ -216,7 +214,18 @@ public class RoutingController {
                     }
 
                     if (source != null && target != null){
+                        link.setStartAndEnd(sourceId, targetId);
                         link.bindEnds(source, target);
+
+                        NodeLinkData ipAddress = NodeLinkPopUp.display();
+                        if(ipAddress != null){
+                            link.infoLabel.setText(ipAddress.getAddress());
+                            link.relocateLabelCoords(right_pane);
+                            System.out.println(ipAddress.getAddress());
+                            System.out.println(ipAddress.getTypeOfConnection());
+                        }else{
+                            right_pane.getChildren().remove(0);
+                        }
                     }
                 }
             }
