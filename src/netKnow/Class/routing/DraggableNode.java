@@ -80,7 +80,6 @@ public class DraggableNode extends AnchorPane{
             rightPane = (AnchorPane) getParent();
         });
 
-        System.out.println("initialize");
         mDragLink = new NodeLink();
         mDragLink.setVisible(false);
     }

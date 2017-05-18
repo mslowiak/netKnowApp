@@ -83,9 +83,6 @@ public class NodeLink extends AnchorPane{
     }
 
     public void setStartAndEnd(String start, String end){
-        System.out.println("\n\tMyID: " + this.getId());
-        System.out.println("\tStart: " + start);
-        System.out.println("\tEnd: " + end);
         startIDNode = start;
         endIDNode = end;
     }

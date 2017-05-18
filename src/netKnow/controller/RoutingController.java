@@ -152,7 +152,6 @@ public class RoutingController {
         };
 
         root_pane.setOnDragDone(event -> {
-            System.out.println("drag done hehe");
             right_pane.removeEventHandler(DragEvent.DRAG_OVER, mIconDragOverRightPane);
             right_pane.removeEventHandler(DragEvent.DRAG_DROPPED, mIconDragDropped);
             base_pane.removeEventHandler(DragEvent.DRAG_OVER, mIconDragOverRoot);
