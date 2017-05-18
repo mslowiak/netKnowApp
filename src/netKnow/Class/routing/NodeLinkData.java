@@ -39,4 +39,8 @@ public class NodeLinkData {
     public String getAddress(){
         return octetFirst + "." + octetSecond + "." + octetThird + "." + octetFourth + "/" + mask;
     }
+
+    public String getTypeOfConnection(){
+        return typeOfConnection;
+    }
 }

@@ -8,8 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
@@ -46,6 +45,7 @@ public class NodeLinkPopUp {
 
         typeOfConnectionChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList("Kabel lan", "Kabel se"));
         Label descriptionLabel = new Label("Podaj adres ip oraz rodzaj zadanego połączenia");
+        descriptionLabel.setPadding(new Insets(0,0,20,0));
         descriptionLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
         Label cableTypeLabel = new Label("Rodzaj połączenia: ");
         cableTypeLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
@@ -56,9 +56,29 @@ public class NodeLinkPopUp {
         Label dot2 = new Label(" . ");
         Label dot3 = new Label(" . ");
         Label slash = new Label(" / ");
+
         Button applyButton = new Button("Zatwierdź");
         Button cancelButton = new Button("Anuluj");
+        applyButton.setPrefSize(100, 40);
+        cancelButton.setPrefSize(100, 40);
+        applyButton.setStyle("-fx-font-size: 16 px");
+        cancelButton.setStyle("-fx-font-size: 16 px");
 
+        GridPane buttons = new GridPane();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPadding(new Insets(20,0,0,0));
+
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setPercentWidth(25);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setPercentWidth(100);
+        ColumnConstraints column3 = new ColumnConstraints();
+        column2.setPercentWidth(25);
+        buttons.getColumnConstraints().addAll(column1, column2, column3);
+
+        buttons.add(cancelButton, 0, 0);
+        buttons.add(new Label(""), 1, 0);
+        buttons.add(applyButton, 2, 0);
 
         HBox ipInfo = new HBox();
         ipInfo.setAlignment(Pos.CENTER);
@@ -69,11 +89,15 @@ public class NodeLinkPopUp {
         cableType.setSpacing(10);
         cableType.getChildren().addAll(cableTypeLabel, typeOfConnectionChoiceBox);
 
-        layout.getChildren().addAll(descriptionLabel, ipInfo, cableType, applyButton, cancelButton);
+        layout.getChildren().addAll(descriptionLabel, ipInfo, cableType, buttons);
 
         applyButton.setOnAction(e ->{
-            System.out.println("dupa");
-            someIP = new NodeLinkData(octetFirstField.getText(), octetSecondField.getText(), octetThirdField.getText(), octetFourthField.getText(), maskField.getText(), "dupka");
+            someIP = new NodeLinkData(octetFirstField.getText(), octetSecondField.getText(), octetThirdField.getText(), octetFourthField.getText(), maskField.getText(), typeOfConnectionChoiceBox.getValue());
+            window.close();
+        });
+
+        cancelButton.setOnAction(e ->{
+            someIP = null;
             window.close();
         });
 

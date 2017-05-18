@@ -6,10 +6,14 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
 import java.io.IOException;
 import java.util.UUID;
 
@@ -27,6 +31,8 @@ public class NodeLink extends AnchorPane{
     public NodeLink() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/netKnow/fxml/node_link.fxml"));
         infoLabel = new Label();
+        infoLabel.setAlignment(Pos.CENTER);
+        infoLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
 
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);

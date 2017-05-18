@@ -196,7 +196,6 @@ public class RoutingController {
                 if (sourceId != null && targetId != null) {
 
                     NodeLink link = new NodeLink();
-                    //System.out.println("LINKID: "+link.getId());
                     right_pane.getChildren().add(0,link);
 
                     DraggableNode source = null;
@@ -222,6 +221,8 @@ public class RoutingController {
                         if(ipAddress != null){
                             link.infoLabel.setText(ipAddress.getAddress());
                             link.relocateLabelCoords(right_pane);
+                            System.out.println(ipAddress.getAddress());
+                            System.out.println(ipAddress.getTypeOfConnection());
                         }else{
                             right_pane.getChildren().remove(0);
                         }
