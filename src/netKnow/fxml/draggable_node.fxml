@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -48,12 +47,18 @@
                </VBox.margin></AnchorPane>
          </children>
       </VBox>
-      <HBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="66.0" prefWidth="80.0" styleClass="dragIcon" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <AnchorPane fx:id="leftLinkHandle" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="25.0" styleClass="left-link-handle" />
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-            <AnchorPane fx:id="rightLinkHandle" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="25.0" styleClass="right-link-handle" />
+            <AnchorPane fx:id="leftLinkHandle" prefHeight="200.0" prefWidth="200.0" styleClass="left-link-handle" />
+            <AnchorPane fx:id="rightLinkHandle" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" styleClass="right-link-handle"/>
          </children>
-      </HBox>
+      </GridPane>
    </children>
 </fx:root>
