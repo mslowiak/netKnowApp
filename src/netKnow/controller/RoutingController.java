@@ -1,7 +1,5 @@
 package netKnow.controller;
 
-import com.sun.javafx.tk.FontLoader;
-import com.sun.javafx.tk.Toolkit;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -16,9 +14,10 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import netKnow.Class.IPAddress;
+import netKnow.Class.routing.NodeLinkData;
 import netKnow.Class.routing.*;
 import netKnow.scene.MainOptionsScene;
+import netKnow.scene.NodeLinkPopUp;
 
 /**
  * Created by MQ on 2017-05-13.
@@ -219,7 +218,7 @@ public class RoutingController {
                         link.setStartAndEnd(sourceId, targetId);
                         link.bindEnds(source, target);
 
-                        IPAddress ipAddress = NodeLinkData.display();
+                        NodeLinkData ipAddress = NodeLinkPopUp.display();
                         if(ipAddress != null){
                             link.infoLabel.setText(ipAddress.getAddress());
                             link.relocateLabelCoords(right_pane);
