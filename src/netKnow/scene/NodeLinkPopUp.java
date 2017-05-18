@@ -90,6 +90,7 @@ public class NodeLinkPopUp {
         cableType.getChildren().addAll(cableTypeLabel, typeOfConnectionChoiceBox);
 
         layout.getChildren().addAll(descriptionLabel, ipInfo, cableType, buttons);
+        GridPane.setVgrow(buttons, Priority.ALWAYS);
 
         applyButton.setOnAction(e ->{
             someIP = new NodeLinkData(octetFirstField.getText(), octetSecondField.getText(), octetThirdField.getText(), octetFourthField.getText(), maskField.getText(), typeOfConnectionChoiceBox.getValue());
