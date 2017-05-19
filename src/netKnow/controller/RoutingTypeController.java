@@ -4,7 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 
 /**
  * Created by MQ on 2017-05-19.
@@ -14,9 +16,9 @@ public class RoutingTypeController {
     private Scene scene;
 
     @FXML
-    private ChoiceBox<String> typeOfDeviceChoiceBox;
+    private ComboBox<String> typeOfDeviceChoiceBox;
     @FXML
-    private ChoiceBox<String> typeOfRoutingChoiceBox;
+    private ComboBox<String> typeOfRoutingChoiceBox;
     @FXML
     private Button generateCodeButton;
     @FXML
@@ -33,6 +35,16 @@ public class RoutingTypeController {
         });
         typeOfDeviceChoiceBox.setItems(FXCollections.observableArrayList("Cisco", "Juniper"));
         typeOfRoutingChoiceBox.setItems(FXCollections.observableArrayList("RIP", "EIGRP", "OSPF (1 - obszarowy)"));
+        typeOfDeviceChoiceBox.getStylesheets().add(
+                getClass().getResource(
+                        "/netKnow/resources/combo-size.css"
+                ).toExternalForm()
+        );
+        typeOfRoutingChoiceBox.getStylesheets().add(
+                getClass().getResource(
+                        "/netKnow/resources/combo-size.css"
+                ).toExternalForm()
+        );
     }
 
     public void setScene(Scene scene){
