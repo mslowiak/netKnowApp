@@ -23,7 +23,7 @@
       <GridPane alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -34,13 +34,19 @@
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin>
+                <font>
+                    <Font name="System Bold" />
+                </font>
             </Label>
-            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
-            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="typeOfDeviceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" />
+            <ChoiceBox fx:id="typeOfRoutingChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Rodzaj routingu:" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin>
+                <font>
+                    <Font name="System Bold" />
+                </font>
             </Label>
          </children>
       </GridPane>
@@ -57,8 +63,8 @@
             <Insets top="100.0" />
          </VBox.margin>
          <children>
-            <Button mnemonicParsing="false" text="Generuj kod" />
-            <Button mnemonicParsing="false" text="Wykonaj symulację" GridPane.columnIndex="2" />
+            <Button fx:id="generateCodeButton" mnemonicParsing="false" text="Generuj kod" />
+            <Button fx:id="simulationButton" mnemonicParsing="false" text="Wykonaj symulację" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </children>
