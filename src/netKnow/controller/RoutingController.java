@@ -19,6 +19,10 @@ import netKnow.Class.routing.*;
 import netKnow.scene.DraggableNodePopUp;
 import netKnow.scene.MainOptionsScene;
 import netKnow.scene.NodeLinkPopUp;
+import netKnow.scene.RoutingTypeScene;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by MQ on 2017-05-13.
@@ -52,7 +56,16 @@ public class RoutingController {
     private void initialize() {
         goBackButton.setOnAction(e -> new MainOptionsScene(scene));
 
-        routingTypeButton.setOnAction(e -> System.out.println("nie ma tej sceny"));
+        routingTypeButton.setOnAction(e -> {
+            List<DraggableNode> nodes = new ArrayList<>();
+            for(int i=0; i<right_pane.getChildren().size(); ++i){
+                if(right_pane.getChildren().get(i) instanceof DraggableNode){
+                    nodes.add((DraggableNode) right_pane.getChildren().get(i));
+                }
+            }
+            new RoutingTypeScene(scene, nodes);
+
+        });
 
         //Add one icon that will be used for the drag-drop process
         //This is added as a child to the root anchorpane so it can be visible
@@ -170,7 +183,8 @@ public class RoutingController {
 
                     if(draggableNodeData != null) {
                         droppedIcon.draggableNodeData = draggableNodeData;
-                        droppedIcon.setTitleBar(draggableNodeData.getName() + " (" + draggableNodeData.getHost() + ")");
+                        droppedIcon.setTitleBar(draggableNodeData.getName());
+                        droppedIcon.setHostLabels("."+draggableNodeData.getHost());
                         droppedIcon.setType(DragIconType.valueOf(container.getValue("type")));
                         right_pane.getChildren().add(droppedIcon);
 

@@ -29,6 +29,10 @@ public class DraggableNode extends AnchorPane{
     @FXML Label closeButton;
     @FXML AnchorPane leftLinkHandle;
     @FXML AnchorPane rightLinkHandle;
+    @FXML Label topHostLabel;
+    @FXML Label bottomHostLabel;
+    @FXML Label leftHostLabel;
+    @FXML Label rightHostLabel;
 
     private final DraggableNode self;
     public final List<String> mLinkIds = new ArrayList();
@@ -281,6 +285,13 @@ public class DraggableNode extends AnchorPane{
             default:
                 break;
         }
+    }
+
+    public void setHostLabels(String host){
+        rightHostLabel.setText(host);
+        leftHostLabel.setText(host);
+        topHostLabel.setText(host);
+        bottomHostLabel.setText(host);
     }
 
 }

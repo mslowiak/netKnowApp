@@ -39,16 +39,16 @@ public class DraggableNodePopUp {
 
         Label nameLabel = new Label("Nazwa urządzenia: ");
         Label hostLabel = new Label("Numer hosta: ");
+        nameLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
+        hostLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
 
-        HBox nameHBox = new HBox();
-        nameHBox.setAlignment(Pos.CENTER);
-        nameHBox.setSpacing(10);
-        nameHBox.getChildren().addAll(nameLabel, nameField);
+        GridPane options = new GridPane();
+        options.setAlignment(Pos.CENTER);
+        options.setHgap(20);
+        options.setVgap(10);
+        options.addRow(0, nameLabel, nameField);
+        options.addRow(1, hostLabel, hostField);
 
-        HBox hostHBox = new HBox();
-        hostHBox.setAlignment(Pos.CENTER);
-        hostHBox.setSpacing(10);
-        hostHBox.getChildren().addAll(hostLabel, hostField);
 
         Button applyButton = new Button("Zatwierdź");
         Button cancelButton = new Button("Anuluj");
@@ -73,7 +73,7 @@ public class DraggableNodePopUp {
         buttons.add(new Label(""), 1, 0);
         buttons.add(applyButton, 2, 0);
 
-        layout.getChildren().addAll(descriptionLabel, nameHBox, hostHBox, buttons);
+        layout.getChildren().addAll(descriptionLabel, options, buttons);
 
         applyButton.setOnAction(e -> {
             if(hostField.getText() != null && nameField.getText() != null){
