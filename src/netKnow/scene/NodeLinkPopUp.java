@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -26,7 +23,7 @@ public class NodeLinkPopUp {
     private static TextField octetThirdField = new TextField();
     private static TextField octetFourthField = new TextField();
     private static TextField maskField = new TextField();
-    private static ChoiceBox<String> typeOfConnectionChoiceBox;
+    private static ComboBox<String> typeOfConnectionChoiceBox;
     private static NodeLinkData someIP;
 
     public static NodeLinkData display(){
@@ -44,7 +41,7 @@ public class NodeLinkPopUp {
         octetFourthField.setPrefSize(55, 25);
         maskField.setPrefSize(55, 25);
 
-        typeOfConnectionChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList("Kabel lan", "Kabel se"));
+        typeOfConnectionChoiceBox = new ComboBox<>(FXCollections.observableArrayList("Kabel lan", "Kabel se"));
         Label descriptionLabel = new Label("Podaj adres ip oraz rodzaj zadanego połączenia");
         descriptionLabel.setPadding(new Insets(0,0,20,0));
         descriptionLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
