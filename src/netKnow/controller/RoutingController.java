@@ -183,7 +183,8 @@ public class RoutingController {
 
                     if(draggableNodeData != null) {
                         droppedIcon.draggableNodeData = draggableNodeData;
-                        droppedIcon.setTitleBar(draggableNodeData.getName() + " (" + draggableNodeData.getHost() + ")");
+                        droppedIcon.setTitleBar(draggableNodeData.getName());
+                        droppedIcon.setHostLabels("."+draggableNodeData.getHost());
                         droppedIcon.setType(DragIconType.valueOf(container.getValue("type")));
                         right_pane.getChildren().add(droppedIcon);
 
