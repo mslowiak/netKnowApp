@@ -105,7 +105,7 @@ public class NodeLink extends AnchorPane{
         if (source != null && target != null){
             FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
             double textLength = fontLoader.computeStringWidth(infoLabel.getText(), infoLabel.getFont());
-            double cordX = (source.getLayoutX() + target.getLayoutX() - textLength/2) / 2 ;
+            double cordX = (source.getLayoutX() + target.getLayoutX() + textLength/4) / 2 ;
             double cordY = (source.getLayoutY() + source.getWidth()/2 + target.getLayoutY() + target.getWidth()/2 ) / 2;
             infoLabel.setLayoutX(cordX);
             infoLabel.setLayoutY(cordY);
@@ -127,6 +127,9 @@ public class NodeLink extends AnchorPane{
             degree = -(90 - degree);
         }else if((x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2)){ // source lub target prawy gorny rog
             degree = 90 - degree;
+        }
+        if( y1 == y2 ){
+            degree = 0;
         }
         return degree;
     }
