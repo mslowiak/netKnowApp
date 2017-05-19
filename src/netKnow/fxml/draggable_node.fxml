@@ -57,8 +57,12 @@
         </rowConstraints>
          <children>
             <AnchorPane fx:id="leftLinkHandle" prefHeight="200.0" prefWidth="200.0" styleClass="left-link-handle" />
-            <AnchorPane fx:id="rightLinkHandle" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" styleClass="right-link-handle"/>
+            <AnchorPane fx:id="rightLinkHandle" prefHeight="200.0" prefWidth="200.0" styleClass="right-link-handle" GridPane.columnIndex="1" />
          </children>
       </GridPane>
+      <Label fx:id="topHostLabel" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-40.0" />
+      <Label fx:id="bottomHostLabel" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="160.0" />
+      <Label fx:id="leftHostLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-67.0" prefHeight="20.0" prefWidth="40.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-67.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="60.0" />
+      <Label fx:id="rightHostLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="40.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="147.0" AnchorPane.rightAnchor="-67.0" AnchorPane.topAnchor="60.0" />
    </children>
 </fx:root>
