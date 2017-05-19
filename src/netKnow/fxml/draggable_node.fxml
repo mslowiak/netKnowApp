@@ -60,9 +60,25 @@
             <AnchorPane fx:id="rightLinkHandle" prefHeight="200.0" prefWidth="200.0" styleClass="right-link-handle" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Label fx:id="topHostLabel" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-40.0" />
-      <Label fx:id="bottomHostLabel" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="160.0" />
-      <Label fx:id="leftHostLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-67.0" prefHeight="20.0" prefWidth="40.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-67.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="60.0" />
-      <Label fx:id="rightHostLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="40.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="147.0" AnchorPane.rightAnchor="-67.0" AnchorPane.topAnchor="60.0" />
+      <Label fx:id="topHostLabel" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-40.0" >
+          <font>
+              <Font name="System Bold" size="16.0" />
+          </font>
+      </Label>
+      <Label fx:id="bottomHostLabel" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="160.0" >
+          <font>
+              <Font name="System Bold" size="16.0" />
+          </font>
+      </Label>
+      <Label fx:id="leftHostLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-67.0" prefHeight="20.0" prefWidth="40.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-67.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="60.0" >
+          <font>
+              <Font name="System Bold" size="16.0" />
+          </font>
+      </Label>
+      <Label fx:id="rightHostLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="40.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="147.0" AnchorPane.rightAnchor="-67.0" AnchorPane.topAnchor="60.0" >
+          <font>
+              <Font name="System Bold" size="16.0" />
+          </font>
+      </Label>
    </children>
 </fx:root>
