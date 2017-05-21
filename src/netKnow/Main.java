@@ -6,6 +6,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import netKnow.scene.LoginScene;
 import netKnow.scene.RoutingScene;
+import netKnow.Class.IP;
+import netKnow.Code.NetworkAggregation;
 
 
 public class Main extends Application {
@@ -18,10 +20,10 @@ public class Main extends Application {
         window.setTitle("netKnow - aplication that will change your life");
         Scene scene = new Scene(new VBox(), 1000, 800);
         window.setScene(scene);
-        //new LoginScene(scene);
-        new RoutingScene(scene);
+        new LoginScene(scene);
+        //new RoutingScene(scene);
         window.show();
-        //window.setFullScreen(true);
+        //window.setFullScreen(true);*/
     }
 
 
