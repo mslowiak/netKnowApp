@@ -30,8 +30,8 @@ public class NetworkAggregation {
             int mask = j+1;
             String [] tmpString1 = {Integer.toString(tmp3[0]), Integer.toString(tmp3[1]), Integer.toString(tmp3[2]),
                     Integer.toString(tmp3[3]), Integer.toString(mask)};
-           result[k] = new IP(tmpString1);
-            while(j > 0) {
+            result[k] = new IP(tmpString1);
+            while((tmp3[j / 8] & (128 >> j%8)) == 0) {
                 tmp2[j / 8] |= 128 >> j % 8;
                 String[] tmpString = {Integer.toString(tmp2[0]), Integer.toString(tmp2[1]), Integer.toString(tmp2[2]),
                         Integer.toString(tmp2[3]), Integer.toString(j)};
@@ -41,8 +41,7 @@ public class NetworkAggregation {
                     i = key;
                     mask = j;
                 }
-                if(i < IPArray.length - 1)
-                    result[k].setMask(mask);
+                result[k].setMask(mask);
                 j--;
             }
             k++;
