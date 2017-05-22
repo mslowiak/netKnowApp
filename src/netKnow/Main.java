@@ -1,5 +1,6 @@
 package netKnow;
 
+import com.mysql.cj.core.conf.IntegerPropertyDefinition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -14,6 +15,8 @@ public class Main extends Application {
 
     private Stage window;
 
+
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         window = primaryStage;
@@ -23,7 +26,7 @@ public class Main extends Application {
         new LoginScene(scene);
         //new RoutingScene(scene);
         window.show();
-        //window.setFullScreen(true);*/
+        //window.setFullScreen(true);
     }
 
 
