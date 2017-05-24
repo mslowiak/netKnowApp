@@ -2,6 +2,7 @@ package netKnow.scene;
 
 import com.sun.javafx.sg.prism.NGNode;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -15,6 +16,7 @@ public class SingleIP extends HBox{
     VBox vBox;
     public SingleIP(VBox vBox){
         hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
         this.vBox = vBox;
 
         tv1 = new TextField();

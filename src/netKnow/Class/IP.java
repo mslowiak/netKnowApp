@@ -19,6 +19,7 @@ public class IP implements Comparable <IP>{
         convertStringToMask();
     }
 
+
     private void convertStringToIPAdress(String [] fullIPAdress){
         for(int i = 0; i < 4; i++) {
             ipArray[i] = Integer.parseInt(fullIPAdress[i]);
