@@ -1,18 +1,13 @@
 package netKnow.scene;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import netKnow.HeaderRoot;
 import netKnow.controller.AggregationController;
-import netKnow.controller.MainOptionsController;
 
 import java.io.IOException;
 
-/**
- * Created by Filip on 24.05.2017.
- */
 public class AggregationScene {
 
     private Scene scene;
@@ -30,7 +25,7 @@ public class AggregationScene {
         loader.setLocation(getClass().getResource("/netKnow/fxml/network_aggregation.fxml"));
 
         try {
-            VBox content = loader.load();
+            GridPane content = loader.load();
             scene.setRoot(content);
         } catch (IOException e) {
             e.printStackTrace();
