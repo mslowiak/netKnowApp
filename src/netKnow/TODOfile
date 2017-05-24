@@ -3,3 +3,7 @@
 -> Router(PC)
 -> Switch
 -> Siec
+
+
+-> przy robieniu linkNode nie ma resetowania wartosci w textfieldach
+-> wywalic do pliku hasla

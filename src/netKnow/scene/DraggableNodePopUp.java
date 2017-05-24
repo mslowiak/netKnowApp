@@ -6,9 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -49,7 +49,6 @@ public class DraggableNodePopUp {
         options.addRow(0, nameLabel, nameField);
         options.addRow(1, hostLabel, hostField);
 
-
         Button applyButton = new Button("Zatwierdź");
         Button cancelButton = new Button("Anuluj");
         applyButton.setPrefSize(100, 40);
@@ -85,7 +84,14 @@ public class DraggableNodePopUp {
 
         cancelButton.setOnAction(e -> {
             draggableNodeData = null;
+            resetTextFields();
             window.close();
+        });
+
+        hostField.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ENTER){
+                applyButton.fire();
+            }
         });
 
         Scene scene = new Scene(layout);
