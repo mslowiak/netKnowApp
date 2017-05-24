@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 
 public class SingleIP extends HBox{
     HBox hBox;
-    TextField tv1, tv2, tv3, tv4, tv5;
+    public TextField tv1, tv2, tv3, tv4, tv5;
     Label dot1,dot2,dot3, backSlash;
 
     VBox vBox;
