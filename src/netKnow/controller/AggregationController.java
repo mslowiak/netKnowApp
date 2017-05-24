@@ -32,7 +32,7 @@ public class AggregationController {
     @FXML
     private Button backButton;
     @FXML
-    private Button agregujButton;
+    private Button aggregateButton;
 
     List<SingleIP> arrayListSingleIp;
     int amount=0;
@@ -41,8 +41,7 @@ public class AggregationController {
     public IP[] aggregatedNetwork;
 
     @FXML
-    void initialize(){
-
+    void initialize(){ 
         amountNetwork.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER ){
                 okButton.fire();
@@ -62,7 +61,7 @@ public class AggregationController {
 
         });
 
-        agregujButton.setOnAction(event -> {
+        aggregateButton.setOnAction(event -> {
 
             if( clickedAggregation ){
 
