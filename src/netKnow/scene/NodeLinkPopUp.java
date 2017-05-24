@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -112,6 +113,12 @@ public class NodeLinkPopUp {
         cancelButton.setOnAction(e ->{
             someIP = null;
             window.close();
+        });
+
+        typeOfConnectionChoiceBox.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ENTER){
+                applyButton.fire();
+            }
         });
 
         Scene scene = new Scene(layout);
