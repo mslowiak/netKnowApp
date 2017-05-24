@@ -84,6 +84,7 @@ public class DraggableNodePopUp {
 
         cancelButton.setOnAction(e -> {
             draggableNodeData = null;
+            resetTextFields();
             window.close();
         });
 

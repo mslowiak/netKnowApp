@@ -112,6 +112,7 @@ public class NodeLinkPopUp {
 
         cancelButton.setOnAction(e ->{
             someIP = null;
+            resetTextFields();
             window.close();
         });
 
