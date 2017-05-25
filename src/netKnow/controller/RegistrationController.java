@@ -10,6 +10,7 @@ import netKnow.DatabaseConnection;
 import netKnow.MailSender;
 import netKnow.PasswordEncrypter;
 import netKnow.scene.LoginScene;
+import netKnow.scene.SuccessfulRegistrationScene;
 
 import javax.mail.MessagingException;
 import java.security.MessageDigest;
@@ -85,6 +86,7 @@ public class RegistrationController {
                             } catch (MessagingException e1) {
                                 e1.printStackTrace();
                             }
+                            new SuccessfulRegistrationScene(scene);
                         }else{
                             registrationErrorLabel.setText("Hasła nie pasują do siebie");
                         }
