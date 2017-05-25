@@ -19,11 +19,6 @@
     -fx-background-position: center;
     -fx-background-size: 100% 100%;
 }
-.icon-label {
-    -fx-background-image: url("chodar.png");
-    -fx-background-position: center;
-    -fx-background-size: 100% 100%;
-}
 
 .draggable-icon {
     -fx-border-width: 1;
