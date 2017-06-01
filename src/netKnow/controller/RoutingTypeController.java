@@ -1,12 +1,19 @@
 package netKnow.controller;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.AnchorPane;
+import netKnow.Class.routing.DraggableNode;
+import netKnow.Class.routing.NodeLink;
+
+import java.util.List;
 
 /**
  * Created by MQ on 2017-05-19.
@@ -23,6 +30,7 @@ public class RoutingTypeController {
     private Button generateCodeButton;
     @FXML
     private Button simulationButton;
+    private List<DraggableNode> nodeList;
 
 
     @FXML
@@ -49,5 +57,8 @@ public class RoutingTypeController {
 
     public void setScene(Scene scene){
         this.scene = scene;
+    }
+    public void setDraggableNodesList(List<DraggableNode> nodeList){
+        this.nodeList = nodeList;
     }
 }

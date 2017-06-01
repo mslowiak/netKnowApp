@@ -57,10 +57,23 @@ public class RoutingController {
         goBackButton.setOnAction(e -> new MainOptionsScene(scene));
 
         routingTypeButton.setOnAction(e -> {
+            // sciaganie nodow do listy nodow
             List<DraggableNode> nodes = new ArrayList<>();
             for(int i=0; i<right_pane.getChildren().size(); ++i){
                 if(right_pane.getChildren().get(i) instanceof DraggableNode){
                     nodes.add((DraggableNode) right_pane.getChildren().get(i));
+                }
+            }
+            // sciaganie linkerow do odpowiednich nodow
+            for(int i=0; i<nodes.size(); ++i){
+                String nodeID = nodes.get(i).getId();
+                for(int j=0; j<right_pane.getChildren().size(); ++j){
+                    if(right_pane.getChildren().get(j) instanceof NodeLink){
+                        NodeLink nodeLinkTmp = (NodeLink)right_pane.getChildren().get(j);
+                        if(nodeLinkTmp.startIDNode.equals(nodeID) || nodeLinkTmp.endIDNode.equals(nodeID)){
+                            nodes.get(i).nodeLinks.add(nodeLinkTmp);
+                        }
+                    }
                 }
             }
             new RoutingTypeScene(scene, nodes);
@@ -239,6 +252,7 @@ public class RoutingController {
                         link.bindEnds(source, target);
 
                         NodeLinkData ipAddress = NodeLinkPopUp.display();
+
                         if(ipAddress != null){
                             link.infoLabel.setText(ipAddress.getAddress());
                             link.relocateLabelCoords(right_pane);
@@ -256,4 +270,5 @@ public class RoutingController {
     public void setScene(Scene scene){
         this.scene = scene;
     }
+
 }

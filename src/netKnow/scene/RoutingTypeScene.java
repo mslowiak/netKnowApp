@@ -41,5 +41,6 @@ public class RoutingTypeScene {
     private void setController() {
         routingTypeController = loader.getController();
         routingTypeController.setScene(scene);
+        routingTypeController.setDraggableNodesList(nodelist);
     }
 }

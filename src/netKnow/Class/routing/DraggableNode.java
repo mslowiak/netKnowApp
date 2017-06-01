@@ -25,7 +25,7 @@ public class DraggableNode extends AnchorPane{
 
     @FXML AnchorPane root_pane;
     @FXML AnchorPane nodeBody;
-    @FXML Label titleBar;
+    @FXML public Label titleBar;
     @FXML Label closeButton;
     @FXML AnchorPane leftLinkHandle;
     @FXML AnchorPane rightLinkHandle;
@@ -36,6 +36,7 @@ public class DraggableNode extends AnchorPane{
 
     private final DraggableNode self;
     public final List<String> mLinkIds = new ArrayList();
+    public List<NodeLink> nodeLinks = new ArrayList<>();
 
     private EventHandler <DragEvent> mContextDragOver;
     private EventHandler <DragEvent> mContextDragDropped;
