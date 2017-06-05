@@ -165,8 +165,6 @@ public class RoutingController {
         };
 
         mIconDragDropped = event -> {
-            System.out.println("drag dropped");
-
             DragContainer container = (DragContainer) event.getDragboard().getContent(DragContainer.AddNode);
 
             container.addData("scene_coords", new Point2D(event.getSceneX(), event.getSceneY()));

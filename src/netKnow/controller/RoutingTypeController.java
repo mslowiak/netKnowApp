@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import netKnow.Class.routing.DragIconType;
 import netKnow.Class.routing.DraggableNode;
 import netKnow.Class.routing.NodeLink;
+import netKnow.Class.routing.RIPInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,9 @@ public class RoutingTypeController {
     @FXML
     void initialize(){
         generateCodeButton.setOnAction(e ->{
+            List<DraggableNode> tmpRouterList = routersList;
             for(int i=0; i<routersList.size(); ++i){
-                countRIPPaths(0);
+                routersList.get(0).ripInfo = new RIPInfo(countRIPPaths(0), routersList);
                 DraggableNode d = routersList.get(0);
                 routersList.remove(0);
                 routersList.add(d);
@@ -104,7 +106,7 @@ public class RoutingTypeController {
         routersList.get(4).nodeLinks.add(new NodeLink("r5-connect1", "R5", "R4"));
 
     }
-    private void countRIPPaths(int v){
+    private DraggableNode[] countRIPPaths(int v){
         //setMyOwnRoutersAndLinkers();
 
         int [] distance = new int[routersList.size()];
@@ -150,5 +152,7 @@ public class RoutingTypeController {
                 System.out.println("NULL");
         }
         System.out.println("\n\n");*/
+
+        return previous;
     }
 }
