@@ -77,19 +77,17 @@ public class RoutingController {
                 }
             }
             new RoutingTypeScene(scene, nodes);
-
         });
 
         //Add one icon that will be used for the drag-drop process
         //This is added as a child to the root anchorpane so it can be visible
         //on both sides of the split pane.
         mDragOverIcon = new DragIcon();
-
         mDragOverIcon.setVisible(false);
         mDragOverIcon.setOpacity(0.65);
         root_pane.getChildren().add(mDragOverIcon);
 
-        String [] labels = {"Komputer", "Router", "Switch", "Chodar"};
+        String [] labels = {"Komputer", "Router", "Switch"};
         //populate left pane with multiple colored icons for testing
         for (int i = 0; i < 3; i++) {
 
