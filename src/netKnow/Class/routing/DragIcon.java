@@ -55,9 +55,6 @@ public class DragIcon extends AnchorPane {
             case switchIco:
                 getStyleClass().add("icon-switch");
                 break;
-            case labelIco:
-                getStyleClass().add("icon-label");
-                break;
             default:
                 break;
         }

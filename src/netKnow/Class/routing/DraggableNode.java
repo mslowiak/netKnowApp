@@ -279,10 +279,6 @@ public class DraggableNode extends AnchorPane{
             case switchIco:
                 nodeBody.getStyleClass().add("icon-switch");
                 break;
-            case labelIco:
-                nodeBody.getStyleClass().add("icon-label");
-                break;
-
             default:
                 break;
         }
