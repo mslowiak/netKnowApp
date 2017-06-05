@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import netKnow.scene.LoginScene;
+import netKnow.scene.MainOptionsScene;
 import netKnow.scene.RoutingScene;
 import netKnow.Class.IP;
 import netKnow.Code.NetworkAggregation;

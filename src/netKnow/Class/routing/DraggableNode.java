@@ -71,6 +71,11 @@ public class DraggableNode extends AnchorPane{
         setId(UUID.randomUUID().toString());
     }
 
+    public DraggableNode(String id){
+        self = this;
+        setId(id);
+    }
+
     public void setTitleBar(String titleBarText) {
         titleBar.setText(titleBarText);
     }
