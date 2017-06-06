@@ -7,10 +7,15 @@ public class DraggableNodeData {
 
     private String name;
     private String host;
+    private String ip;
 
-    public DraggableNodeData(String name, String host){
+    public DraggableNodeData(String name, String x){
         this.name = name;
-        this.host = host;
+        if(x.length() > 3){
+            this.ip = x;
+        }else{
+            this.host = x;
+        }
     }
 
     public String getName(){
@@ -19,5 +24,9 @@ public class DraggableNodeData {
 
     public String getHost(){
         return host;
+    }
+
+    public String getIp() {
+        return ip;
     }
 }

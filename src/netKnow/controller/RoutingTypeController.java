@@ -35,7 +35,7 @@ public class RoutingTypeController {
     @FXML
     void initialize(){
         generateCodeButton.setOnAction(e ->{
-            JuniperConfigurationCodeGenerator juniper = new JuniperConfigurationCodeGenerator(routersList);
+            JuniperConfigurationCodeGenerator juniper = new JuniperConfigurationCodeGenerator(routersList, nodeList);
             String out = juniper.getConfiguration();
             System.out.println(out);
             System.out.println("Tu bedzie generowanie kodu!");
@@ -60,10 +60,14 @@ public class RoutingTypeController {
     public void setScene(Scene scene){
         this.scene = scene;
     }
+
     public void setDraggableNodesList(List<DraggableNode> nodeList){
         this.nodeList = nodeList;
         setRoutersList();
+        setNodePCLink();
+        setPCConnectedToRouters();
     }
+
     private void setRoutersList(){
         routersList = new ArrayList<>();
         for(int i=0; i<nodeList.size(); ++i){
@@ -71,6 +75,9 @@ public class RoutingTypeController {
                 routersList.add(nodeList.get(i));
             }
         }
+    }
+
+    private void setNodePCLink(){
         for(int i=0; i<routersList.size(); ++i){
             DraggableNode tmpNode = routersList.get(i);
             for(int j=0; j<tmpNode.nodeLinks.size(); ++j){
@@ -89,6 +96,31 @@ public class RoutingTypeController {
             }
         }
     }
+
+    private void setPCConnectedToRouters(){
+        System.out.println("setPCConnectedToRouters");
+        for(int i=0; i<routersList.size(); ++i){
+            DraggableNode tmpNode = routersList.get(i);
+            System.out.println("ROUTER: " + tmpNode.titleBar.getText());
+            for(int j=0; j<tmpNode.nodePCLink.size(); ++j){
+                NodeLink link = tmpNode.nodePCLink.get(j);
+                String pcId;
+                if(link.startIDNode.equals(tmpNode.getId())){
+                    pcId = link.endIDNode;
+                }else{
+                    pcId = link.startIDNode;
+                }
+                for(int k=0; k<nodeList.size(); ++k){
+                    if(nodeList.get(k).getId().equals(pcId) && nodeList.get(k).getType().equals(DragIconType.pcIco)){
+                        System.out.println("\tr: "+tmpNode.titleBar.getText() + "\tpc:" + nodeList.get(k).titleBar.getText());
+                        tmpNode.pcList.add(nodeList.get(k));
+                    }
+                }
+            }
+            System.out.println("router: " + tmpNode.titleBar.getText() + "\tpclistsize: " + tmpNode.pcList.size() + "\tnodepclink: " + tmpNode.nodePCLink.size());
+        }
+    }
+
     private void setMyOwnRoutersAndLinkers(){
         routersList = new ArrayList<>();
         System.out.println("Aktualny size to: "+routersList.size());

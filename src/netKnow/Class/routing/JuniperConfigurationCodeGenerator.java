@@ -1,4 +1,4 @@
-package netKnow.Class.routing;
+    package netKnow.Class.routing;
 
 import java.util.List;
 
@@ -8,14 +8,15 @@ import java.util.List;
 public class JuniperConfigurationCodeGenerator {
 
     List<DraggableNode> routersList;
+    List<DraggableNode> nodes;
 
-    public JuniperConfigurationCodeGenerator(List<DraggableNode> routersList){
+    public JuniperConfigurationCodeGenerator(List<DraggableNode> routersList, List<DraggableNode> nodes){
         this.routersList = routersList;
+        this.nodes = nodes;
     }
 
     public String getConfiguration(){
         String out = "";
-
         for(int i=0; i<routersList.size(); ++i){
             out += "\n\nKonfiguracja dla routera: " + routersList.get(i).titleBar.getText() + "\n";
             out += "============================================================================\n";
@@ -23,6 +24,8 @@ public class JuniperConfigurationCodeGenerator {
             out += setHostName(routersList.get(i).titleBar.getText());
             out += commit();
             out += setInterfaces(i);
+            out += commit();
+            out += setRoutingOptions(i);
             out += commit();
         }
         return out;
@@ -36,14 +39,13 @@ public class JuniperConfigurationCodeGenerator {
     }
 
     private String commit(){
-        return "commit" + "\n";
+        return "commit" + "\nexit\n";
     }
 
     private String setHostName(String hostName){
         String out = "";
         out += "edit system\n";
         out += "set host-name " + hostName + "\n";
-        out += "exit" + "\n";
         return out;
     }
 
@@ -65,13 +67,12 @@ public class JuniperConfigurationCodeGenerator {
             }
             out += "set unit 0 family inet address " + nodeLink.nodeLinkData.getAddressToInterface() + interfaceNode.draggableNodeData.getHost() + "/" + nodeLink.nodeLinkData.getMask() + "\n";
             out += "activate unit 0 family inet address " + nodeLink.nodeLinkData.getAddressToInterface() + interfaceNode.draggableNodeData.getHost() + "/" + nodeLink.nodeLinkData.getMask() + "\n";
-            out += "exit" + "\n";
         }
         return out;
     }
 
     private String setRoutingOptions(int index){
-        String out = "";
+        String out = "edit routing-options static\n";
         DraggableNode interfaceNode = routersList.get(index);
         for(int i=0; i<interfaceNode.nodeLinks.size(); ++i){
             DraggableNode connectedToInterfaceNode;
@@ -80,7 +81,7 @@ public class JuniperConfigurationCodeGenerator {
             }else{
                 connectedToInterfaceNode = getFriend(interfaceNode.nodeLinks.get(i).startIDNode);
             }
-            if(connectedToInterfaceNode.getType() == DragIconType.switchIco){ // router polaczony ze switchem
+            if(connectedToInterfaceNode.getType().equals(DragIconType.switchIco)){
                 for(int j=0; j<connectedToInterfaceNode.nodeLinks.size(); ++j){
                     DraggableNode fromSwitchNode;
                     if(connectedToInterfaceNode.nodeLinks.get(j).startIDNode.equals(connectedToInterfaceNode.getId())){
@@ -90,21 +91,41 @@ public class JuniperConfigurationCodeGenerator {
                     }
                     if(fromSwitchNode != interfaceNode){
                         NodeLinkData data = connectedToInterfaceNode.nodeLinks.get(j).nodeLinkData;
-                        out += data.getAddressToInterface() + connectedToInterfaceNode.draggableNodeData.getHost() + "/" + data.getMask() +"\n";
+                        out += "set route ";
+                        out += connectedToInterfaceNode.pcList.get(j).draggableNodeData.getIp();
+                        out += " next-hop ";
+                        out += data.getAddressToInterface() + connectedToInterfaceNode.draggableNodeData.getHost() + "\n";
                     }
                 }
-            }else if(connectedToInterfaceNode.getType() == DragIconType.routerIco){
-                NodeLinkData data = connectedToInterfaceNode.nodeLinks.get(i).nodeLinkData;
-                out += data.getAddressToInterface() + connectedToInterfaceNode.draggableNodeData.getHost() + "/" + data.getAddress() + "\n";
+            }else if(connectedToInterfaceNode.getType().equals(DragIconType.routerIco)){
+                if(connectedToInterfaceNode.nodePCLink.size() > 0){
+                    NodeLinkData data = connectedToInterfaceNode.nodeLinks.get(i).nodeLinkData;
+                    for(int j=0; j<connectedToInterfaceNode.nodePCLink.size(); ++j){
+                        String pcId;
+                        if(connectedToInterfaceNode.nodePCLink.get(j).startIDNode.equals(connectedToInterfaceNode.getId())){
+                            pcId = connectedToInterfaceNode.nodePCLink.get(j).endIDNode;
+                        }else{
+                            pcId = connectedToInterfaceNode.nodePCLink.get(j).startIDNode;
+                        }
+                        for(int k=0; k<connectedToInterfaceNode.pcList.size(); ++k){
+                            if(connectedToInterfaceNode.pcList.get(k).getId().equals(pcId)){
+                                out += "set route ";
+                                out += connectedToInterfaceNode.pcList.get(k).draggableNodeData.getIp();
+                                out += " next-hop ";
+                                out += data.getAddressToInterface() + connectedToInterfaceNode.draggableNodeData.getHost() + "\n";
+                            }
+                        }
+                    }
+                }
             }
         }
         return out;
     }
 
     private DraggableNode getFriend(String id){
-        for(int j=0; j<routersList.size(); ++j){
-            if(routersList.get(j).getId().equals(id)){
-                return routersList.get(j);
+        for(int j=0; j<nodes.size(); ++j){
+            if(nodes.get(j).getId().equals(id)){
+                return nodes.get(j);
             }
         }
         return null;
