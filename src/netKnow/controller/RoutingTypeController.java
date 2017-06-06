@@ -10,10 +10,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
-import netKnow.Class.routing.DragIconType;
-import netKnow.Class.routing.DraggableNode;
-import netKnow.Class.routing.NodeLink;
-import netKnow.Class.routing.RIPInfo;
+import netKnow.Class.routing.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +25,6 @@ public class RoutingTypeController {
     @FXML
     private ComboBox<String> typeOfDeviceChoiceBox;
     @FXML
-    private ComboBox<String> typeOfRoutingChoiceBox;
-    @FXML
     private Button generateCodeButton;
     @FXML
     private Button simulationButton;
@@ -40,29 +35,22 @@ public class RoutingTypeController {
     @FXML
     void initialize(){
         generateCodeButton.setOnAction(e ->{
-            List<DraggableNode> tmpRouterList = routersList;
+            JuniperConfigurationCodeGenerator juniper = new JuniperConfigurationCodeGenerator(routersList);
+            String out = juniper.getConfiguration();
+            System.out.println(out);
+            System.out.println("Tu bedzie generowanie kodu!");
+        });
+        simulationButton.setOnAction(e -> {
             for(int i=0; i<routersList.size(); ++i){
                 routersList.get(0).ripInfo = new RIPInfo(countRIPPaths(0), routersList);
                 DraggableNode d = routersList.get(0);
                 routersList.remove(0);
                 routersList.add(d);
             }
-            System.out.println("Tu bedzie generowanie kodu!");
-        });
-        simulationButton.setOnAction(e -> {
-            for(int i=0; i<routersList.size(); ++i){
-                countRIPPaths(i);
-            }
             System.out.println("Tu bedzie symulowanie dzialania");
         });
         typeOfDeviceChoiceBox.setItems(FXCollections.observableArrayList("Cisco", "Juniper"));
-        typeOfRoutingChoiceBox.setItems(FXCollections.observableArrayList("RIP", "EIGRP", "OSPF (1 - obszarowy)"));
         typeOfDeviceChoiceBox.getStylesheets().add(
-                getClass().getResource(
-                        "/netKnow/resources/combo-size.css"
-                ).toExternalForm()
-        );
-        typeOfRoutingChoiceBox.getStylesheets().add(
                 getClass().getResource(
                         "/netKnow/resources/combo-size.css"
                 ).toExternalForm()
@@ -81,6 +69,23 @@ public class RoutingTypeController {
         for(int i=0; i<nodeList.size(); ++i){
             if(nodeList.get(i).getType() == DragIconType.routerIco){
                 routersList.add(nodeList.get(i));
+            }
+        }
+        for(int i=0; i<routersList.size(); ++i){
+            DraggableNode tmpNode = routersList.get(i);
+            for(int j=0; j<tmpNode.nodeLinks.size(); ++j){
+                String find;
+                if(tmpNode.nodeLinks.get(j).startIDNode.equals(tmpNode.getId())){
+                    find = tmpNode.nodeLinks.get(j).endIDNode;
+                }else{
+                    find = tmpNode.nodeLinks.get(j).startIDNode;
+                }
+
+                for(int k=0; k<nodeList.size(); ++k){
+                    if(nodeList.get(k).getId().equals(find)){
+                        tmpNode.nodePCLink.add(tmpNode.nodeLinks.get(j));
+                    }
+                }
             }
         }
     }

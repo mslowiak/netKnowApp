@@ -37,6 +37,7 @@ public class DraggableNode extends AnchorPane{
     private final DraggableNode self;
     public final List<String> mLinkIds = new ArrayList();
     public List<NodeLink> nodeLinks = new ArrayList<>();
+    public List<NodeLink> nodePCLink = new ArrayList<>();
 
     private EventHandler <DragEvent> mContextDragOver;
     private EventHandler <DragEvent> mContextDragDropped;

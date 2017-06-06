@@ -24,6 +24,14 @@ public class NodeLinkData {
         return octetFirst + "." + octetSecond + "." + octetThird + "." + octetFourth + "/" + mask;
     }
 
+    public String getAddressToInterface(){
+        return octetFirst + "." + octetSecond + "." + octetThird + ".";
+    }
+
+    public String getMask() {
+        return mask;
+    }
+
     public String getTypeOfConnection(){
         return typeOfConnection;
     }

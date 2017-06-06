@@ -70,6 +70,8 @@ public class RoutingController {
                 for(int j=0; j<right_pane.getChildren().size(); ++j){
                     if(right_pane.getChildren().get(j) instanceof NodeLink){
                         NodeLink nodeLinkTmp = (NodeLink)right_pane.getChildren().get(j);
+                        NodeLink searchedPCLink;
+                        String searchedId;
                         if(nodeLinkTmp.startIDNode.equals(nodeID) || nodeLinkTmp.endIDNode.equals(nodeID)){
                             nodes.get(i).nodeLinks.add(nodeLinkTmp);
                         }
