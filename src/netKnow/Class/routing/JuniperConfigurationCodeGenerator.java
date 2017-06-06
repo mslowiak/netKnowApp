@@ -1,4 +1,4 @@
-    package netKnow.Class.routing;
+package netKnow.Class.routing;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class JuniperConfigurationCodeGenerator {
     public String getConfiguration(){
         String out = "";
         for(int i=0; i<routersList.size(); ++i){
-            out += "\n\nKonfiguracja dla routera: " + routersList.get(i).titleBar.getText() + "\n";
+            out += "Konfiguracja dla routera: " + routersList.get(i).titleBar.getText() + "\n";
             out += "============================================================================\n";
             out += goToConfiguration();
             out += setHostName(routersList.get(i).titleBar.getText());
@@ -27,6 +27,7 @@ public class JuniperConfigurationCodeGenerator {
             out += commit();
             out += setRoutingOptions(i);
             out += commit();
+            out += "\n\n";
         }
         return out;
     }

@@ -11,6 +11,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import netKnow.Class.routing.*;
+import netKnow.scene.CodeGeneratorScene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +36,13 @@ public class RoutingTypeController {
     @FXML
     void initialize(){
         generateCodeButton.setOnAction(e ->{
-            JuniperConfigurationCodeGenerator juniper = new JuniperConfigurationCodeGenerator(routersList, nodeList);
-            String out = juniper.getConfiguration();
-            System.out.println(out);
-            System.out.println("Tu bedzie generowanie kodu!");
+            String typeOfConnection = typeOfDeviceChoiceBox.getValue();
+            new CodeGeneratorScene(scene, typeOfConnection, routersList, nodeList);
+            //new CodeGeneratorScene(scene);
+            //JuniperConfigurationCodeGenerator juniper = new JuniperConfigurationCodeGenerator(routersList, nodeList);
+            //String out = juniper.getConfiguration();
+            //System.out.println(out);
+            //System.out.println("Tu bedzie generowanie kodu!");
         });
         simulationButton.setOnAction(e -> {
             for(int i=0; i<routersList.size(); ++i){
