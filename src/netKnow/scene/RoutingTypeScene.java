@@ -8,6 +8,7 @@ import netKnow.controller.RoutingController;
 import netKnow.controller.RoutingTypeController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,5 +42,6 @@ public class RoutingTypeScene {
     private void setController() {
         routingTypeController = loader.getController();
         routingTypeController.setScene(scene);
+        routingTypeController.setDraggableNodesList(nodelist);
     }
 }

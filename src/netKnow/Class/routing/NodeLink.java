@@ -48,6 +48,12 @@ public class NodeLink extends AnchorPane{
         this.getChildren().add(infoLabel);
     }
 
+    public NodeLink(String id, String startID, String endID){
+        setId(id);
+        startIDNode = startID;
+        endIDNode = endID;
+    }
+
     @FXML
     private void initialize(){
     }

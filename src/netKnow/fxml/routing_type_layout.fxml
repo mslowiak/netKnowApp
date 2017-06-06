@@ -47,7 +47,6 @@
                 </font>
             </Label>
             <ComboBox fx:id="typeOfDeviceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" />
-            <ComboBox fx:id="typeOfRoutingChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <GridPane alignment="CENTER">

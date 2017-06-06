@@ -14,8 +14,8 @@ public class DatabaseConnection {
 
     public static Connection getConenction(){
         try {
-            connection = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
-            //connection = DriverManager.getConnection(DBURL2, DBUSER2, DBPASS);
+            //connection = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
+            connection = DriverManager.getConnection(DBURL2, DBUSER2, DBPASS);
             if(connection != null){
                 System.out.println("Connected to the datebase :D");
                 return connection;
