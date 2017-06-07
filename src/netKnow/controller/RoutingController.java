@@ -1,6 +1,5 @@
 package netKnow.controller;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
