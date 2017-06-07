@@ -25,13 +25,20 @@ public class DraggableNode extends AnchorPane{
 
     @FXML AnchorPane root_pane;
     @FXML AnchorPane nodeBody;
-    @FXML Label titleBar;
+    @FXML public Label titleBar;
     @FXML Label closeButton;
     @FXML AnchorPane leftLinkHandle;
     @FXML AnchorPane rightLinkHandle;
+    @FXML Label topHostLabel;
+    @FXML Label bottomHostLabel;
+    @FXML Label leftHostLabel;
+    @FXML Label rightHostLabel;
 
     private final DraggableNode self;
     public final List<String> mLinkIds = new ArrayList();
+    public List<NodeLink> nodeLinks = new ArrayList<>();
+    public List<NodeLink> nodePCLink = new ArrayList<>();
+    public List<DraggableNode> pcList = new ArrayList<>();
 
     private EventHandler <DragEvent> mContextDragOver;
     private EventHandler <DragEvent> mContextDragDropped;
@@ -47,6 +54,7 @@ public class DraggableNode extends AnchorPane{
     private DragIconType mType = null;
     private Point2D mDragOffset = new Point2D(0.0, 0.0);
     public DraggableNodeData draggableNodeData;
+    public RIPInfo ripInfo;
 
     public DraggableNode() {
         self = this;
@@ -64,6 +72,11 @@ public class DraggableNode extends AnchorPane{
         }
 
         setId(UUID.randomUUID().toString());
+    }
+
+    public DraggableNode(String id){
+        self = this;
+        setId(id);
     }
 
     public void setTitleBar(String titleBarText) {
@@ -274,13 +287,20 @@ public class DraggableNode extends AnchorPane{
             case switchIco:
                 nodeBody.getStyleClass().add("icon-switch");
                 break;
-            case labelIco:
-                nodeBody.getStyleClass().add("icon-label");
-                break;
-
             default:
                 break;
         }
+    }
+
+    public void setHostLabels(String host){
+        rightHostLabel.setText(host);
+        leftHostLabel.setText(host);
+        topHostLabel.setText(host);
+        bottomHostLabel.setText(host);
+    }
+
+    public void setIpTop(String ip){
+        topHostLabel.setText(ip);
     }
 
 }

@@ -1,6 +1,6 @@
 package netKnow.Class;
 
-public class IP {
+public class IP implements Comparable <IP>{
     private int [] ipArray;
     private int [] maskArray;
     private String fullIPAdress [];
@@ -15,7 +15,10 @@ public class IP {
         ipArray = new int[4];
         maskArray = new int[4];
         this.fullIPAdress = fullIPAdress;
+        convertStringToIPAdress(fullIPAdress);
+        convertStringToMask();
     }
+
 
     private void convertStringToIPAdress(String [] fullIPAdress){
         for(int i = 0; i < 4; i++) {
@@ -23,7 +26,7 @@ public class IP {
         }
     }
 
-    private void convertStringToMask(String mask){
+    private void convertStringToMask(){
         int n = Integer.parseInt(fullIPAdress[4]);
         for(int i = 0; i < n; i++){
             maskArray[i/8] |=  (128 >> (i%8));
@@ -31,8 +34,6 @@ public class IP {
     }
 
     public void computeData(){
-        convertStringToIPAdress(fullIPAdress);
-        convertStringToMask(fullIPAdress[4]);
         network = computeNetwork();
         broadcast = computeBroadcast();
         numberOfHosts = Integer.toString(numberOfHosts());
@@ -77,6 +78,22 @@ public class IP {
         return (tmp1[0] + "." + tmp1[1] + "." + tmp1[2] + "." + tmp2);
     }
 
+    public int compareTo(IP ip){
+        if(this.ipArray[0] == ip.ipArray[0] && this.ipArray[1] == ip.ipArray[1] && this.ipArray[2] == ip.ipArray[2]
+                && this.ipArray[3] == ip.ipArray[3]){
+            return 0;
+        }
+        else if((this.ipArray[0] > ip.ipArray[0]) || (this.ipArray[0] == ip.ipArray[0] && this.ipArray[1] > ip.ipArray[1]) ||
+                (this.ipArray[0] == ip.ipArray[0] && this.ipArray[1] == ip.ipArray[1] && this.ipArray[2] > ip.ipArray[2]) ||
+                (this.ipArray[0] == ip.ipArray[0] && this.ipArray[1] == ip.ipArray[1] && this.ipArray[2] == ip.ipArray[2]
+                        && this.ipArray[3] > ip.ipArray[3])){
+            return 1;
+        }
+        else{
+            return -1;
+        }
+    }
+
     public String getNetwork() {
         return network;
     }
@@ -96,4 +113,17 @@ public class IP {
     public String getNumberOfHosts() {
         return numberOfHosts;
     }
+
+    public String getIP(){
+        return (ipArray[0]+ "." + ipArray[1]+ "." + ipArray[2]+ "." + ipArray[3] + "/" + fullIPAdress[4]);
+    }
+
+    public int[] getIPAsInt(){ return ipArray; }
+
+    public int getMaskAsInt(){return Integer.parseInt(fullIPAdress[4]);}
+
+    public void setMask(int k){
+        fullIPAdress[4] = Integer.toString(k);
+        convertStringToMask();
+    };
 }

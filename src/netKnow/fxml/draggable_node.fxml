@@ -10,55 +10,75 @@
 <?import javafx.scene.text.Font?>
 
 <fx:root fx:id="root_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" styleClass="draggable-icon" stylesheets="@/netKnow/resources/application.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <GridPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" styleClass="node-overlay">
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="25.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label fx:id="closeButton" alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" text="X" textAlignment="RIGHT" GridPane.columnIndex="1">
-                     <padding>
-                        <Insets right="10.0" />
-                     </padding>
-                      <font>
-                          <Font name="System Bold" />
-                      </font>
-                  </Label>
-                  <Label fx:id="titleBar" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Label">
-                   <font>
-                       <Font name="System Bold" />
-                   </font>
-                   </Label>
+    <children>
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <GridPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" styleClass="node-overlay">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="25.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label fx:id="closeButton" alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" text="X" textAlignment="RIGHT" GridPane.columnIndex="1">
+                            <padding>
+                                <Insets right="10.0" />
+                            </padding>
+                            <font>
+                                <Font name="System Bold" />
+                            </font>
+                        </Label>
+                        <Label fx:id="titleBar" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Label">
+                            <font>
+                                <Font name="System Bold" />
+                            </font>
+                        </Label>
 
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin>
-            </GridPane>
-            <AnchorPane fx:id="nodeBody" prefHeight="200.0" prefWidth="200.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></AnchorPane>
-         </children>
-      </VBox>
-      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <AnchorPane fx:id="leftLinkHandle" prefHeight="200.0" prefWidth="200.0" styleClass="left-link-handle" />
-            <AnchorPane fx:id="rightLinkHandle" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" styleClass="right-link-handle"/>
-         </children>
-      </GridPane>
-   </children>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                    </VBox.margin>
+                </GridPane>
+                <AnchorPane fx:id="nodeBody" prefHeight="200.0" prefWidth="200.0">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin></AnchorPane>
+            </children>
+        </VBox>
+        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <AnchorPane fx:id="leftLinkHandle" prefHeight="200.0" prefWidth="200.0" styleClass="left-link-handle" />
+                <AnchorPane fx:id="rightLinkHandle" prefHeight="200.0" prefWidth="200.0" styleClass="right-link-handle" GridPane.columnIndex="1" />
+            </children>
+        </GridPane>
+        <Label fx:id="bottomHostLabel" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="-30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="135.0">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="leftHostLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-67.0" prefHeight="20.0" prefWidth="40.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-45.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="60.0">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="topHostLabel" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-30.0">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="rightHostLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="40.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="-45.0" AnchorPane.topAnchor="60.0">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+    </children>
 </fx:root>
