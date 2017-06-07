@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class RIPWay {
     private DraggableNode destination;
-    private List<DraggableNode> way;
+    public List<DraggableNode> way;
 
     public RIPWay(DraggableNode dest){
         destination = dest;
