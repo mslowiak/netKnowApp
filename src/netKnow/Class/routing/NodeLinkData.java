@@ -20,6 +20,17 @@ public class NodeLinkData {
         this.typeOfConnection = typeOfConnection;
     }
 
+    public NodeLinkData(String ip){
+        String [] ipAndMask = ip.split("/");
+        String [] ipAddress = ipAndMask[0].split("\\.");
+        this.mask = ipAndMask[1];
+        this.octetFirst = ipAddress[0];
+        this.octetSecond = ipAddress[1];
+        this.octetThird = ipAddress[2];
+        this.octetFourth = ipAddress[3];
+        this.typeOfConnection = "Kabel lan";
+    }
+
     public String getAddress(){
         return octetFirst + "." + octetSecond + "." + octetThird + "." + octetFourth + "/" + mask;
     }

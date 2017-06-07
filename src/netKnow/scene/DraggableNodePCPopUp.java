@@ -17,9 +17,9 @@ import javafx.stage.Stage;
 import netKnow.Class.routing.DraggableNodeData;
 
 /**
- * Created by MQ on 2017-05-18.
+ * Created by MQ on 2017-06-07.
  */
-public class DraggableNodePopUp {
+public class DraggableNodePCPopUp {
     private static TextField nameField = new TextField();
     private static TextField hostField = new TextField();
     private static DraggableNodeData draggableNodeData;
@@ -27,18 +27,18 @@ public class DraggableNodePopUp {
     public static DraggableNodeData display(){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Wprowadź dane dotyczące urządzenia");
+        window.setTitle("Wprowadź dane dotyczące komputera");
         VBox layout = new VBox();
         layout.setSpacing(20);
         layout.setPadding(new Insets(20,20,20,20));
         layout.setAlignment(Pos.CENTER);
 
-        Label descriptionLabel = new Label("Podaj nazwę urządzenia oraz numer hosta");
+        Label descriptionLabel = new Label("Podaj nazwę komputera oraz adres ip");
         descriptionLabel.setPadding(new Insets(0,0,20,0));
         descriptionLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
 
-        Label nameLabel = new Label("Nazwa urządzenia: ");
-        Label hostLabel = new Label("Numer hosta: ");
+        Label nameLabel = new Label("Nazwa komputera: ");
+        Label hostLabel = new Label("Adres ip z maską: ");
         nameLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
         hostLabel.setFont(Font.font(null, FontWeight.BOLD, 14));
 
