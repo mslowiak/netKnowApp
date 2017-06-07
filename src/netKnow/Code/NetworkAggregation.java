@@ -41,6 +41,9 @@ public class NetworkAggregation {
             int j = IPArray[i].getMaskAsInt() - 1;
             int mask = j+1;
             int mask1 = mask;
+            if(j < 7){
+                return null;
+            }
             String [] tmpString1 = {Integer.toString(tmp3[0]), Integer.toString(tmp3[1]), Integer.toString(tmp3[2]),
                     Integer.toString(tmp3[3]), Integer.toString(mask)};
             result[k] = new IP(tmpString1);

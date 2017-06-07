@@ -20,7 +20,8 @@ import netKnow.scene.SingleIP;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AggregationController {
+public class
+AggregationController {
     private Scene scene;
 
     @FXML
