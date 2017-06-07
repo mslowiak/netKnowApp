@@ -299,4 +299,8 @@ public class DraggableNode extends AnchorPane{
         bottomHostLabel.setText(host);
     }
 
+    public void setIpTop(String ip){
+        topHostLabel.setText(ip);
+    }
+
 }
