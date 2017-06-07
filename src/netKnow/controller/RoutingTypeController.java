@@ -10,8 +10,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import netKnow.Class.routing.*;
 import netKnow.scene.CodeGeneratorScene;
+import netKnow.scene.SimulationScene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
 public class RoutingTypeController {
 
     private Scene scene;
+    private GridPane scheme;
 
     @FXML
     private ComboBox<String> typeOfDeviceChoiceBox;
@@ -38,11 +41,6 @@ public class RoutingTypeController {
         generateCodeButton.setOnAction(e ->{
             String typeOfConnection = typeOfDeviceChoiceBox.getValue();
             new CodeGeneratorScene(scene, typeOfConnection, routersList, nodeList);
-            //new CodeGeneratorScene(scene);
-            //JuniperConfigurationCodeGenerator juniper = new JuniperConfigurationCodeGenerator(routersList, nodeList);
-            //String out = juniper.getConfiguration();
-            //System.out.println(out);
-            //System.out.println("Tu bedzie generowanie kodu!");
         });
         simulationButton.setOnAction(e -> {
             for(int i=0; i<routersList.size(); ++i){
@@ -51,6 +49,7 @@ public class RoutingTypeController {
                 routersList.remove(0);
                 routersList.add(d);
             }
+            new SimulationScene(scene, scheme, nodeList);
             System.out.println("Tu bedzie symulowanie dzialania");
         });
         typeOfDeviceChoiceBox.setItems(FXCollections.observableArrayList("Cisco", "Juniper"));
@@ -195,5 +194,8 @@ public class RoutingTypeController {
         System.out.println("\n\n");*/
 
         return previous;
+    }
+    public void setSchemeGridPane(GridPane scheme){
+        this.scheme = scheme;
     }
 }

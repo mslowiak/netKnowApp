@@ -15,6 +15,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import netKnow.Class.routing.NodeLinkData;
@@ -36,6 +37,8 @@ public class RoutingController {
 
     private Scene scene;
 
+    @FXML
+    private GridPane gridPane;
     @FXML
     SplitPane base_pane;
     @FXML
@@ -85,7 +88,7 @@ public class RoutingController {
                     }
                 }
             }
-            new RoutingTypeScene(scene, nodes);
+            new RoutingTypeScene(scene, nodes, gridPane);
         });
 
         screenshotButton.setOnAction(e->{
