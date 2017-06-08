@@ -98,7 +98,7 @@ public class LoginController {
         }else{
             if(login.equals(dbLogin)){
                 if(PasswordEncrypter.isPasswordMatching(password, dbPassword)){
-                    return 1; // login and pass matches
+                    return 1; // login i pass matches
                 }else{
                     return 2; // login good, password bad
                 }

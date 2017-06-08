@@ -2,9 +2,6 @@ package netKnow.Class.routing;
 
 import java.util.List;
 
-/**
- * Created by MQ on 2017-06-06.
- */
 public class JuniperConfigurationCodeGenerator {
 
     List<DraggableNode> routersList;

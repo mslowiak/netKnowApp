@@ -14,10 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
 import javafx.util.Duration;
-import netKnow.Class.routing.DragIconType;
-import netKnow.Class.routing.DraggableNode;
-import netKnow.Class.routing.NodeLink;
-import netKnow.Class.routing.RIPWay;
+import netKnow.Class.routing.*;
 
 import java.util.List;
 
@@ -28,12 +25,14 @@ public class SimulationScene {
     private Scene scene;
     private GridPane gridPane;
     private List<DraggableNode> nodeList;
+    private List<DragIcon> dragIcons;
     private AnchorPane context;
 
-    public SimulationScene(Scene scene, GridPane gridPane, List<DraggableNode> nodeList, AnchorPane context){
+    public SimulationScene(Scene scene, GridPane gridPane, List<DraggableNode> nodeList, List<DragIcon> dragIcons, AnchorPane context){
         this.scene = scene;
         this.gridPane = gridPane;
         this.nodeList = nodeList;
+        this.dragIcons = dragIcons;
         this.context = context;
         setScene();
         disableMouseEvents();
@@ -56,6 +55,11 @@ public class SimulationScene {
             draggableNode.mContextLinkDragOver = null;
             draggableNode.mContextLinkDragDropped = null;
             draggableNode.closeButton.setOnMouseClicked(null);
+        }
+
+        for( int i=0; i<dragIcons.size(); i++){
+            DragIcon dragIcon = dragIcons.get(i);
+            dragIcon.setOnDragDetected(null);
         }
     }
 
@@ -85,6 +89,8 @@ public class SimulationScene {
         TextField fromNodeNameTextField = new TextField();
         TextField toNodeNameTextField = new TextField();
 
+        out.setHgap(20);
+        out.setVgap(10);
         out.addRow(0, menuButton, fromNodeNameLabel, fromNodeNameTextField, toNodeNameLabel, toNodeNameTextField, simulateButton);
 
         menuButton.setOnAction(e ->{

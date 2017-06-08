@@ -33,9 +33,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by MQ on 2017-05-13.
- */
 public class RoutingController {
 
     private Scene scene;
@@ -65,6 +62,7 @@ public class RoutingController {
     private EventHandler<DragEvent> mIconDragDropped = null;
     private EventHandler<DragEvent> mIconDragOverRightPane = null;
 
+    List<DragIcon> dragIcons = new ArrayList<>();
     @FXML
     private void initialize() {
         goBackButton.setOnAction(e -> new MainOptionsScene(scene));
@@ -91,7 +89,7 @@ public class RoutingController {
                     }
                 }
             }
-            new RoutingTypeScene(scene, nodes, gridPane, right_pane);
+            new RoutingTypeScene(scene, nodes, dragIcons, gridPane, right_pane);
         });
 
         screenshotButton.setOnAction(e->{
@@ -110,16 +108,12 @@ public class RoutingController {
             }
         });
 
-        //Add one icon that will be used for the drag-drop process
-        //This is added as a child to the root anchorpane so it can be visible
-        //on both sides of the split pane.
         mDragOverIcon = new DragIcon();
         mDragOverIcon.setVisible(false);
         mDragOverIcon.setOpacity(0.65);
         root_pane.getChildren().add(mDragOverIcon);
 
         String [] labels = {"Komputer", "Router", "Switch"};
-        //populate left pane with multiple colored icons for testing
         for (int i = 0; i < 3; i++) {
 
             DragIcon icn = new DragIcon();
@@ -130,6 +124,8 @@ public class RoutingController {
 
             icn.setType(DragIconType.values()[i]);
             left_pane.getChildren().addAll(icn, descriptionLabel);
+            dragIcons.add(icn);
+
         }
         buildDragHandlers();
     }
@@ -137,17 +133,13 @@ public class RoutingController {
     private void addDragDetection(DragIcon dragIcon) {
 
         dragIcon.setOnDragDetected(event -> {
-            // odpowiada za przeciąganie z lewego panelu na prawy panel
 
-            // set drag event handlers on their respective objects
             base_pane.setOnDragOver(mIconDragOverRoot);
             right_pane.setOnDragOver(mIconDragOverRightPane);
             right_pane.setOnDragDropped(mIconDragDropped);
 
-            // get a reference to the clicked DragIcon object
             DragIcon icn = (DragIcon) event.getSource();
 
-            //begin drag ops
             mDragOverIcon.setType(icn.getType());
             mDragOverIcon.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
 
@@ -166,13 +158,10 @@ public class RoutingController {
 
     private void buildDragHandlers() {
 
-        //drag over transition to move widget form left pane to right pane
         mIconDragOverRoot = event -> {
 
             Point2D p = right_pane.sceneToLocal(event.getSceneX(), event.getSceneY());
 
-            //turn on transfer mode and track in the right-pane's context
-            //if (and only if) the mouse cursor falls within the right pane's bounds.
             if (!right_pane.boundsInLocalProperty().get().contains(p)) {
 
                 event.acceptTransferModes(TransferMode.ANY);
@@ -186,11 +175,6 @@ public class RoutingController {
         mIconDragOverRightPane = event -> {
             event.acceptTransferModes(TransferMode.ANY);
 
-            //convert the mouse coordinates to scene coordinates,
-            //then convert back to coordinates that are relative to
-            //the parent of mDragIcon.  Since mDragIcon is a child of the root
-            //pane, coodinates must be in the root pane's coordinate system to work
-            //properly.
             mDragOverIcon.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
             event.consume();
         };

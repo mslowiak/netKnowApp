@@ -2,10 +2,7 @@ package netKnow.Class.routing;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by MQ on 2017-06-06.
- */
+ 
 public class RIPWay {
     private DraggableNode destination;
     public List<DraggableNode> way;
