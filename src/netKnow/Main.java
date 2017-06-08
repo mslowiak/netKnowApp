@@ -22,7 +22,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         window = primaryStage;
         window.setTitle("netKnow - aplication that will change your life");
-        Scene scene = new Scene(new VBox(), 1000, 800);
+        Scene scene = new Scene(new VBox(), 1400, 1000);
         window.setScene(scene);
         new LoginScene(scene);
         //new RoutingScene(scene);

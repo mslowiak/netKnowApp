@@ -1,5 +1,6 @@
 package netKnow.scene;
 
+import javafx.animation.PathTransition;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,8 +10,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polyline;
+import javafx.util.Duration;
+import netKnow.Class.routing.DragIconType;
 import netKnow.Class.routing.DraggableNode;
+import netKnow.Class.routing.NodeLink;
 import netKnow.Class.routing.RIPWay;
 
 import java.util.List;
@@ -22,11 +28,13 @@ public class SimulationScene {
     private Scene scene;
     private GridPane gridPane;
     private List<DraggableNode> nodeList;
+    private AnchorPane context;
 
-    public SimulationScene(Scene scene, GridPane gridPane, List<DraggableNode> nodeList){
+    public SimulationScene(Scene scene, GridPane gridPane, List<DraggableNode> nodeList, AnchorPane context){
         this.scene = scene;
         this.gridPane = gridPane;
         this.nodeList = nodeList;
+        this.context = context;
         setScene();
         disableMouseEvents();
     }
@@ -47,7 +55,7 @@ public class SimulationScene {
             draggableNode.mLinkHandleDragDropped = null;
             draggableNode.mContextLinkDragOver = null;
             draggableNode.mContextLinkDragDropped = null;
-            //draggableNode.closeButton.setOnMouseClicked(null);
+            draggableNode.closeButton.setOnMouseClicked(null);
         }
     }
 
@@ -97,30 +105,88 @@ public class SimulationScene {
                     toNode = iterNode;
                 }
             }
-            Point2D pointOne = fromNode.localToScene(0.0, 0.0);
-            Point2D pointTwo = toNode.localToScene(0.0, 0.0);
-            //(fromNode, toNode);
+            simulateRoute(fromNode, toNode);
         });
         return out;
     }
 
     private void simulateRoute(DraggableNode start, DraggableNode stop){
         RIPWay ripWay = null;
-        Circle circle = new Circle(start.localToScene(0.0, 0.0).getX(), start.localToScene(0.0, 0.0).getY(),10);
-        //AnchorPane
-        gridPane.getChildren().add(circle);
+        Point2D stopPc = null;
+        Polyline polyline = new Polyline();
+
+        if(start.getType().equals(DragIconType.pcIco)){
+            polyline.getPoints().add(start.getLayoutX()+60);
+            polyline.getPoints().add(start.getLayoutY()+70);
+            NodeLink pc = start.nodeLinks.get(0);
+            start = getNodeWithSameID(start.getId(), pc);
+        }
+
+        if(stop.getType().equals(DragIconType.pcIco)){
+            stopPc = new Point2D(stop.getLayoutX()+60, stop.getLayoutY()+70);
+            NodeLink pc = stop.nodeLinks.get(0);
+            stop = getNodeWithSameID(stop.getId(), pc);
+        }
+
+        Point2D startPoint = new Point2D(start.getLayoutX()+60, start.getLayoutY()+70);
+        Point2D tmpPoint = null;
+        polyline.getPoints().add(startPoint.getX());
+        polyline.getPoints().add(startPoint.getY());
+
+        Circle circle = new Circle(30);
+        circle.setFill(Color.RED);
+
+
+        polyline.getPoints().add(startPoint.getX());
+        polyline.getPoints().add(startPoint.getY());
+
+        context.getChildren().add(circle);
+
         for(int i=0; i<start.ripInfo.ripWayList.size(); ++i){
+            System.out.println(start.ripInfo.ripWayList.get(i).getDestination().titleBar.getText());
             if(start.ripInfo.ripWayList.get(i).getDestination().equals(stop)){
                 ripWay = start.ripInfo.ripWayList.get(i);
             }
         }
 
-        for(int i=0; i+1<ripWay.way.size(); ++i){
-            DraggableNode firstNode = ripWay.way.get(i);
-            DraggableNode secondNode = ripWay.way.get(i+1);
-            Point2D pointOne = firstNode.localToScene(0.0, 0.0);
-            Point2D pointTwo = secondNode.localToScene(0.0, 0.0);
+        for(int i=1; i<ripWay.way.size(); ++i){
+            DraggableNode tmpNode = ripWay.way.get(i);
+            tmpPoint = new Point2D(tmpNode.getLayoutX()+60, tmpNode.getLayoutY()+70);
+            polyline.getPoints().add(tmpPoint.getX());
+            polyline.getPoints().add(tmpPoint.getY());
+
         }
+        if(stopPc != null){
+            polyline.getPoints().add(stopPc.getX());
+            polyline.getPoints().add(stopPc.getY());
+        }
+
+        PathTransition transmission = new PathTransition();
+        transmission.setNode(circle);
+        transmission.setPath(polyline);
+        transmission.setCycleCount(1);
+        transmission.setDuration(Duration.seconds(10));
+        transmission.play();
+        transmission.setOnFinished(e ->{
+            context.getChildren().remove(circle);
+        });
     }
 
+    private DraggableNode getNodeWithSameID(String id, NodeLink pc){
+        DraggableNode nodeWithSameId = null;
+        if(pc.startIDNode.equals(id)){
+            for(int i=0; i<nodeList.size(); ++i){
+                if(nodeList.get(i).getId().equals(pc.endIDNode)){
+                    nodeWithSameId = nodeList.get(i);
+                }
+            }
+        }else{
+            for(int i=0; i<nodeList.size(); ++i){
+                if(nodeList.get(i).getId().equals(pc.startIDNode)){
+                    nodeWithSameId = nodeList.get(i);
+                }
+            }
+        }
+        return nodeWithSameId;
+    }
 }

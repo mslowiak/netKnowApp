@@ -34,7 +34,8 @@ public class RoutingTypeController {
     private Button simulationButton;
     private List<DraggableNode> nodeList;
     private List<DraggableNode> routersList;
-
+    private List<DraggableNode> routersAndSwitchesList;
+    private AnchorPane context;
 
     @FXML
     void initialize(){
@@ -44,12 +45,12 @@ public class RoutingTypeController {
         });
         simulationButton.setOnAction(e -> {
             for(int i=0; i<routersList.size(); ++i){
-                routersList.get(0).ripInfo = new RIPInfo(countRIPPaths(0), routersList);
+                routersList.get(0).ripInfo = new RIPInfo(countRIPPaths(0), routersAndSwitchesList);
                 DraggableNode d = routersList.get(0);
                 routersList.remove(0);
                 routersList.add(d);
             }
-            new SimulationScene(scene, scheme, nodeList);
+            new SimulationScene(scene, scheme, nodeList, context);
             System.out.println("Tu bedzie symulowanie dzialania");
         });
         typeOfDeviceChoiceBox.setItems(FXCollections.observableArrayList("Cisco", "Juniper"));
@@ -73,9 +74,13 @@ public class RoutingTypeController {
 
     private void setRoutersList(){
         routersList = new ArrayList<>();
+        routersAndSwitchesList = new ArrayList<>();
         for(int i=0; i<nodeList.size(); ++i){
             if(nodeList.get(i).getType() == DragIconType.routerIco){
                 routersList.add(nodeList.get(i));
+                routersAndSwitchesList.add(nodeList.get(i));
+            }else if(nodeList.get(i).getType() == DragIconType.switchIco){
+                routersAndSwitchesList.add(nodeList.get(i));
             }
         }
     }
@@ -146,39 +151,46 @@ public class RoutingTypeController {
         routersList.get(4).nodeLinks.add(new NodeLink("r5-connect1", "R5", "R4"));
 
     }
+
     private DraggableNode[] countRIPPaths(int v){
         //setMyOwnRoutersAndLinkers();
 
-        int [] distance = new int[routersList.size()];
-        DraggableNode [] previous = new DraggableNode[routersList.size()];
+        int [] distance = new int[routersAndSwitchesList.size()];
+        DraggableNode [] previous = new DraggableNode[routersAndSwitchesList.size()];
 
-        for(int i=0; i<routersList.size(); ++i){
+        for(int i=0; i<routersAndSwitchesList.size(); ++i){
             distance[i] = 2000000000;
             previous[i] = null;
         }
 
         distance[v] = 0;
-        for(int i=1; i<routersList.size(); ++i){
-            for(int l=0; l<routersList.size(); ++l){
-                DraggableNode routerNode = routersList.get(l);
-                for(int j=0; j<routerNode.nodeLinks.size(); ++j){
-                    NodeLink nodeLink = routerNode.nodeLinks.get(j);
+        for(int i=1; i<routersAndSwitchesList.size(); ++i){
+            for(int l=0; l<routersAndSwitchesList.size(); ++l){
+                DraggableNode deviceNode = routersAndSwitchesList.get(l);
+                for(int j=0; j< deviceNode.nodeLinks.size(); ++j){
+                    NodeLink nodeLink =  deviceNode.nodeLinks.get(j);
                     String id = "";
-                    if(!nodeLink.startIDNode.equals(routerNode.getId())){
+                    if(!nodeLink.startIDNode.equals( deviceNode.getId())){
                         id = nodeLink.startIDNode;
                     }else{
                         id = nodeLink.endIDNode;
                     }
                     int index = 0;
-                    for(int k=0; k<routersList.size(); ++k){
-                        if(routersList.get(k).getId().equals(id)){
+                    for(int k=0; k<routersAndSwitchesList.size(); ++k){
+                        if(routersAndSwitchesList.get(k).getId().equals(id)){
                             index = k;
                         }
                     }
+                    int weight = 0;
+                    if(routersAndSwitchesList.get(index).getType().equals(DragIconType.routerIco)){
+                        weight = 10;
+                    }else if(routersAndSwitchesList.get(index).getType().equals(DragIconType.switchIco)){
+                        weight = 1;
+                    }
 
-                    if(distance[index] > distance[l] + 1){
-                        distance[index] = distance[l] + 1;
-                        previous[index] = routersList.get(l);
+                    if(distance[index] > distance[l] + weight){
+                        distance[index] = distance[l] + weight;
+                        previous[index] = routersAndSwitchesList.get(l);
                     }
                 }
             }
@@ -195,7 +207,8 @@ public class RoutingTypeController {
 
         return previous;
     }
-    public void setSchemeGridPane(GridPane scheme){
+    public void setSchemeGridPane(GridPane scheme, AnchorPane context){
         this.scheme = scheme;
+        this.context = context;
     }
 }
