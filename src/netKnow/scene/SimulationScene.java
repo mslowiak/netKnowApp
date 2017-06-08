@@ -1,5 +1,6 @@
 package netKnow.scene;
 
+import javafx.animation.PathTransition;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,9 +13,13 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polyline;
+import javafx.util.Duration;
 import netKnow.Class.routing.DraggableNode;
 import netKnow.Class.routing.RIPWay;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,36 +33,7 @@ public class SimulationScene {
     private GridPane gridPane;
     private List<DraggableNode> nodeList;
     private AnchorPane context;
-/*
-    TimerTask timerTask;
-    Timer timer;
-
-    final Handler handler = new Handler();
-    public void startTimer() {
-        timer = new Timer();
-        initializeTimerTask();
-        timer.schedule(timerTask, INTERVAL_HAPPENED* 1000, 1000);
-    }
-
-    public void stoptimertask() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
-    }
-
-    public void initializeTimerTaskHappened() {
-        timerTask = new TimerTask() {
-            public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
-
-                    }
-                });
-            }
-        };
-    }
-*/
+    
     public SimulationScene(Scene scene, GridPane gridPane, List<DraggableNode> nodeList, AnchorPane context){
         this.scene = scene;
         this.gridPane = gridPane;
@@ -83,7 +59,7 @@ public class SimulationScene {
             draggableNode.mLinkHandleDragDropped = null;
             draggableNode.mContextLinkDragOver = null;
             draggableNode.mContextLinkDragDropped = null;
-            //draggableNode.closeButton.setOnMouseClicked(null);
+            draggableNode.closeButton.setOnMouseClicked(null);
         }
     }
 
@@ -140,58 +116,43 @@ public class SimulationScene {
 
     private void simulateRoute(DraggableNode start, DraggableNode stop){
         RIPWay ripWay = null;
-        Point2D pointOne = new Point2D(start.getLayoutX()+60, start.getLayoutY()+70);
-        Point2D pointTwo = new Point2D(stop.getLayoutX()+60, stop.getLayoutY()+70);
-        Circle circle = new Circle(pointOne.getX(), pointOne.getY(), 10);
+        Point2D startPoint = new Point2D(start.getLayoutX()+60, start.getLayoutY()+70);
+        Point2D tmpPoint = null;
+        List<Double> doubleList = new ArrayList<>();
+        doubleList.add(startPoint.getX());
+        doubleList.add(startPoint.getY());
+
+        Circle circle = new Circle(30);
         circle.setFill(Color.RED);
 
+        Polyline polyline = new Polyline();
+        polyline.getPoints().add(startPoint.getX());
+        polyline.getPoints().add(startPoint.getY());
+
         context.getChildren().add(circle);
-        double x1 = pointOne.getX();
-        double x2 = pointTwo.getX();
-        double y1 = pointOne.getY();
-        double y2 = pointTwo.getY();
-        System.out.println("x1: " + x1 +"\tx2: "+x2+"\ty1: "+y1+"\ty2: "+y2);
 
-        if(x1<x2 && y1>y2){
-
-            double t = x2-x1;
-            double z = y2-y1;
-            double distance = Math.sqrt(t*t+z*z);
-            double interval = 10.0;
-            double range = 10.0;
-            double alpha = Math.toDegrees(Math.atan(z/t));
-
-            while(distance-interval>range){
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                double newx = x1 + range*Math.cos(alpha);
-                double newy = y1 - range*Math.sin(alpha);
-
-                circle.setTranslateX(newx);
-                circle.setTranslateY(newy);
-
-                //System.out.println(newx + " " + newy);
-                range+=interval;
-            }
-        }
-
-        /*
         for(int i=0; i<start.ripInfo.ripWayList.size(); ++i){
             if(start.ripInfo.ripWayList.get(i).getDestination().equals(stop)){
                 ripWay = start.ripInfo.ripWayList.get(i);
             }
         }
 
-        for(int i=0; i+1<ripWay.way.size(); ++i){
-            DraggableNode firstNode = ripWay.way.get(i);
-            DraggableNode secondNode = ripWay.way.get(i+1);
-            //Point2D pointOne = firstNode.localToScene(0.0, 0.0);
-            //Point2D pointTwo = secondNode.localToScene(0.0, 0.0);
+        for(int i=1; i<ripWay.way.size(); ++i){
+            DraggableNode tmpNode = ripWay.way.get(i);
+            tmpPoint = new Point2D(tmpNode.getLayoutX()+60, tmpNode.getLayoutY()+70);
+            polyline.getPoints().add(tmpPoint.getX());
+            polyline.getPoints().add(tmpPoint.getY());
         }
-        */
+
+        PathTransition transmission = new PathTransition();
+        transmission.setNode(circle);
+        transmission.setPath(polyline);
+        transmission.setCycleCount(1);
+        transmission.setDuration(Duration.seconds(10));
+        transmission.play();
+        transmission.setOnFinished(e ->{
+            context.getChildren().remove(circle);
+        });
     }
 
 }
