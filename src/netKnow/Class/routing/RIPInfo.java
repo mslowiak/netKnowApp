@@ -9,7 +9,7 @@ import java.util.List;
 public class RIPInfo {
 
     private DraggableNode routerFrom;
-    private List<RIPWay> ripWayList;
+    public List<RIPWay> ripWayList;
     private DraggableNode[] prev;
     private List<DraggableNode> orderedRouters;
 

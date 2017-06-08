@@ -1,26 +1,35 @@
 package netKnow.controller;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import netKnow.Class.routing.NodeLinkData;
 import netKnow.Class.routing.*;
-import netKnow.scene.DraggableNodePopUp;
-import netKnow.scene.MainOptionsScene;
-import netKnow.scene.NodeLinkPopUp;
-import netKnow.scene.RoutingTypeScene;
+import netKnow.scene.*;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +40,8 @@ public class RoutingController {
 
     private Scene scene;
 
+    @FXML
+    private GridPane gridPane;
     @FXML
     SplitPane base_pane;
     @FXML
@@ -44,6 +55,8 @@ public class RoutingController {
     Button goBackButton;
     @FXML
     Button routingTypeButton;
+    @FXML
+    Button screenshotButton;
 
 
     private DragIcon mDragOverIcon = null;
@@ -78,7 +91,23 @@ public class RoutingController {
                     }
                 }
             }
-            new RoutingTypeScene(scene, nodes);
+            new RoutingTypeScene(scene, nodes, gridPane, right_pane);
+        });
+
+        screenshotButton.setOnAction(e->{
+            WritableImage image = right_pane.snapshot(new SnapshotParameters(), null);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDate localDate = LocalDate.now();
+            String nameOfFile = dtf.format(localDate);
+            nameOfFile = nameOfFile.replace(" ", "_");
+            nameOfFile = nameOfFile.replace("/", "");
+            nameOfFile = nameOfFile.replace(":", "");
+            File file = new File("D:\\netKnowApp\\"+ nameOfFile + ".png");
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         });
 
         //Add one icon that will be used for the drag-drop process
@@ -190,13 +219,27 @@ public class RoutingController {
             if (container != null) {
                 if (container.getValue("scene_coords") != null) {
                     DraggableNode droppedIcon = new DraggableNode();
-                    DraggableNodeData draggableNodeData = DraggableNodePopUp.display();
+                    DragIconType dragIconType = DragIconType.valueOf(container.getValue("type"));
+                    DraggableNodeData draggableNodeData;
+
+                    if(dragIconType.equals(DragIconType.routerIco)){
+                        draggableNodeData = DraggableNodeRouterPopUp.display();
+                    }else if(dragIconType.equals(DragIconType.pcIco)){
+                        draggableNodeData = DraggableNodePCPopUp.display();
+                    }else{
+                        draggableNodeData = DraggableNodeSwitchPopUp.display();
+                    }
 
                     if(draggableNodeData != null) {
                         droppedIcon.draggableNodeData = draggableNodeData;
+                        if(dragIconType.equals(DragIconType.routerIco)){
+                            droppedIcon.setHostLabels("."+draggableNodeData.getHost());
+                        }else if(dragIconType.equals(DragIconType.pcIco)){
+                            droppedIcon.setIpTop(draggableNodeData.getIp());
+                        }
+
                         droppedIcon.setTitleBar(draggableNodeData.getName());
-                        droppedIcon.setHostLabels("."+draggableNodeData.getHost());
-                        droppedIcon.setType(DragIconType.valueOf(container.getValue("type")));
+                        droppedIcon.setType(dragIconType);
                         right_pane.getChildren().add(droppedIcon);
 
                         Point2D cursorPoint = container.getValue("scene_coords");
@@ -248,8 +291,15 @@ public class RoutingController {
                     if (source != null && target != null){
                         link.setStartAndEnd(sourceId, targetId);
                         link.bindEnds(source, target);
+                        NodeLinkData ipAddress;
 
-                        NodeLinkData ipAddress = NodeLinkPopUp.display();
+                        if(source.getType().equals(DragIconType.switchIco)){
+                            ipAddress = new NodeLinkData(source.draggableNodeData.getIp());
+                        }else if(target.getType().equals(DragIconType.switchIco)){
+                            ipAddress = new NodeLinkData(target.draggableNodeData.getIp());
+                        }else{
+                            ipAddress = NodeLinkPopUp.display();
+                        }
 
                         if(ipAddress != null){
                             link.infoLabel.setText(ipAddress.getAddress());
