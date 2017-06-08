@@ -19,7 +19,6 @@ import netKnow.Class.routing.DraggableNode;
 import netKnow.Class.routing.NodeLink;
 import netKnow.Class.routing.RIPWay;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,35 +113,37 @@ public class SimulationScene {
     private void simulateRoute(DraggableNode start, DraggableNode stop){
         RIPWay ripWay = null;
         Point2D stopPc = null;
-        List<Double> doubleList = new ArrayList<>();
-        if(start.getType().equals(DragIconType.pcIco)){
-            doubleList.add(start.getLayoutX()+60);
-            doubleList.add(start.getLayoutY()+70);
+        Polyline polyline = new Polyline();
 
-            NodeLink pc = start.nodePCLink.get(0);
+        if(start.getType().equals(DragIconType.pcIco)){
+            polyline.getPoints().add(start.getLayoutX()+60);
+            polyline.getPoints().add(start.getLayoutY()+70);
+            NodeLink pc = start.nodeLinks.get(0);
             start = getNodeWithSameID(start.getId(), pc);
         }
+
         if(stop.getType().equals(DragIconType.pcIco)){
             stopPc = new Point2D(stop.getLayoutX()+60, stop.getLayoutY()+70);
-            NodeLink pc = stop.nodePCLink.get(0);
-            stop = getNodeWithSameID(start.getId(), pc);
+            NodeLink pc = stop.nodeLinks.get(0);
+            stop = getNodeWithSameID(stop.getId(), pc);
         }
 
         Point2D startPoint = new Point2D(start.getLayoutX()+60, start.getLayoutY()+70);
         Point2D tmpPoint = null;
-        doubleList.add(startPoint.getX());
-        doubleList.add(startPoint.getY());
+        polyline.getPoints().add(startPoint.getX());
+        polyline.getPoints().add(startPoint.getY());
 
         Circle circle = new Circle(30);
         circle.setFill(Color.RED);
 
-        Polyline polyline = new Polyline();
+
         polyline.getPoints().add(startPoint.getX());
         polyline.getPoints().add(startPoint.getY());
 
         context.getChildren().add(circle);
 
         for(int i=0; i<start.ripInfo.ripWayList.size(); ++i){
+            System.out.println(start.ripInfo.ripWayList.get(i).getDestination().titleBar.getText());
             if(start.ripInfo.ripWayList.get(i).getDestination().equals(stop)){
                 ripWay = start.ripInfo.ripWayList.get(i);
             }
@@ -153,6 +154,7 @@ public class SimulationScene {
             tmpPoint = new Point2D(tmpNode.getLayoutX()+60, tmpNode.getLayoutY()+70);
             polyline.getPoints().add(tmpPoint.getX());
             polyline.getPoints().add(tmpPoint.getY());
+
         }
         if(stopPc != null){
             polyline.getPoints().add(stopPc.getX());
