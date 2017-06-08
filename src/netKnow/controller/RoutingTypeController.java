@@ -34,6 +34,7 @@ public class RoutingTypeController {
     private Button simulationButton;
     private List<DraggableNode> nodeList;
     private List<DraggableNode> routersList;
+    private List<DragIcon> dragIcons;
     private List<DraggableNode> routersAndSwitchesList;
     private AnchorPane context;
 
@@ -49,8 +50,9 @@ public class RoutingTypeController {
                 DraggableNode d = routersAndSwitchesList.get(0);
                 routersAndSwitchesList.remove(0);
                 routersAndSwitchesList.add(d);
-            }
-            new SimulationScene(scene, scheme, nodeList, context);
+            } 
+            new SimulationScene(scene, scheme, nodeList,dragIcons, context);
+            System.out.println("Tu bedzie symulowanie dzialania"); 
         });
         typeOfDeviceChoiceBox.setItems(FXCollections.observableArrayList("Cisco", "Juniper"));
         typeOfDeviceChoiceBox.getStylesheets().add(
@@ -70,6 +72,11 @@ public class RoutingTypeController {
         setNodePCLink();
         setPCConnectedToRouters();
     }
+
+    public void setDragIconList(List<DragIcon> dragIcons){
+        this.dragIcons = dragIcons;
+    }
+
 
     private void setRoutersList(){
         routersList = new ArrayList<>();

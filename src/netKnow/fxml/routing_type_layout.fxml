@@ -38,14 +38,6 @@
                     <Font name="System Bold" />
                 </font>
             </Label>
-            <Label text="Rodzaj routingu:" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets right="20.0" />
-               </GridPane.margin>
-                <font>
-                    <Font name="System Bold" />
-                </font>
-            </Label>
             <ComboBox fx:id="typeOfDeviceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>

@@ -1,8 +1,5 @@
 package netKnow.Class.routing;
 
-/**
- * Created by MQ on 2017-05-17.
- */
 public class NodeLinkData {
     private String octetFirst;
     private String octetSecond;

@@ -3,9 +3,6 @@ package netKnow.Class.routing;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by MQ on 2017-06-05.
- */
 public class RIPInfo {
 
     private DraggableNode routerFrom;

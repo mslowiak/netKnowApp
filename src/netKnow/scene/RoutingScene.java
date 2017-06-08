@@ -35,7 +35,6 @@ public class RoutingScene {
             GridPane content = loader.load();
             VBox header = HeaderRoot.getHeader();
 
-            // nie wiem czy header akurat tu potrzebny bedzie, jak tak to trzeba wrzucic w vboxa
 
             scene.setRoot(content);
         } catch (IOException e) {

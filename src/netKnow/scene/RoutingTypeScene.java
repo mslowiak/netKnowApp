@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import netKnow.Class.routing.DragIcon;
 import netKnow.Class.routing.DraggableNode;
 import netKnow.controller.RoutingController;
 import netKnow.controller.RoutingTypeController;
@@ -22,11 +23,13 @@ public class RoutingTypeScene {
     private FXMLLoader loader;
     private RoutingTypeController routingTypeController;
     private List<DraggableNode> nodelist;
+    private List<DragIcon> dragIcons;
     private AnchorPane context;
 
-    public RoutingTypeScene(Scene scene, List<DraggableNode> nodeList, GridPane scheme, AnchorPane context) {
+    public RoutingTypeScene(Scene scene, List<DraggableNode> nodeList, List<DragIcon> dragIcons , GridPane scheme, AnchorPane context) {
         this.scene = scene;
         this.nodelist = nodeList;
+        this.dragIcons = dragIcons;
         this.scheme = scheme;
         this.context = context;
         setScene();
@@ -50,5 +53,6 @@ public class RoutingTypeScene {
         routingTypeController.setScene(scene);
         routingTypeController.setDraggableNodesList(nodelist);
         routingTypeController.setSchemeGridPane(scheme, context);
+        routingTypeController.setDragIconList(dragIcons);
     }
 }
