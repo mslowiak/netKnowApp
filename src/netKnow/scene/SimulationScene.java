@@ -6,24 +6,21 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
 import javafx.util.Duration;
+import netKnow.Class.routing.DragIconType;
 import netKnow.Class.routing.DraggableNode;
+import netKnow.Class.routing.NodeLink;
 import netKnow.Class.routing.RIPWay;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Handler;
 
 /**
  * Created by MQ on 2017-06-07.
@@ -33,7 +30,7 @@ public class SimulationScene {
     private GridPane gridPane;
     private List<DraggableNode> nodeList;
     private AnchorPane context;
-    
+
     public SimulationScene(Scene scene, GridPane gridPane, List<DraggableNode> nodeList, AnchorPane context){
         this.scene = scene;
         this.gridPane = gridPane;
@@ -116,9 +113,23 @@ public class SimulationScene {
 
     private void simulateRoute(DraggableNode start, DraggableNode stop){
         RIPWay ripWay = null;
+        Point2D stopPc = null;
+        List<Double> doubleList = new ArrayList<>();
+        if(start.getType().equals(DragIconType.pcIco)){
+            doubleList.add(start.getLayoutX()+60);
+            doubleList.add(start.getLayoutY()+70);
+
+            NodeLink pc = start.nodePCLink.get(0);
+            start = getNodeWithSameID(start.getId(), pc);
+        }
+        if(stop.getType().equals(DragIconType.pcIco)){
+            stopPc = new Point2D(stop.getLayoutX()+60, stop.getLayoutY()+70);
+            NodeLink pc = stop.nodePCLink.get(0);
+            stop = getNodeWithSameID(start.getId(), pc);
+        }
+
         Point2D startPoint = new Point2D(start.getLayoutX()+60, start.getLayoutY()+70);
         Point2D tmpPoint = null;
-        List<Double> doubleList = new ArrayList<>();
         doubleList.add(startPoint.getX());
         doubleList.add(startPoint.getY());
 
@@ -143,6 +154,10 @@ public class SimulationScene {
             polyline.getPoints().add(tmpPoint.getX());
             polyline.getPoints().add(tmpPoint.getY());
         }
+        if(stopPc != null){
+            polyline.getPoints().add(stopPc.getX());
+            polyline.getPoints().add(stopPc.getY());
+        }
 
         PathTransition transmission = new PathTransition();
         transmission.setNode(circle);
@@ -155,4 +170,21 @@ public class SimulationScene {
         });
     }
 
+    private DraggableNode getNodeWithSameID(String id, NodeLink pc){
+        DraggableNode nodeWithSameId = null;
+        if(pc.startIDNode.equals(id)){
+            for(int i=0; i<nodeList.size(); ++i){
+                if(nodeList.get(i).getId().equals(pc.endIDNode)){
+                    nodeWithSameId = nodeList.get(i);
+                }
+            }
+        }else{
+            for(int i=0; i<nodeList.size(); ++i){
+                if(nodeList.get(i).getId().equals(pc.startIDNode)){
+                    nodeWithSameId = nodeList.get(i);
+                }
+            }
+        }
+        return nodeWithSameId;
+    }
 }
