@@ -17,6 +17,9 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import netKnow.Class.routing.NodeLinkData;
 import netKnow.Class.routing.*;
@@ -88,7 +91,7 @@ public class RoutingController {
                     }
                 }
             }
-            new RoutingTypeScene(scene, nodes, gridPane);
+            new RoutingTypeScene(scene, nodes, gridPane, right_pane);
         });
 
         screenshotButton.setOnAction(e->{

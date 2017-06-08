@@ -2,6 +2,7 @@ package netKnow.scene;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import netKnow.Class.routing.DraggableNode;
@@ -21,11 +22,13 @@ public class RoutingTypeScene {
     private FXMLLoader loader;
     private RoutingTypeController routingTypeController;
     private List<DraggableNode> nodelist;
+    private AnchorPane context;
 
-    public RoutingTypeScene(Scene scene, List<DraggableNode> nodeList, GridPane scheme) {
+    public RoutingTypeScene(Scene scene, List<DraggableNode> nodeList, GridPane scheme, AnchorPane context) {
         this.scene = scene;
         this.nodelist = nodeList;
         this.scheme = scheme;
+        this.context = context;
         setScene();
         setController();
     }
@@ -46,6 +49,6 @@ public class RoutingTypeScene {
         routingTypeController = loader.getController();
         routingTypeController.setScene(scene);
         routingTypeController.setDraggableNodesList(nodelist);
-        routingTypeController.setSchemeGridPane(scheme);
+        routingTypeController.setSchemeGridPane(scheme, context);
     }
 }

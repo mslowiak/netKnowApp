@@ -34,7 +34,7 @@ public class RoutingTypeController {
     private Button simulationButton;
     private List<DraggableNode> nodeList;
     private List<DraggableNode> routersList;
-
+    private AnchorPane context;
 
     @FXML
     void initialize(){
@@ -49,7 +49,7 @@ public class RoutingTypeController {
                 routersList.remove(0);
                 routersList.add(d);
             }
-            new SimulationScene(scene, scheme, nodeList);
+            new SimulationScene(scene, scheme, nodeList, context);
             System.out.println("Tu bedzie symulowanie dzialania");
         });
         typeOfDeviceChoiceBox.setItems(FXCollections.observableArrayList("Cisco", "Juniper"));
@@ -195,7 +195,8 @@ public class RoutingTypeController {
 
         return previous;
     }
-    public void setSchemeGridPane(GridPane scheme){
+    public void setSchemeGridPane(GridPane scheme, AnchorPane context){
         this.scheme = scheme;
+        this.context = context;
     }
 }
