@@ -1,6 +1,5 @@
 package netKnow.controller;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,7 +15,11 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import netKnow.Class.routing.NodeLinkData;
 import netKnow.Class.routing.*;
@@ -37,6 +40,8 @@ public class RoutingController {
 
     private Scene scene;
 
+    @FXML
+    private GridPane gridPane;
     @FXML
     SplitPane base_pane;
     @FXML
@@ -86,7 +91,7 @@ public class RoutingController {
                     }
                 }
             }
-            new RoutingTypeScene(scene, nodes);
+            new RoutingTypeScene(scene, nodes, gridPane, right_pane);
         });
 
         screenshotButton.setOnAction(e->{
