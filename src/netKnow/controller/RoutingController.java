@@ -17,11 +17,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import netKnow.Class.routing.NodeLinkData;
 import netKnow.Class.routing.*;
 import netKnow.scene.*;
 
@@ -132,6 +128,7 @@ public class RoutingController {
             left_pane.getChildren().addAll(icn, descriptionLabel);
         }
         buildDragHandlers();
+        setTestData();
     }
 
     private void addDragDetection(DragIcon dragIcon) {
@@ -319,4 +316,101 @@ public class RoutingController {
         this.scene = scene;
     }
 
+
+    public void setTestData(){
+        DraggableNode pc1 = new DraggableNode();
+        DraggableNode pc2 = new DraggableNode();
+        DraggableNode router1 = new DraggableNode();
+        DraggableNode router2 = new DraggableNode();
+        DraggableNode router3 = new DraggableNode();
+        DraggableNode router4 = new DraggableNode();
+        DraggableNode switch1 = new DraggableNode();
+
+        pc1.setType(DragIconType.pcIco);
+        pc1.draggableNodeData = new DraggableNodeData("pc1", "1.0.0.0/24");
+        pc1.titleBar.setText("pc1");
+        pc1.setLayoutX(98.0);
+        pc1.setLayoutY(71.0);
+
+        pc2.setType(DragIconType.pcIco);
+        pc2.draggableNodeData = new DraggableNodeData("pc2", "2.0.0.0/24");
+        pc2.titleBar.setText("pc2");
+        pc2.setLayoutX(1040.0);
+        pc2.setLayoutY(279.0);
+
+        router1.setType(DragIconType.routerIco);
+        router1.draggableNodeData = new DraggableNodeData("r1", "1");
+        router1.titleBar.setText("r1");
+        router1.setLayoutX(79.0);
+        router1.setLayoutY(268.0);
+
+        router2.setType(DragIconType.routerIco);
+        router2.draggableNodeData = new DraggableNodeData("r2", "2");
+        router2.titleBar.setText("r2");
+        router2.setLayoutX(120.0);
+        router2.setLayoutY(679.0);
+
+        router3.setType(DragIconType.routerIco);
+        router3.draggableNodeData = new DraggableNodeData("r3", "3");
+        router3.titleBar.setText("r3");
+        router3.setLayoutX(622.0);
+        router3.setLayoutY(705.0);
+
+        router4.setType(DragIconType.routerIco);
+        router4.draggableNodeData = new DraggableNodeData("r4", "4");
+        router4.titleBar.setText("r4");
+        router4.setLayoutX(940.0);
+        router4.setLayoutY(542.0);
+
+        switch1.setType(DragIconType.switchIco);
+        switch1.draggableNodeData = new DraggableNodeData("s1", "10.10.10.10/24");
+        switch1.titleBar.setText("s1");
+        switch1.setLayoutX(351.0);
+        switch1.setLayoutY(530.0);
+
+        NodeLink link1 = new NodeLink();
+        link1.setStartAndEnd(pc1.getId(), router1.getId());
+        link1.bindEnds(pc1, router1);
+        NodeLinkData linkData1 = new NodeLinkData("1.1.1.1/24");
+        link1.nodeLinkData = linkData1;
+
+        NodeLink link2 = new NodeLink();
+        link2.setStartAndEnd(router1.getId(), router2.getId());
+        link2.bindEnds(router1, router2);
+        NodeLinkData linkData2 = new NodeLinkData("12.12.12.12/24");
+        link2.nodeLinkData = linkData2;
+
+        NodeLink link3 = new NodeLink();
+        link3.setStartAndEnd(router1.getId(), switch1.getId());
+        link3.bindEnds(router1, switch1);
+        NodeLinkData linkData3 = new NodeLinkData(switch1.draggableNodeData.getIp());
+        link3.nodeLinkData = linkData3;
+
+        NodeLink link4 = new NodeLink();
+        link4.setStartAndEnd(switch1.getId(), router3.getId());
+        link4.bindEnds(switch1, router3);
+        NodeLinkData linkData4 = new NodeLinkData(switch1.draggableNodeData.getIp());
+        link4.nodeLinkData = linkData4;
+
+        NodeLink link5 = new NodeLink();
+        link5.setStartAndEnd(router2.getId(), router3.getId());
+        link5.bindEnds(router2, router3);
+        NodeLinkData linkData5 = new NodeLinkData("23.23.23.23/24");
+        link5.nodeLinkData = linkData5;
+
+        NodeLink link6 = new NodeLink();
+        link6.setStartAndEnd(router3.getId(), router4.getId());
+        link6.bindEnds(router3, router4);
+        NodeLinkData linkData6 = new NodeLinkData("34.34.34.34/24");
+        link6.nodeLinkData = linkData6;
+
+        NodeLink link7 = new NodeLink();
+        link7.setStartAndEnd(router4.getId(), pc2.getId());
+        link7.bindEnds(router4, pc2);
+        NodeLinkData linkData7 = new NodeLinkData("2.2.2.2/24");
+        link7.nodeLinkData = linkData7;
+
+        right_pane.getChildren().addAll(link1, link2, link3, link4, link5, link6, link7);
+        right_pane.getChildren().addAll(pc1, pc2, router1, router2, router3, router4, switch1);
+    }
 }

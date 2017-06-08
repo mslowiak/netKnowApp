@@ -37,6 +37,7 @@ public class SimulationScene {
         this.context = context;
         setScene();
         disableMouseEvents();
+        //printNodesCoords();
     }
 
     public void setScene(){
@@ -136,14 +137,12 @@ public class SimulationScene {
         Circle circle = new Circle(30);
         circle.setFill(Color.RED);
 
-
         polyline.getPoints().add(startPoint.getX());
         polyline.getPoints().add(startPoint.getY());
 
         context.getChildren().add(circle);
 
         for(int i=0; i<start.ripInfo.ripWayList.size(); ++i){
-            System.out.println(start.ripInfo.ripWayList.get(i).getDestination().titleBar.getText());
             if(start.ripInfo.ripWayList.get(i).getDestination().equals(stop)){
                 ripWay = start.ripInfo.ripWayList.get(i);
             }
@@ -188,5 +187,18 @@ public class SimulationScene {
             }
         }
         return nodeWithSameId;
+    }
+
+    public void printNodesCoords(){
+        for(int i=0; i<nodeList.size(); ++i){
+            DraggableNode dn = nodeList.get(i);
+            if(dn.getType().equals(DragIconType.routerIco)){
+                System.out.println("router: "+dn.titleBar.getText() + "\n\tx: "+dn.getLayoutX() + "\ty: "+dn.getLayoutY());
+            }else if(dn.getType().equals(DragIconType.routerIco)){
+                System.out.println("switch: "+dn.titleBar.getText() + "\n\tx: "+dn.getLayoutX() + "\ty: "+dn.getLayoutY());
+            }else{
+                System.out.println("pc: "+dn.titleBar.getText() + "\n\tx: "+dn.getLayoutX() + "\ty: "+dn.getLayoutY());
+            }
+        }
     }
 }
