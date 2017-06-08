@@ -70,7 +70,7 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="topHostLabel" alignment="CENTER" contentDisplay="CENTER" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-30.0">
+        <Label fx:id="topHostLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-43.0" prefHeight="35.0" prefWidth="204.0" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="-43.0" AnchorPane.rightAnchor="-41.0" AnchorPane.topAnchor="-30.0">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>

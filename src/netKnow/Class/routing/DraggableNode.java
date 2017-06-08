@@ -26,9 +26,9 @@ public class DraggableNode extends AnchorPane{
     @FXML AnchorPane root_pane;
     @FXML AnchorPane nodeBody;
     @FXML public Label titleBar;
-    @FXML Label closeButton;
-    @FXML AnchorPane leftLinkHandle;
-    @FXML AnchorPane rightLinkHandle;
+    @FXML public Label closeButton;
+    @FXML public AnchorPane leftLinkHandle;
+    @FXML public AnchorPane rightLinkHandle;
     @FXML Label topHostLabel;
     @FXML Label bottomHostLabel;
     @FXML Label leftHostLabel;
@@ -43,10 +43,10 @@ public class DraggableNode extends AnchorPane{
     private EventHandler <DragEvent> mContextDragOver;
     private EventHandler <DragEvent> mContextDragDropped;
 
-    private EventHandler <MouseEvent> mLinkHandleDragDetected; // wykrycie przeciagania
-    private EventHandler <DragEvent> mLinkHandleDragDropped; // wykrycie konca przeciagania
-    private EventHandler <DragEvent> mContextLinkDragOver; // wykrycie przeciagania z drugim obiektem
-    private EventHandler <DragEvent> mContextLinkDragDropped; // wykrycie konca przeciagania z drugim obiektem
+    public EventHandler <MouseEvent> mLinkHandleDragDetected; // wykrycie przeciagania
+    public EventHandler <DragEvent> mLinkHandleDragDropped; // wykrycie konca przeciagania
+    public EventHandler <DragEvent> mContextLinkDragOver; // wykrycie przeciagania z drugim obiektem
+    public EventHandler <DragEvent> mContextLinkDragDropped; // wykrycie konca przeciagania z drugim obiektem
 
     private NodeLink mDragLink;
     private AnchorPane rightPane;
@@ -297,6 +297,10 @@ public class DraggableNode extends AnchorPane{
         leftHostLabel.setText(host);
         topHostLabel.setText(host);
         bottomHostLabel.setText(host);
+    }
+
+    public void setIpTop(String ip){
+        topHostLabel.setText(ip);
     }
 
 }

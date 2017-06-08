@@ -71,7 +71,7 @@ public class CiscoConfigurationCodeGenerator {
     }
 
     private String setRoutingOptions(int index){
-        String out = "edit routing-options static\n";
+        String out = "";
         DraggableNode interfaceNode = routersList.get(index);
         for(int i=0; i<interfaceNode.nodeLinks.size(); ++i){
             DraggableNode connectedToInterfaceNode;
