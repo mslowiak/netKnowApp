@@ -8,15 +8,15 @@ public class RIPInfo {
     private DraggableNode routerFrom;
     public List<RIPWay> ripWayList;
     private DraggableNode[] prev;
-    private List<DraggableNode> orderedRouters;
+    private List<DraggableNode> routersAndSwitches;
 
-    public RIPInfo(DraggableNode[] prev, List<DraggableNode> orderedRouters){
-        routerFrom = orderedRouters.get(0);
+    public RIPInfo(DraggableNode[] prev,List<DraggableNode> routersAndSwitches){
+        routerFrom = routersAndSwitches.get(0);
         this.prev = prev;
-        this.orderedRouters = orderedRouters;
+        this.routersAndSwitches = routersAndSwitches;
         ripWayList = new ArrayList<>();
         fillWayList();
-        showWayList();
+        //showWayList();
     }
 
     public void showWayList(){
@@ -33,9 +33,10 @@ public class RIPInfo {
     }
 
     public void fillWayList(){
-        for(int i=1; i<prev.length; ++i){
-            createNewWay(orderedRouters.get(i));
-            addToLatestWayFront(orderedRouters.get(i));
+
+        for(int i=1; i<routersAndSwitches.size(); ++i){
+            createNewWay(routersAndSwitches.get(i));
+            addToLatestWayFront(routersAndSwitches.get(i));
             DraggableNode tmp = prev[i];
             while(tmp != routerFrom){
                 addToLatestWayFront(tmp);
@@ -47,8 +48,8 @@ public class RIPInfo {
     }
 
     public int findIndexRouter(DraggableNode toFind){
-        for(int j=0; j<orderedRouters.size(); ++j){
-            if(toFind == orderedRouters.get(j)){
+        for(int j=0; j<routersAndSwitches.size(); ++j){
+            if(toFind == routersAndSwitches.get(j)){
                 return j;
             }
         }
