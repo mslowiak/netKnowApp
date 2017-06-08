@@ -24,8 +24,8 @@ public class Main extends Application {
         window.setTitle("netKnow - aplication that will change your life");
         Scene scene = new Scene(new VBox(), 1400, 1000);
         window.setScene(scene);
-        new LoginScene(scene);
-        //new RoutingScene(scene);
+        //new LoginScene(scene);
+        new RoutingScene(scene);
         window.show();
         //window.setFullScreen(true);
     }

@@ -44,14 +44,13 @@ public class RoutingTypeController {
             new CodeGeneratorScene(scene, typeOfConnection, routersList, nodeList);
         });
         simulationButton.setOnAction(e -> {
-            for(int i=0; i<routersList.size(); ++i){
-                routersList.get(0).ripInfo = new RIPInfo(countRIPPaths(0), routersAndSwitchesList);
-                DraggableNode d = routersList.get(0);
-                routersList.remove(0);
-                routersList.add(d);
+            for(int i=0; i<routersAndSwitchesList.size(); ++i){
+                routersAndSwitchesList.get(0).ripInfo = new RIPInfo(countRIPPaths(0), routersAndSwitchesList);
+                DraggableNode d = routersAndSwitchesList.get(0);
+                routersAndSwitchesList.remove(0);
+                routersAndSwitchesList.add(d);
             }
             new SimulationScene(scene, scheme, nodeList, context);
-            System.out.println("Tu bedzie symulowanie dzialania");
         });
         typeOfDeviceChoiceBox.setItems(FXCollections.observableArrayList("Cisco", "Juniper"));
         typeOfDeviceChoiceBox.getStylesheets().add(
@@ -106,10 +105,8 @@ public class RoutingTypeController {
     }
 
     private void setPCConnectedToRouters(){
-        System.out.println("setPCConnectedToRouters");
         for(int i=0; i<routersList.size(); ++i){
             DraggableNode tmpNode = routersList.get(i);
-            System.out.println("ROUTER: " + tmpNode.titleBar.getText());
             for(int j=0; j<tmpNode.nodePCLink.size(); ++j){
                 NodeLink link = tmpNode.nodePCLink.get(j);
                 String pcId;
@@ -120,12 +117,10 @@ public class RoutingTypeController {
                 }
                 for(int k=0; k<nodeList.size(); ++k){
                     if(nodeList.get(k).getId().equals(pcId) && nodeList.get(k).getType().equals(DragIconType.pcIco)){
-                        System.out.println("\tr: "+tmpNode.titleBar.getText() + "\tpc:" + nodeList.get(k).titleBar.getText());
                         tmpNode.pcList.add(nodeList.get(k));
                     }
                 }
             }
-            System.out.println("router: " + tmpNode.titleBar.getText() + "\tpclistsize: " + tmpNode.pcList.size() + "\tnodepclink: " + tmpNode.nodePCLink.size());
         }
     }
 
@@ -153,8 +148,6 @@ public class RoutingTypeController {
     }
 
     private DraggableNode[] countRIPPaths(int v){
-        //setMyOwnRoutersAndLinkers();
-
         int [] distance = new int[routersAndSwitchesList.size()];
         DraggableNode [] previous = new DraggableNode[routersAndSwitchesList.size()];
 
@@ -195,16 +188,6 @@ public class RoutingTypeController {
                 }
             }
         }
-
-        /*for(int i=0; i<routersList.size(); ++i){
-            System.out.print(i + ": " + distance[i] + " ");
-            if(previous[i] != null)
-                System.out.println(previous[i].getId());
-            else
-                System.out.println("NULL");
-        }
-        System.out.println("\n\n");*/
-
         return previous;
     }
     public void setSchemeGridPane(GridPane scheme, AnchorPane context){

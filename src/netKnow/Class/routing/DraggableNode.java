@@ -303,4 +303,7 @@ public class DraggableNode extends AnchorPane{
         topHostLabel.setText(ip);
     }
 
+    public void setmDragLink(NodeLink mDragLink) {
+        this.mDragLink = mDragLink;
+    }
 }
